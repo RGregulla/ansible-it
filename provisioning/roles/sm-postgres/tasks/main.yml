@@ -1,0 +1,10 @@
+---
+
+- name: install Postgres DB for Service Manger
+  yum:
+    name:
+       - postgresql-server
+       - postgresql-contrib
+    state: present
+  tags: install
+  become: yes

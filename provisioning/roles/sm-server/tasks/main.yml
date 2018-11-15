@@ -1,0 +1,97 @@
+---
+
+#- name: upgrade all packages
+#  yum:
+#    name: '*'
+#    state: latest
+#  become: yes
+
+- name: create Installdir
+  file: path={{ itsm_sm.installation.filepath }} state=directory
+  tags: prepare
+  become: yes
+
+- name: Copy ITSM Archive and Unarchive it
+  unarchive: src={{ itsm_sm.source.sm_bin }} dest={{ itsm_sm.installation.filepath }} mode=0755
+  tags: prepare
+  become: yes
+
+- name: chmod Installation Files
+  file:
+    path: "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }}"
+    mode: 0777
+  tags: prepare
+  become: yes
+
+- name: create Target Directory
+  file:
+    path: "{{ itsm_sm.installation.install_dir }}"
+    state: directory
+    owner: "{{ itsm_sm.installation.install_user }}"
+    mode: 0755
+  tags: prepare
+  become: yes
+
+#- name: install Python Module pexpect
+#  yum:
+#    name: pexpect
+#    state: latest
+#  tags: install
+#  become: yes
+
+- name: Install Python Module Manager
+  easy_install:
+    name: pip
+    state: latest
+  become: yes
+  # There is an error in installation the module which can ignored
+  ignore_errors: yes
+
+- name: Install Python Module pexpect
+  pip:
+    name: pexpect
+    state: latest
+  become: yes
+  # There is an error in installation the module which can ignored
+  ignore_errors: yes
+
+- name: Install ITSM
+  expect:
+    command: "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }} -i console"
+    responses:
+      'PRESS \<ENTER\> TO CONTINUE:' : ''
+      'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ itsm_sm.installation.install_server_dir }}"
+      'IS THIS CORRECT?' : 'Y'
+      'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
+  tags: install
+  become: yes
+
+# You can use shell to run other executables to perform actions inline
+
+# - name: Run expect to Install ITSM Server
+#   shell: |
+#     set timeout 300
+#     spawn "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }} -i console"
+#
+#     expect "PRESS \<ENTER\> TO CONTINUE:"
+#     send "\n"
+#
+#     expect "DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT? \(Y/N\)"
+#     send "Y\n"
+#
+#     expect "ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT"
+#     send "{{ itsm_sm.installation.install_server_dir }}\n"
+#
+#     expect "IS THIS CORRECT? \(Y/N\):"
+#     send "Y\n"
+#
+#     expect "PRESS \<ENTER\> TO EXIT THE INSTALLER:"
+#     send "Y\n"
+#
+#     exit 0
+#   args:
+#     executable: /usr/bin/expect
+#   #delegate_to: localhost
+#   sudo: true
+#   sudo_user: root

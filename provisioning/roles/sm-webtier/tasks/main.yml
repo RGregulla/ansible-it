@@ -1,0 +1,9 @@
+---
+
+- name: install Tomcat for Service Manger Webtier
+  yum:
+    name:
+       - tomcat
+    state: present
+  tags: install
+  become: yes

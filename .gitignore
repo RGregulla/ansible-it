@@ -1,0 +1,4 @@
+.DS_Store
+provisioning/binaries/
+.vagrant/
+provisioning/playbook.retry

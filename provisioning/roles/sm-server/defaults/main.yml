@@ -1,0 +1,31 @@
+---
+
+java: java-1.8.0-openjdk.x86_64
+update_java: false
+
+itsm_sm:
+  version: servicemanager-9.6.0
+  source:
+    remote: yes
+    sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
+  installation:
+    filepath: /opt/itsm
+    bin_path: /opt/itsm/Installation/Server
+    bin: setupLinuxX64-9.60.bin
+    install_dir: /opt/MicroFocus
+    install_user: ec2-user
+    install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+
+datasource:
+  name: postgresql
+  qualifier: org.postgresql
+  namespace: org/postgresql
+  class: org.postgresql.Driver
+  driver: postgresql-9.4.1208.jar
+  source:
+    remote: true
+    path: http://lwie0artif01/artifactory/external-applications/postgres/postgresql-9.4.1208.jar
+  connection:
+    url: jdbc:postgresql://lwie0keydb01/keycloak_sso
+    user: keycloak_sso
+    password: Ohchoo9ueloo8uquoigh2chaiw3Shi
