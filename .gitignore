@@ -2,3 +2,4 @@
 provisioning/binaries/
 .vagrant/
 provisioning/playbook.retry
+provisioning/roles/**/files/
