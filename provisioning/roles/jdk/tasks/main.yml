@@ -1,0 +1,26 @@
+---
+
+- name: create java installdir
+  file: path={{ java.installation.install_path }} state=directory
+  tags: prepare
+  become: yes
+
+- name: install glibc for java
+  yum:
+    name: glibc.i686
+  tags: prepare
+  become: yes
+
+- name: download java
+  command: "wget --continue --no-check-certificate -O {{ java.source.download_folder }}/{{ java.source.java_archive }} --header 'Cookie: oraclelicense=a' {{ java.source.download_url }} creates={{ java.source.java_archive }}"
+
+- name: unzip java
+  unarchive:
+    src: "{{ java.source.download_folder }}/{{ java.source.java_archive }}"
+    dest: "{{java.installation.install_path}}"
+    remote_src: yes
+  tags: prepare
+  become: yes
+
+- name: Clean up java installation files
+  file: state=absent path="{{ java.source.download_folder }}/{{ java.source.java_archive }}"
