@@ -6,13 +6,45 @@
 #    state: latest
 #  become: yes
 
-- name: create Installdir
-  file: path={{ itsm_sm.installation.filepath }} state=directory
+#- name: install Python Module pexpect
+#  yum:
+#    name: pexpect
+#    state: latest
+#  tags: install
+#  become: yes
+
+- name: install Python Module Manager
+  yum:
+    name: python2-pip
+    state: latest
+  tags: prepare
+  become: yes
+
+#- name: install python module manager
+#  easy_install:
+#    executable: /bin/easy_install
+#    name: pip
+#    state: latest
+#  become: yes
+  # There is an error in installation the module which can ignored
+  #ignore_errors: yes
+
+- name: install python module pexpect
+  pip:
+    name: pexpect
+    state: latest
+  tags: prepare
+  become: yes
+  # There is an error at installation of the module which can ignored
+  #ignore_errors: yes
+
+- name: create sm installdir
+  file: path={{ itsm_sm.installation.filepath }} state=directory mode=0755 owner={{ install_user }}
   tags: prepare
   become: yes
 
 - name: Copy ITSM Archive and Unarchive it
-  unarchive: src={{ itsm_sm.source.sm_bin }} dest={{ itsm_sm.installation.filepath }} mode=0755
+  unarchive: src={{ itsm_sm.source.sm_bin }} dest={{ itsm_sm.installation.filepath }} mode=0755 owner={{ install_user }}
   tags: prepare
   become: yes
 
@@ -23,39 +55,16 @@
   tags: prepare
   become: yes
 
-- name: create Target Directory
+- name: create target itsm directory
   file:
     path: "{{ itsm_sm.installation.install_dir }}"
     state: directory
-    owner: "{{ itsm_sm.installation.install_user }}"
+    owner: "{{ install_user }}"
     mode: 0755
   tags: prepare
   become: yes
 
-#- name: install Python Module pexpect
-#  yum:
-#    name: pexpect
-#    state: latest
-#  tags: install
-#  become: yes
-
-- name: Install Python Module Manager
-  easy_install:
-    name: pip
-    state: latest
-  become: yes
-  # There is an error in installation the module which can ignored
-  ignore_errors: yes
-
-- name: Install Python Module pexpect
-  pip:
-    name: pexpect
-    state: latest
-  become: yes
-  # There is an error in installation the module which can ignored
-  ignore_errors: yes
-
-- name: Install ITSM
+- name: install itsm
   expect:
     command: "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }} -i console"
     responses:
@@ -65,33 +74,52 @@
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
   tags: install
+
+- name: add sm.ini
+  copy:
+    src: sm.ini
+    dest: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+    owner: "{{ install_user }}"
+    mode: 0755
+
+- name: link jre in sm installation
+  command: "{{ itsm_sm.installation.install_server_dir }}/RUN/setupLinks.sh jre"
+  environment:
+    JAVA_HOME: "{{ java.installation.install_path }}/{{ java.installation.java_dir }}"
+  tags: install
+
+- name: create patches installdir
+  file: path={{ itsm_sm.patch.patch_path }} state=directory mode=0755 owner={{ install_user }}
+  tags: patch
   become: yes
 
-# You can use shell to run other executables to perform actions inline
+- name: copy itsm patch and unarchive it
+  unarchive: src={{ itsm_sm.patch.patch_file }} dest={{ itsm_sm.patch.patch_path }} mode=0755 owner={{ install_user }}
+  tags: patch
+  become: yes
 
-# - name: Run expect to Install ITSM Server
-#   shell: |
-#     set timeout 300
-#     spawn "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }} -i console"
-#
-#     expect "PRESS \<ENTER\> TO CONTINUE:"
-#     send "\n"
-#
-#     expect "DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT? \(Y/N\)"
-#     send "Y\n"
-#
-#     expect "ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT"
-#     send "{{ itsm_sm.installation.install_server_dir }}\n"
-#
-#     expect "IS THIS CORRECT? \(Y/N\):"
-#     send "Y\n"
-#
-#     expect "PRESS \<ENTER\> TO EXIT THE INSTALLER:"
-#     send "Y\n"
-#
-#     exit 0
-#   args:
-#     executable: /usr/bin/expect
-#   #delegate_to: localhost
-#   sudo: true
-#   sudo_user: root
+- name: unarchive patch
+  unarchive:
+    src: "{{ itsm_sm.patch.patch_path }}/{{ itsm_sm.patch.patch_patch }}"
+    dest: "{{ itsm_sm.patch.patch_path }}"
+    mode: 0755
+    owner: "{{ install_user }}"
+    remote_src: yes
+  tags: patch
+  become: yes
+
+- name: create patches backupdir
+  file: path={{ itsm_sm.patch.patch_backup }} state=directory mode=0755 owner={{ install_user }}
+  tags: patch
+  become: yes
+
+- name: install itsm patch
+  expect:
+    command: "{{ itsm_sm.patch.patch_path }}/{{ itsm_sm.patch.patch_cmd }}"
+    responses:
+      'SM Server installation directory' : "{{ itsm_sm.installation.install_server_dir }}"
+      'SM Server backup directory' : "{{ itsm_sm.patch.patch_backup }}"
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ itsm_sm.installation.install_server_dir }}"
+      'IS THIS CORRECT?' : 'Y'
+      'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
+  tags: patch
