@@ -6,28 +6,12 @@
 #    state: latest
 #  become: yes
 
-#- name: install Python Module pexpect
-#  yum:
-#    name: pexpect
-#    state: latest
-#  tags: install
-#  become: yes
-
 - name: install Python Module Manager
   yum:
     name: python2-pip
     state: latest
   tags: prepare
   become: yes
-
-#- name: install python module manager
-#  easy_install:
-#    executable: /bin/easy_install
-#    name: pip
-#    state: latest
-#  become: yes
-  # There is an error in installation the module which can ignored
-  #ignore_errors: yes
 
 - name: install python module pexpect
   pip:
@@ -37,6 +21,18 @@
   become: yes
   # There is an error at installation of the module which can ignored
   #ignore_errors: yes
+
+- name: install krb5 libs for postgres
+  yum:
+    name: krb5-libs.i686
+  tags: prepare
+  become: yes
+
+  - name: install openladp libs for postgres
+    yum:
+      name: openldap.i686
+    tags: prepare
+    become: yes
 
 - name: create sm installdir
   file: path={{ itsm_sm.installation.filepath }} state=directory mode=0755 owner={{ install_user }}

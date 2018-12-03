@@ -3,6 +3,11 @@
 - hosts: all
   vars:
     install_user: vagrant
+    dbname: smdb
+    dbschema: sm
+    dbuser: smuser
+    dbpassword: smpassw0rd
+    postgres_user: postgres
     java:
       source:
         download_url: https://download.oracle.com/otn-pub/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/jre-8u192-linux-i586.tar.gz
