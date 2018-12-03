@@ -23,6 +23,7 @@
         java_dir: jre1.8.0_192
 
   roles:
+    - common
     - sm-postgres
     - jdk
     - sm-server

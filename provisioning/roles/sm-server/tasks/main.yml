@@ -1,11 +1,5 @@
 ---
 
-#- name: upgrade all packages
-#  yum:
-#    name: '*'
-#    state: latest
-#  become: yes
-
 - name: install Python Module Manager
   yum:
     name: python2-pip

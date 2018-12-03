@@ -1,11 +1,5 @@
 ---
 
-- name: upgrade all packages
-  yum:
-    name: '*'
-    state: latest
-  become: yes
-
 - name: install Postgres DB for Service Manger
   yum:
     name:
@@ -21,6 +15,26 @@
 
 - name: initialize postgres
   command: postgresql-setup initdb
+  become: true
+  become_user: "{{postgres_user}}"
+
+- name: change connection rule in config
+  lineinfile:
+    path: /var/lib/pgsql/data/pg_hba.conf
+    #regexp: '^# \"local\" is for Unix domain socket connections only'
+    state: present
+    insertafter: '# \"local\" is for Unix domain socket connections only'
+    line: 'local   all             smuser                                  trust'
+  become: true
+  become_user: "{{postgres_user}}"
+
+- name: change 2nd connection rule in config
+  lineinfile:
+    path: /var/lib/pgsql/data/pg_hba.conf
+    #regexp: '^# IPv4 local connections:'
+    state: present
+    insertafter: '# IPv4 local connections:'
+    line: 'host    all             smuser          127.0.0.1/32            trust'
   become: true
   become_user: "{{postgres_user}}"
 
