@@ -1,5 +1,11 @@
 ---
 
+- name: upgrade all packages
+  yum:
+    name: '*'
+    state: latest
+  become: yes
+
 - name: install Postgres DB for Service Manger
   yum:
     name:
@@ -7,6 +13,8 @@
        - postgresql-server
        - postgresql-contrib
        - python-psycopg2
+       - openldap.i686
+       - krb5-libs.i686
     state: present
   tags: install
   become: yes
