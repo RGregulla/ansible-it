@@ -22,5 +22,9 @@
   tags: prepare
   become: yes
 
+- name: Make Java available for system
+  command: 'alternatives --install "/usr/bin/java" "java" "{{java.installation.install_path}}/{{java.installation.java_dir}}/bin/java" 2000'
+  become: yes
+
 - name: Clean up java installation files
   file: state=absent path="{{ java.source.download_folder }}/{{ java.source.java_archive }}"

@@ -101,3 +101,40 @@
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
   tags: patch
+
+  # [vagrant@localhost Server]$ ./configure -consolemode
+  # WARNING: This program is meant for out-of-box system configuration.
+  # It will overwrite your current settings in sm.ini.
+  # Please backup your sm.ini file.
+  # Enter httpPort (Current value - 13080 ):
+  # Choose Database Type:
+  # (0) Oracle 12c
+  # (1) PostgreSQL (Current value - 1 ):
+  # Enter Database name (Current value - host=localhost port=5432 dbname=smdb ):
+  # Enter SQL user (Current value -  ):smuser
+  # Enter SQL password (Current value -  ):smpassw0rd
+  # Enter Postgres Schema (Current value - sm ):sm
+  # Case Insensitive?(Y or N) (Current value - Y ):N
+  # Updating new configuration to sm.ini...
+  # Validating SQL connectivity.... Please wait....
+
+- name: configure itsm
+  expect:
+    command: "{{ itsm_sm.installation.install_server_dir }}/configure -consolemode"
+    chdir: "{{ itsm_sm.installation.install_server_dir }}"
+    responses:
+      'Enter httpPort' : "{{ itsm_sm.installation.server_port }}"
+      'Choose Database Type' : '1'
+      'Enter Database name' : 'host={{ itsm_sm.installation.server_dbhost }} port=5432 dbname={{ dbname }}'
+      'Enter SQL user' : '{{ dbuser }}'
+      'Enter SQL password' : '{{ dbpassword }}'
+      'Enter Postgres Schema': '{{ dbschema }}'
+      'Case Insensitive?': 'N'
+      'Do you wish to load Service Manager application and demo data to the Database': 'Y'
+  # there are some ignorable errors in the output
+  ignore_errors: yes
+  tags: patch
+
+- name: create temporary license
+  command: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+  tags: license

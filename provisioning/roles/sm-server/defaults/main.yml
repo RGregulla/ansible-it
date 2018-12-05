@@ -14,6 +14,8 @@ itsm_sm:
     bin: setupLinuxX64-9.60.bin
     install_dir: /opt/MicroFocus
     install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+    server_port: 13080
+    server_dbhost: localhost
   patch:
     patch_path: /opt/itsm/patches
     patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
