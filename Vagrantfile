@@ -13,7 +13,12 @@ Vagrant.configure("2") do |config|
   # The most common configuration options are documented and commented below.
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
-
+  if Vagrant.has_plugin?("vagrant-proxyconf")
+      # if CNTLM is configured use this
+      config.proxy.http     = "http://localhost:3128/"
+      config.proxy.https    = "http://localhost:3128/"
+      config.proxy.no_proxy = "localhost,127.0.0.1,.db.de"
+  end
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://vagrantcloud.com/search.
   #config.vm.box = "stakahashi/amazonlinux2"
