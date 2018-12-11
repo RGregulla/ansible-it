@@ -14,6 +14,9 @@ Vagrant.configure("2") do |config|
   # For a complete reference, please see the online documentation at
   # https://docs.vagrantup.com.
   if Vagrant.has_plugin?("vagrant-proxyconf")
+      # proxyconf is enabled if plugin is installed
+      # Install the plugin with: 'vagrant plugin install vagrant-proxyconf'
+      # See http://tmatilai.github.io/vagrant-proxyconf/
       # if CNTLM is configured use this
       config.proxy.http     = "http://localhost:3128/"
       config.proxy.https    = "http://localhost:3128/"
