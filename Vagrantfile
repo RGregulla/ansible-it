@@ -19,6 +19,8 @@ Vagrant.configure("2") do |config|
   #config.vm.box = "stakahashi/amazonlinux2"
   config.vm.box = "aibax/amazonlinux2"
   config.vm.box_version = "2.0.20180622"
+  #config.vm.box = "centos/7"
+  #config.vm.box_version = "1811.01"
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
   # `vagrant box outdated`. This is not recommended.
@@ -75,8 +77,9 @@ Vagrant.configure("2") do |config|
   #   apt-get install -y apache2
   # SHELL
   # Provisioning from ansible playbooks
-  config.vm.provision "ansible" do |ansible|
+  config.vm.provision "ansible_local" do |ansible|
     ansible.playbook = "provisioning/playbook.yml"
+    ansible.install_mode = "pip"
     ansible.verbose = "-vvv"
   end
 end

@@ -91,9 +91,14 @@
   tags: patch
   become: yes
 
+- name: create logdir
+  file: path="{{ itsm_sm.installation.install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
+  tags: patch
+
 - name: install itsm patch
   expect:
     command: "{{ itsm_sm.patch.patch_path }}/{{ itsm_sm.patch.patch_cmd }}"
+    chdir: "{{ itsm_sm.installation.install_server_dir }}"
     responses:
       'SM Server installation directory' : "{{ itsm_sm.installation.install_server_dir }}"
       'SM Server backup directory' : "{{ itsm_sm.patch.patch_backup }}"
@@ -136,5 +141,7 @@
   tags: patch
 
 - name: create temporary license
-  command: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+  args:
+    chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
   tags: license
