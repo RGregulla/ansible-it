@@ -5,5 +5,37 @@
     name:
        - tomcat
     state: present
-  tags: install
+  tags: tomcat
   become: yes
+
+- name: Copy webtier Archive and Unarchive it
+  unarchive:
+    src: "{{ itsm_web.webtier_archive }}"
+    dest: "{{ itsm_web.webtier_path }}"
+    mode: "0755"
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+  tags: webapp
+  become: yes
+
+#keytool -genkey -noprompt \
+# -alias alias1 \
+# -dname "CN=mqttserver.ibm.com, OU=ID, O=IBM, L=Hursley, S=Hants, C=GB" \
+# -keystore keystore \
+# -storepass password \
+# -keypass password
+
+- name: generate ssl truststore
+  command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat.keystore }}" -storepass changeit -keypass changeit
+  become: yes
+
+- name: copy server.xml with ssl activated
+  copy:
+    src: server.xml
+    dest: "{{ tomcat.config_path }}"
+    #owner: "{{ tomcat_user }}"
+    owner: root
+    group: "{{ tomcat_group }}"
+    mode: 0755
+  become: yes
+  notify: restart tomcat

@@ -27,3 +27,4 @@
     - sm-postgres
     - jdk
     - sm-server
+    - sm-webtier

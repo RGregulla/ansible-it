@@ -107,6 +107,13 @@
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
   tags: patch
 
+- name: create temporary license
+  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+  args:
+    executable: /bin/bash
+    chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+  tags: license
+
   # [vagrant@localhost Server]$ ./configure -consolemode
   # WARNING: This program is meant for out-of-box system configuration.
   # It will overwrite your current settings in sm.ini.
@@ -138,10 +145,18 @@
       'Do you wish to load Service Manager application and demo data to the Database': 'Y'
   # there are some ignorable errors in the output
   ignore_errors: yes
-  tags: patch
+  tags: configure
 
-- name: create temporary license
-  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+- name: start sm
+  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/smstart"
   args:
+    executable: /bin/bash
     chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
-  tags: license
+  tags: start
+
+# - name: shutdown sm
+#   shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -shutdown"
+#   args:
+#     executable: /bin/bash
+#     chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+#   tags: license
