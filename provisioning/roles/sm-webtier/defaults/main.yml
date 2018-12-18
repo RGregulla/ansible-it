@@ -1,0 +1,11 @@
+---
+
+tomcat_user: tomcat
+tomcat_group: tomcat
+
+itsm_web:
+  webtier_archive: webtier-9.61.zip
+  webtier_path: /usr/share/tomcat/webapps
+tomcat:
+  config_path: /etc/tomcat
+  keystore: /usr/share/tomcat/.keystore
