@@ -19,6 +19,7 @@
     src: "{{ java.source.download_folder }}/{{ java.source.java_archive }}"
     dest: "{{java.installation.install_path}}"
     remote_src: yes
+    owner: "{{ install_user }}"
   tags: prepare
   become: yes
 
