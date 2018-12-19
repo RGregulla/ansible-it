@@ -1,0 +1,6 @@
+---
+
+- name: delete install packages
+  file:
+    state: absent
+    path: /opt/itsm 
