@@ -3,7 +3,9 @@
 Installiert in ein Virtualbox Image den ServiceManager. Benötigt wird lokal ein installiertes Vagrant sowie Virtualbox.
 Unter Windows bzw. einer Proxy-abhängigen Umgebung wird ein konfiguriertes CNTLM automatisch angewendet sobald das notwendige Vagrant Plugin installiert ist.
 Installiert wird dieses per
+```
     vagrant plugin install vagrant-proxyconf
+```
 
 Ein lokal instaliertes ansible ist nicht notwendig da das ansible playbook auf der erstellten Maschine ausgeführt wird.
 
