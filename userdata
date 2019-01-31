@@ -4,4 +4,4 @@ yum update
 yum install -y libffi-dev g++ libssl-dev python-pip python-dev git
 pip install -U awscli ansible setuptools
 
-ansible-pull -d /tmp/playbooks -i /tmp/playbooks/provisioning/inventory/awsinventory -U https://github.com/RGregulla/ansible-it provisioning/smserver.yml 
+ansible-pull -d /tmp/playbooks -i /tmp/playbooks/provisioning/inventory/awsinventory -U https://github.com/RGregulla/ansible-it provisioning/smserver.yml -vvv
