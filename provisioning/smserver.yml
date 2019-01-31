@@ -1,6 +1,6 @@
 ---
 # file: webservers.yml
-- hosts: sm-server
+- hosts: all
   vars:
     install_user: vagrant
     dbname: smdb
