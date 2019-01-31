@@ -140,7 +140,7 @@
 
 - name: change owner server_dir to install_user
   file:
-    path: "{{ install_server_dir }}"
+    path: "{{ installation.install_server_dir }}"
     owner: "{{ install_user }}"
     recurse: yes
   tags: prepare
