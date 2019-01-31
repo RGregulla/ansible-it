@@ -2,7 +2,7 @@
 # file: webservers.yml
 - hosts: all
   vars:
-    install_user: vagrant
+    install_user: ec2-user
     dbname: smdb
     dbschema: sm
     dbuser: smuser
