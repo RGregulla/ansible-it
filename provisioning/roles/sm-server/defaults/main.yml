@@ -2,26 +2,27 @@
 
 install_user: vagrant
 
-itsm_sm:
-  version: servicemanager-9.6.0
-  source:
-    remote: yes
-    sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
-  installation:
-    filepath: /opt/itsm
-    patchpath: /opt/itsm/patches
-    bin_path: /opt/itsm/Installation/Server
-    bin: setupLinuxX64-9.60.bin
-    install_dir: /opt/MicroFocus
-    install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
-    server_port: 13080
-    server_dbhost: localhost
-  patch:
-    patch_path: /opt/itsm/patches
-    patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
-    patch_patch: sm9.61.0019_Linux-x86.tar
-    patch_cmd: PatchSetup.sh
-    patch_backup: /opt/itsm/backup
+version: servicemanager-9.6.0
+s3:
+  bucket: gregulla.itsm.stuff
+  bin_path: itsm
+source:
+  remote: yes
+  sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
+installation:
+  filepath: /opt/itsm
+  bin_path: /opt/itsm/Installation/Server
+  bin: setupLinuxX64-9.60.bin
+  install_dir: /opt/MicroFocus
+  install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+  server_port: 13080
+  server_dbhost: localhost
+patch:
+  patch_path: /opt/itsm/patches
+  patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
+  patch_patch: sm9.61.0019_Linux-x86.tar
+  patch_cmd: PatchSetup.sh
+  patch_backup: /opt/itsm/backup
 
 datasource:
   name: postgresql

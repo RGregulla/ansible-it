@@ -16,26 +16,48 @@
   # There is an error at installation of the module which can ignored
   #ignore_errors: yes
 
-- name: create sm installdir
-  file: path={{ itsm_sm.installation.filepath }} state=directory mode=0755 owner={{ install_user }}
+- name: install python module botocore
+  pip:
+    name: botocore
+    state: latest
   tags: prepare
   become: yes
 
-- name: Copy ITSM Archive and Unarchive it
-  unarchive: src={{ itsm_sm.source.sm_bin }} dest={{ itsm_sm.installation.filepath }} mode=0755 owner={{ install_user }}
+- name: install python module boto
+  pip:
+    name: boto3
+    state: latest
+  tags: prepare
+  become: yes
+
+- name: create sm installdir
+  file: path={{ installation.filepath }} state=directory mode=0755 owner={{ install_user }}
+  tags: prepare
+  become: yes
+
+- name: copy ITSM Archive from S3
+  aws_s3:
+    bucket: gregulla.itsm.stuff
+    object: "{{ s3.bin_path }}/{{ source.sm_bin }}"
+    # version: 48c9ee5131af7a716edc22df9772aa6f
+    dest: "{{ installation.filepath }}/{{ source.sm_bin }}"
+    mode: get
+
+- name: Unarchive ITSM Archive
+  unarchive: src={{ installation.filepath }}/{{ source.sm_bin }} dest={{ installation.filepath }} mode=0755 owner={{ install_user }}
   tags: prepare
   become: yes
 
 - name: chmod Installation Files
   file:
-    path: "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }}"
+    path: "{{ installation.bin_path }}/{{ installation.bin }}"
     mode: 0777
   tags: prepare
   become: yes
 
 - name: create target itsm directory
   file:
-    path: "{{ itsm_sm.installation.install_dir }}"
+    path: "{{ installation.install_dir }}"
     state: directory
     owner: "{{ install_user }}"
     mode: 0755
@@ -44,11 +66,11 @@
 
 - name: install itsm
   expect:
-    command: "{{ itsm_sm.installation.bin_path }}/{{ itsm_sm.installation.bin }} -i console"
+    command: "{{ installation.bin_path }}/{{ installation.bin }} -i console"
     responses:
       'PRESS \<ENTER\> TO CONTINUE:' : ''
       'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
-      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ itsm_sm.installation.install_server_dir }}"
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ installation.install_server_dir }}"
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
     timeout: 90
@@ -57,62 +79,87 @@
 - name: add sm.ini
   copy:
     src: sm.ini
-    dest: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+    dest: "{{ installation.install_server_dir }}/RUN"
     owner: "{{ install_user }}"
     mode: 0755
 
+# work only on redhat images
+#- name: install openjdk per internal script
+#  command: "{{ installation.install_server_dir }}/installOpenJDK.sh -i4sm"
+#  tags: prepare
+#  become: yes
+
 - name: link jre in sm installation
-  command: "{{ itsm_sm.installation.install_server_dir }}/RUN/setupLinks.sh jre"
+  command: "{{ installation.install_server_dir }}/RUN/setupLinks.sh jre"
   environment:
-    JAVA_HOME: "{{ java.installation.install_path }}/{{ java.installation.java_dir }}"
+    JAVA_HOME: "{{ java.home }}"
   tags: install
 
 - name: create patches installdir
-  file: path={{ itsm_sm.patch.patch_path }} state=directory mode=0755 owner={{ install_user }}
+  file: path={{ patch.patch_path }} state=directory mode=0755 owner={{ install_user }}
   tags: patch
   become: yes
 
-- name: copy itsm patch and unarchive it
-  unarchive: src={{ itsm_sm.patch.patch_file }} dest={{ itsm_sm.patch.patch_path }} mode=0755 owner={{ install_user }}
-  tags: patch
-  become: yes
+#- name: copy itsm patch and unarchive it
+#  unarchive: src={{ patch.patch_file }} dest={{ patch.patch_path }} mode=0755 owner={{ install_user }}
+#  tags: patch
+#  become: yes
+
+- name: copy ITSM Patch from S3
+  aws_s3:
+    bucket: gregulla.itsm.stuff
+    object: "{{ s3.bin_path }}/{{ patch.patch_file }}"
+    # version: 48c9ee5131af7a716edc22df9772aa6f
+    dest: "{{ patch.patch_path }}/{{ patch.patch_file }}"
+    mode: get
 
 - name: unarchive patch
   unarchive:
-    src: "{{ itsm_sm.patch.patch_path }}/{{ itsm_sm.patch.patch_patch }}"
-    dest: "{{ itsm_sm.patch.patch_path }}"
+    src: "{{ patch.patch_path }}/{{ patch.patch_file }}"
+    dest: "{{ patch.patch_path }}"
     mode: 0755
     owner: "{{ install_user }}"
     remote_src: yes
   tags: patch
   become: yes
 
+- name: unarchive patchfile
+  unarchive:
+    src: "{{ patch.patch_path }}/{{ patch.patch_patch }}"
+    dest: "{{ patch.patch_path }}"
+    mode: 0755
+    owner: "{{ install_user }}"
+    remote_src: yes
+  tags: patch
+  become: yes
+
+
 - name: create patches backupdir
-  file: path={{ itsm_sm.patch.patch_backup }} state=directory mode=0755 owner={{ install_user }}
+  file: path={{ patch.patch_backup }} state=directory mode=0755 owner={{ install_user }}
   tags: patch
   become: yes
 
 - name: create logdir
-  file: path="{{ itsm_sm.installation.install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
+  file: path="{{ installation.install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
   tags: patch
 
 - name: install itsm patch
   expect:
-    command: "{{ itsm_sm.patch.patch_path }}/{{ itsm_sm.patch.patch_cmd }}"
-    chdir: "{{ itsm_sm.installation.install_server_dir }}"
+    command: "{{ patch.patch_path }}/{{ patch.patch_cmd }}"
+    chdir: "{{ installation.install_server_dir }}"
     responses:
-      'SM Server installation directory' : "{{ itsm_sm.installation.install_server_dir }}"
-      'SM Server backup directory' : "{{ itsm_sm.patch.patch_backup }}"
-      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ itsm_sm.installation.install_server_dir }}"
+      'SM Server installation directory' : "{{ installation.install_server_dir }}"
+      'SM Server backup directory' : "{{ patch.patch_backup }}"
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ installation.install_server_dir }}"
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
   tags: patch
 
 - name: create temporary license
-  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -instanton"
+  shell: "{{ installation.install_server_dir }}/RUN/sm -instanton"
   args:
     executable: /bin/bash
-    chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+    chdir: "{{ installation.install_server_dir }}/RUN"
   tags: license
 
   # [vagrant@localhost Server]$ ./configure -consolemode
@@ -133,12 +180,12 @@
 
 - name: configure itsm
   expect:
-    command: "{{ itsm_sm.installation.install_server_dir }}/configure -consolemode"
-    chdir: "{{ itsm_sm.installation.install_server_dir }}"
+    command: "{{ installation.install_server_dir }}/configure -consolemode"
+    chdir: "{{ installation.install_server_dir }}"
     responses:
-      'Enter httpPort' : "{{ itsm_sm.installation.server_port }}"
+      'Enter httpPort' : "{{ installation.server_port }}"
       'Choose Database Type' : '1'
-      'Enter Database name' : 'host={{ itsm_sm.installation.server_dbhost }} port=5432 dbname={{ dbname }}'
+      'Enter Database name' : 'host={{ installation.server_dbhost }} port=5432 dbname={{ dbname }}'
       'Enter SQL user' : '{{ dbuser }}'
       'Enter SQL password' : '{{ dbpassword }}'
       'Enter Postgres Schema': '{{ dbschema }}'
@@ -149,15 +196,15 @@
   tags: configure
 
 - name: start sm
-  shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/smstart"
+  shell: "{{ installation.install_server_dir }}/RUN/smstart"
   args:
     executable: /bin/bash
-    chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+    chdir: "{{ installation.install_server_dir }}/RUN"
   tags: start
 
 # - name: shutdown sm
-#   shell: "{{ itsm_sm.installation.install_server_dir }}/RUN/sm -shutdown"
+#   shell: "{{ installation.install_server_dir }}/RUN/sm -shutdown"
 #   args:
 #     executable: /bin/bash
-#     chdir: "{{ itsm_sm.installation.install_server_dir }}/RUN"
+#     chdir: "{{ installation.install_server_dir }}/RUN"
 #   tags: license

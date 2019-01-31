@@ -1,0 +1,7 @@
+#!/bin/bash
+
+yum update
+yum install -y libffi-dev g++ libssl-dev python-pip python-dev git
+pip install -U awscli ansible setuptools
+
+ansible-pull -d /tmp/playbooks -i 'localhost,' -U https://github.com/RGregulla/ansible-it provisioning/playbook.yml 

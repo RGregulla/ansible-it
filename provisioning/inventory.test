@@ -1,0 +1,7 @@
+host1
+[sm-sever]
+host3
+host4
+[sm-webtier]
+host5
+host6

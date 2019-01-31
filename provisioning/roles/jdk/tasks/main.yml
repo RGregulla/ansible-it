@@ -11,21 +11,15 @@
   tags: prepare
   become: yes
 
-- name: download java
-  command: "wget --continue --no-check-certificate -O {{ java.source.download_folder }}/{{ java.source.java_archive }} --header 'Cookie: oraclelicense=a' {{ java.source.download_url }} creates={{ java.source.java_archive }}"
-
-- name: unzip java
-  unarchive:
-    src: "{{ java.source.download_folder }}/{{ java.source.java_archive }}"
-    dest: "{{java.installation.install_path}}"
-    remote_src: yes
-    owner: "{{ install_user }}"
+- name: install openjdk 32bit
+  yum:
+    name: "{{ java.source.download_url }}"
   tags: prepare
   become: yes
 
-- name: Make Java available for system
-  command: 'alternatives --install "/usr/bin/java" "java" "{{java.installation.install_path}}/{{java.installation.java_dir}}/bin/java" 2000'
-  become: yes
+#- name: Make Java available for system
+#  command: 'alternatives --install "/usr/bin/java" "java" "{{java.installation.install_path}}/{{java.installation.java_dir}}/bin/java" 2000'
+#  become: yes
 
-- name: Clean up java installation files
-  file: state=absent path="{{ java.source.download_folder }}/{{ java.source.java_archive }}"
+#- name: Clean up java installation files
+#  file: state=absent path="{{ java.source.download_folder }}/{{ java.source.java_archive }}"
