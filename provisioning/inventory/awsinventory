@@ -1,2 +1,2 @@
 [sm-server]
-localhost
+localhost   ansible_connection=local
