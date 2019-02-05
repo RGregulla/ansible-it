@@ -3,11 +3,14 @@
 - hosts: all
   vars:
     install_user: ec2-user
-    dbname: smdb
-    dbschema: sm
-    dbuser: smuser
-    dbpassword: smpassw0rd
-    postgres_user: postgres
+    db:
+      dbname: smdb
+      dbschema: sm
+      dbuser: smuser
+      dbpassword: smpassw0rd
+      postgres_user: postgres
+      server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+      server_dbport: 5432
     java:
       source:
         #download_url: https://download.oracle.com/otn-pub/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/jre-8u192-linux-i586.tar.gz
@@ -32,6 +35,7 @@
   roles:
     - common
 #    - sm-postgres
+    - prepare-postgres
     - jdk
     - sm-server
     - sm-webtier

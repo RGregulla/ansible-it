@@ -1,0 +1,31 @@
+---
+
+- name: ensure database is created
+  postgresql_db: name="{{ db.dbname }}"
+    login_host: "{{ db.server_dbhost }}"
+  become: true
+  become_user: "{{ db.postgres_user }}"
+
+- name: ensure user has access to database
+  postgresql_user: db="{{ db.dbname }}" name="{{ db.dbuser }}" password="{{ db.dbpassword }}" priv=ALL
+  become: true
+  become_user: "{{ db.postgres_user }}"
+
+- name: ensure user does not have unnecessary privilege
+  postgresql_user: name="{{ db.dbuser }}" role_attr_flags=NOSUPERUSER,NOCREATEDB
+  become: true
+  become_user: "{{ db.postgres_user }}"
+
+- name: ensure no other user can access the database
+  postgresql_privs: db="{{ db.dbname }}" role=PUBLIC type=database priv=ALL state=absent
+  become: true
+  become_user: "{{ db.postgres_user }}"
+
+- name: create sm schema
+  postgresql_schema:
+    database: "{{ db.dbname }}"
+    name: "{{ db.dbschema }}"
+    owner: "{{ db.dbuser }}"
+  become: true
+  become_user: "{{ db.postgres_user }}"
+  #notify: restart postgresql

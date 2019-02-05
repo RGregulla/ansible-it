@@ -192,10 +192,10 @@
     responses:
       'Enter httpPort' : "{{ installation.server_port }}"
       'Choose Database Type' : '1'
-      'Enter Database name' : 'host={{ installation.server_dbhost }} port={{ installation.server_dbport }} dbname={{ dbname }}'
-      'Enter SQL user' : '{{ dbuser }}'
-      'Enter SQL password' : '{{ dbpassword }}'
-      'Enter Postgres Schema': '{{ dbschema }}'
+      'Enter Database name' : 'host={{ db.server_dbhost }} port={{ installation.server_dbport }} dbname={{ db.dbname }}'
+      'Enter SQL user' : '{{ db.dbuser }}'
+      'Enter SQL password' : '{{ db.dbpassword }}'
+      'Enter Postgres Schema': '{{ db.dbschema }}'
       'Case Insensitive?': 'N'
       'Do you wish to load Service Manager application and demo data to the Database': 'Y'
   # there are some ignorable errors in the output

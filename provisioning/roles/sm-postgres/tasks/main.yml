@@ -43,32 +43,3 @@
            enabled=yes
            state=started
   become: true
-
-- name: ensure database is created
-  postgresql_db: name="{{ dbname }}"
-  become: true
-  become_user: "{{ postgres_user }}"
-
-- name: ensure user has access to database
-  postgresql_user: db="{{ dbname }}" name="{{ dbuser }}" password="{{ dbpassword }}" priv=ALL
-  become: true
-  become_user: "{{ postgres_user }}"
-
-- name: ensure user does not have unnecessary privilege
-  postgresql_user: name="{{ dbuser }}" role_attr_flags=NOSUPERUSER,NOCREATEDB
-  become: true
-  become_user: "{{ postgres_user }}"
-
-- name: ensure no other user can access the database
-  postgresql_privs: db="{{ dbname }}" role=PUBLIC type=database priv=ALL state=absent
-  become: true
-  become_user: "{{ postgres_user }}"
-
-- name: create sm schema
-  postgresql_schema:
-    database: "{{ dbname }}"
-    name: "{{ dbschema }}"
-    owner: "{{ dbuser }}"
-  become: true
-  become_user: "{{ postgres_user }}"
-  #notify: restart postgresql

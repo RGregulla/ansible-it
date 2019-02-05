@@ -23,6 +23,14 @@ patch:
   patch_patch: sm9.61.0019_Linux-x86.tar
   patch_cmd: PatchSetup.sh
   patch_backup: /opt/itsm/backup
+db:
+  dbname: smdb
+  dbschema: sm
+  dbuser: smuser
+  dbpassword: smpassw0rd
+  postgres_user: postgres
+  server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+  server_dbport: 5432
 
 datasource:
   name: postgresql
