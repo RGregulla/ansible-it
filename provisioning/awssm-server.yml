@@ -27,7 +27,7 @@
         server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
         server_dbport: 5432
 
-      home: /usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386
+      home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
 
   roles:
     - common
