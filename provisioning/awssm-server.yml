@@ -23,7 +23,7 @@
       installation:
         install_path: /opt/java
         java_dir: jre1.8.0_192
-      home: /usr/lib/jvm/jre
+      home: /usr/lib/jvm/jre-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386
 
   roles:
     - common
