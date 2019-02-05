@@ -1,8 +1,24 @@
 #!/bin/bash
 
 yum update
-yum install -y libffi-dev g++ libssl-dev python-pip python-dev git
-pip install -U awscli ansible setuptools
+
+# RedHat only
+if [ -f "/etc/redhat-release" ]
+then
+  # Add Hostname to /etc/hosts
+  echo 127.0.0.1 `hostname` >>/etc/hosts
+
+  yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  yum update
+  yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip
+  pip install -U awscli ansible setuptools
+else
+  # Add Hostname to /etc/hosts
+  echo 127.0.0.1 `hostname` >>/etc/hosts
+
+  yum install -y libffi-dev g++ libssl-dev python-pip python-dev git
+  pip install -U awscli ansible setuptools
+fi
 
 #ansible-pull -d /tmp/playbooks -i /tmp/playbooks/provisioning/inventory/awsinventory -U https://github.com/RGregulla/ansible-it provisioning/smserver.yml -vvv
-ansible-pull -d /tmp/playbooks -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/awssm-server.yml  -vvv
+runuser ec2-user -c 'ansible-pull -d /tmp/playbooks -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/awssm-server.yml  -vvv'

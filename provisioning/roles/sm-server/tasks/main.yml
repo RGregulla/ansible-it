@@ -138,13 +138,13 @@
   tags: patch
   become: yes
 
-- name: change owner server_dir to install_user
-  file:
-    path: "{{ installation.install_server_dir }}"
-    owner: "{{ install_user }}"
-    recurse: yes
-  tags: prepare
-  become: yes
+# - name: change owner server_dir to install_user
+#   file:
+#     path: "{{ installation.install_server_dir }}"
+#     owner: "{{ install_user }}"
+#     recurse: yes
+#   tags: prepare
+#   become: yes
 
 - name: create logdir
   file: path="{{ installation.install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
