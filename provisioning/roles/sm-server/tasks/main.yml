@@ -192,7 +192,7 @@
     responses:
       'Enter httpPort' : "{{ installation.server_port }}"
       'Choose Database Type' : '1'
-      'Enter Database name' : 'host={{ installation.server_dbhost }} port=5432 dbname={{ dbname }}'
+      'Enter Database name' : 'host={{ installation.server_dbhost }} port={{ installation.server_dbport }} dbname={{ dbname }}'
       'Enter SQL user' : '{{ dbuser }}'
       'Enter SQL password' : '{{ dbpassword }}'
       'Enter Postgres Schema': '{{ dbschema }}'
