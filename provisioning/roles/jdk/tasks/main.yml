@@ -19,8 +19,9 @@
 
 - name: change owner java
   file: "{{ java.home }}"
-    chown: "{{ install_user }}"
+    owner: "{{ install_user }}"
     recurse: yes
+    mode: 755
   tags: java_install
   become: yes
 
