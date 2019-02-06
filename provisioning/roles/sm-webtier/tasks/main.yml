@@ -8,15 +8,28 @@
   tags: tomcat
   become: yes
 
-- name: Copy webtier Archive and Unarchive it
-  unarchive:
-    src: "{{ itsm_web.webtier_archive }}"
-    dest: "{{ itsm_web.webtier_path }}"
-    mode: "0755"
-    owner: "{{ tomcat_user }}"
-    group: "{{ tomcat_group }}"
-  tags: webapp
+- name: copy webtier Archive from S3
+  aws_s3:
+    bucket: "{{ s3.bucket }}"
+    object: "{{ s3.webtier_path }}/{{ s3.webtier_archive }}"
+    # version: 48c9ee5131af7a716edc22df9772aa6f
+    dest: "{{ itsm_web.webtier_target }}/{{ s3.webtier_archive }}"
+    mode: get
+
+- name: Unarchive webtier Archive
+  unarchive: src={{ itsm_web.webtier_target }}/{{ s3.webtier_archive }} dest={{ itsm_web.webtier_path }} mode=0755 owner={{ tomcat_user}} group={{ tomcat_group }}
+  tags: prepare
   become: yes
+
+# - name: Copy webtier Archive and Unarchive it
+#   unarchive:
+#     src: "{{ itsm_web.webtier_archive }}"
+#     dest: "{{ itsm_web.webtier_path }}"
+#     mode: "0755"
+#     owner: "{{ tomcat_user }}"
+#     group: "{{ tomcat_group }}"
+#   tags: webapp
+#   become: yes
 
 #keytool -genkey -noprompt \
 # -alias alias1 \

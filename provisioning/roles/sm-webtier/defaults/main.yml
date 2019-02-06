@@ -4,8 +4,12 @@ tomcat_user: tomcat
 tomcat_group: tomcat
 
 itsm_web:
-  webtier_archive: webtier-9.61.zip
+  webtier_target: /tmp
   webtier_path: /usr/share/tomcat/webapps
 tomcat:
   config_path: /etc/tomcat
   keystore: /usr/share/tomcat/.keystore
+s3:
+  bucket: gregulla.itsm.stuff
+  webtier_path: itsm
+  webtier_archive: webtier-9.61.zip
