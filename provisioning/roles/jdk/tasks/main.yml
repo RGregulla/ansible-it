@@ -2,19 +2,26 @@
 
 - name: create java installdir
   file: path={{ java.installation.install_path }} state=directory
-  tags: prepare
+  tags: java_install
   become: yes
 
 - name: install glibc for java
   yum:
     name: glibc.i686
-  tags: prepare
+  tags: java_install
   become: yes
 
 - name: install openjdk 32bit
   yum:
     name: "{{ java.source.download_url }}"
-  tags: prepare
+  tags: java_install
+  become: yes
+
+- name: change owner java
+  file: "{{ java.home }}"
+    chown: "{{ install_user }}"
+    recurse: yes
+  tags: java_install
   become: yes
 
 #- name: Make Java available for system
