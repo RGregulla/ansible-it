@@ -22,7 +22,6 @@
     path: "{{ java.home }}"
     owner: "{{ install_user }}"
     recurse: yes
-    mode: 755
   tags: java_install
   become: yes
 
