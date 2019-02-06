@@ -18,7 +18,8 @@
   become: yes
 
 - name: change owner java
-  file: "{{ java.home }}"
+  file:
+    path: "{{ java.home }}"
     owner: "{{ install_user }}"
     recurse: yes
     mode: 755
