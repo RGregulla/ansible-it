@@ -19,6 +19,7 @@
 
 - name: change owner java
   file:
+    state: directory
     path: "{{ java.home }}"
     owner: "{{ install_user }}"
     recurse: yes
