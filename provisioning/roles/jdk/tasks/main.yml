@@ -17,14 +17,14 @@
   tags: java_install
   become: yes
 
-- name: change owner java
-  file:
-    state: directory
-    path: "{{ java.home }}"
-    owner: "{{ install_user }}"
-    recurse: yes
-  tags: java_install
-  become: yes
+# - name: change owner java
+#   file:
+#     state: directory
+#     path: "{{ java.home }}"
+#     owner: "{{ install_user }}"
+#     recurse: yes
+#   tags: java_install
+#   become: yes
 
 #- name: Make Java available for system
 #  command: 'alternatives --install "/usr/bin/java" "java" "{{java.installation.install_path}}/{{java.installation.java_dir}}/bin/java" 2000'
