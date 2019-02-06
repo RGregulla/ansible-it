@@ -37,4 +37,4 @@
 #    - prepare-postgres
     - jdk
     - sm-server
-    - sm-webtier
+#    - sm-webtier
