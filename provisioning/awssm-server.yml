@@ -35,7 +35,7 @@
   roles:
     - common
 #    - sm-postgres
-    - prepare-postgres
+#    - prepare-postgres
     - jdk
     - sm-server
     - sm-webtier
