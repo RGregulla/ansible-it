@@ -195,7 +195,8 @@
       'Enter Database name' : 'host={{ db.server_dbhost }} port={{ installation.server_dbport }} dbname={{ db.dbname }}'
       'Enter SQL user' : '{{ db.dbuser }}'
       'Enter SQL password' : '{{ db.dbpassword }}'
-      'Enter Postgres Schema': '{{ db.dbschema }}'
+      #'Enter Postgres Schema': '{{ db.dbschema }}'
+      'Enter Postgres Schema': ''
       'Case Insensitive?': 'N'
       'Do you wish to load Service Manager application and demo data to the Database': 'Y'
   # there are some ignorable errors in the output

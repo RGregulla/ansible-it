@@ -9,7 +9,7 @@
       dbuser: smuser
       dbpassword: smpassw0rd
       postgres_user: postgres
-      server_dbhost: mysmdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+      server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
       server_dbport: 5432
     java:
       source:
@@ -27,7 +27,7 @@
         install_path: /opt/java
         java_dir: jre1.8.0_192
         server_port: 13080
-        server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+        server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
         server_dbport: 5432
 
       home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
