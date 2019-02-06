@@ -10,7 +10,7 @@ then
 
   yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   yum update
-  yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip
+  yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip postgresql.i686
   pip install -U awscli ansible setuptools
 else
   # Add Hostname to /etc/hosts
