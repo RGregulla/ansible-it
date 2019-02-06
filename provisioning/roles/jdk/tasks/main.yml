@@ -1,9 +1,9 @@
 ---
 
-- name: create java installdir
-  file: path={{ java.installation.install_path }} state=directory
-  tags: java_install
-  become: yes
+# - name: create java installdir
+#   file: path={{ java.installation.install_path }} state=directory
+#   tags: java_install
+#   become: yes
 
 - name: install glibc for java
   yum:
