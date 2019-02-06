@@ -28,8 +28,6 @@
         install_path: /opt/java
         java_dir: jre1.8.0_192
         server_port: 13080
-        server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
-        server_dbport: 5432
 
   roles:
     - common
