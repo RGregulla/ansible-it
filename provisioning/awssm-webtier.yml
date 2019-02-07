@@ -10,6 +10,8 @@
     sm:
       host:
       port:
+    webapp:
+      sm_serverHost: 3.122.102.59
 
   roles:
     - common
