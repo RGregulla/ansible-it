@@ -13,3 +13,6 @@ s3:
   bucket: gregulla.itsm.stuff
   webtier_path: itsm
   webtier_archive: webtier-9.61.zip
+webapp:
+  webxml_path:
+  sm_serverHost: 

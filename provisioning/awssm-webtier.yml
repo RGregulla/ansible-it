@@ -13,6 +13,5 @@
 
   roles:
     - common
-    - jdk
+#    - jdk
     - sm-webtier
-    
