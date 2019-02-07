@@ -63,8 +63,8 @@
   become: yes
 
 - name: copy web.xml with target sm server
-  copy:
-    src: web.xml
+  template:
+    src: web.xml.j2
     dest: "{{ webapp.webxml_path }}"
     owner: "{{ tomcat_user }}"
     #owner: root
