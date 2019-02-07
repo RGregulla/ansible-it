@@ -3,31 +3,16 @@
 - hosts: all
   vars:
     install_user: ec2-user
-    dbname: smdb
-    dbschema: sm
-    dbuser: smuser
-    dbpassword: smpassw0rd
-    postgres_user: postgres
     java:
       source:
-        #download_url: https://download.oracle.com/otn-pub/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/jre-8u192-linux-i586.tar.gz
-        #download_url: https://rpmfind.net/linux/fedora-secondary/development/rawhide/Everything/i386/os/Packages/j/java-1.8.0-openjdk-1.8.0.191.b13-0.fc30.i686.rpm
-        download_url: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.181-7.b13.el7.i686.rpm
-        download_folder: /tmp
-        java_archive: jdk-8u192-linux-x64.tar.gz
-        #download_cmd: "wget --continue --no-check-certificate -O /tmp/{{ java.source.java_archive }} --header \"Cookie: oraclelicense=a\" {{ java.source.install_file }}"
-        #install_rpm: https://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jre-8u191-linux-i586.rpm
-        #install_wget_rpm: wget --continue --no-check-certificate -O jdk-8u191-linux-x64.rpm --header "Cookie: oraclelicense=a" https://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jre-8u191-linux-i586.rpm
-        #install_wget_tar: wget --continue --no-check-certificate -O jdk-8u191-linux-x64.tar.gz --header "Cookie: oraclelicense=a" https://download.oracle.com/otn-pub/java/jdk/8u191-b12/2787e4a523244c269598db4e85c51e0c/jre-8u191-linux-i586.tar.gz
-        #install_wget_tar: wget --continue --no-check-certificate -O jdk-8u192-linux-x64.tar.gz --header "Cookie: oraclelicense=a" https://download.oracle.com/otn-pub/java/jdk/8u192-b12/750e1c8617c5452694857ad95c3ee230/jre-8u192-linux-i586.tar.gz
-      installation:
-        install_path: /opt/java
-        java_dir: jre1.8.0_192
-        server_port: 13080
-        server_dbhost: localhost
+        download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
       home: /usr/lib/jvm/jre
+    sm:
+      host:
+      port:
 
   roles:
     - common
     - jdk
     - sm-webtier
+    
