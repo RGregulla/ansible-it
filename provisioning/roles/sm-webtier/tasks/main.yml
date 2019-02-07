@@ -73,6 +73,9 @@
   become: yes
   notify: restart tomcat
 
+# force execution of handler to restart tomcat
+- meta: flush_handlers
+
 - name: copy web.xml with target sm server
   template:
     src: web.xml.j2
