@@ -1,5 +1,19 @@
 ---
 
+- name: install python module botocore
+  pip:
+    name: botocore
+    state: latest
+  tags: prepare
+  become: yes
+
+- name: install python module boto
+  pip:
+    name: boto3
+    state: latest
+  tags: prepare
+  become: yes
+
 - name: install Tomcat for Service Manger Webtier
   yum:
     name:
