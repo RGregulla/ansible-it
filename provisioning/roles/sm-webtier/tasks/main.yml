@@ -52,8 +52,24 @@
 # -storepass password \
 # -keypass password
 
+# - name: change target hostname to sm-server
+#   xml:
+#     path: /web-app/context-param/bar.xml
+#     xpath: /web-app/servlet/init-param/param-name/serverHost
+#     value: 11
+
 - name: generate ssl truststore
   command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat.keystore }}" -storepass changeit -keypass changeit
+  become: yes
+
+- name: copy web.xml with target sm server
+  copy:
+    src: web.xml
+    dest: "{{ webapp.webxml_path }}"
+    owner: "{{ tomcat_user }}"
+    #owner: root
+    group: "{{ tomcat_group }}"
+    mode: 0755
   become: yes
 
 - name: copy server.xml with ssl activated
