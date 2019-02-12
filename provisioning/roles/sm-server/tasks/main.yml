@@ -66,7 +66,7 @@
   tags: install
 
 - name: create patches installdir
-  file: path={{ patch_path }} state=directory mode=0755 owner={{ install_user }}
+  file: path={{ sm_patch_path }} state=directory mode=0755 owner={{ install_user }}
   tags: patch
   become: yes
 
@@ -80,13 +80,13 @@
     bucket: "{{ s3_bucket }}"
     object: "{{ s3_patch_path }}/{{ patch_file }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
-    dest: "{{ patch_path }}/{{ patch_file }}"
+    dest: "{{ sm_patch_path }}/{{ patch_file }}"
     mode: get
 
 - name: unarchive patch
   unarchive:
-    src: "{{ patch_path }}/{{ patch_file }}"
-    dest: "{{ patch_path }}"
+    src: "{{ sm_patch_path }}/{{ sm_patch_file }}"
+    dest: "{{ sm_patch_path }}"
     mode: 0755
     owner: "{{ install_user }}"
     remote_src: yes
