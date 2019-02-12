@@ -78,9 +78,9 @@
 - name: copy ITSM Patch from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
-    object: "{{ s3_patch_path }}/{{ patch_file }}"
+    object: "{{ s3_patch_path }}/{{ sm_patch_file }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
-    dest: "{{ sm_patch_path }}/{{ patch_file }}"
+    dest: "{{ sm_patch_path }}/{{ sm_patch_file }}"
     mode: get
 
 - name: unarchive patch
@@ -95,8 +95,8 @@
 
 - name: unarchive patchfile
   unarchive:
-    src: "{{ patch_path }}/{{ patch_patch }}"
-    dest: "{{ patch_path }}"
+    src: "{{ sm_patch_path }}/{{ sm_patch_patch }}"
+    dest: "{{ sm_patch_path }}"
     mode: 0755
     owner: "{{ install_user }}"
     remote_src: yes
@@ -104,7 +104,7 @@
   become: yes
 
 - name: create patches backupdir
-  file: path={{ patch_backup }} state=directory mode=0755 owner={{ install_user }}
+  file: path={{ sm_patch_backup }} state=directory mode=0755 owner={{ install_user }}
   tags: patch
   become: yes
 
@@ -122,11 +122,11 @@
 
 - name: install itsm patch
   expect:
-    command: "{{ patch_path }}/{{ patch_cmd }}"
+    command: "{{ sm_patch_path }}/{{ sm_patch_cmd }}"
     chdir: "{{ sm_install_server_dir }}"
     responses:
       'SM Server installation directory' : "{{ sm_install_server_dir }}"
-      'SM Server backup directory' : "{{ patch_backup }}"
+      'SM Server backup directory' : "{{ sm_patch_backup }}"
       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
