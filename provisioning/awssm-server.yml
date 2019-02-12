@@ -5,9 +5,9 @@
 #    proxy_env:
 #      http_proxy: http://webproxy.comp.db.de:8080
 #      https_proxy: http://webproxy.comp.db.de:8080
-#    environment:
-#      http_proxy: http://webproxy.comp.db.de:8080
-#      https_proxy: http://webproxy.comp.db.de:8080
+    environment:
+      http_proxy: http://webproxy.comp.db.de:8080
+      https_proxy: http://webproxy.comp.db.de:8080
     install_user: ec2-user
     db:
       dbname: smdb
