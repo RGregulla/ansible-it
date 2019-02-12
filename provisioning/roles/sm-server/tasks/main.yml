@@ -1,35 +1,5 @@
 ---
 
-- name: install Python Module Manager
-  yum:
-    name: python2-pip
-    state: latest
-  tags: prepare
-  become: yes
-
-- name: install python module pexpect
-  pip:
-    name: pexpect
-    state: latest
-  tags: prepare
-  become: yes
-  # There is an error at installation of the module which can ignored
-  #ignore_errors: yes
-
-- name: install python module botocore
-  pip:
-    name: botocore
-    state: latest
-  tags: prepare
-  become: yes
-
-- name: install python module boto
-  pip:
-    name: boto3
-    state: latest
-  tags: prepare
-  become: yes
-
 - name: create sm installdir
   file: path={{ installation.filepath }} state=directory mode=0755 owner={{ install_user }}
   tags: prepare
