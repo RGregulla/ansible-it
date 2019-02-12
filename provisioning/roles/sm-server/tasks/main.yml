@@ -77,7 +77,7 @@
 
 - name: copy ITSM Patch from S3
   aws_s3:
-    bucket: "{{ sm_bucket }}"
+    bucket: "{{ s3_bucket }}"
     object: "{{ sm_patch_path }}/{{ sm_patch_file }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ sm_patch_path }}/{{ sm_patch_file }}"
