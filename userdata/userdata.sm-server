@@ -21,4 +21,4 @@ else
 fi
 
 #ansible-pull -d /tmp/playbooks -i /tmp/playbooks/provisioning/inventory/awsinventory -U https://github.com/RGregulla/ansible-it provisioning/smserver.yml -vvv
-runuser ec2-user -c 'ansible-pull -d /tmp/playbooks -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/awssm-server.yml  -vvv'
+runuser ec2-user -l -c 'ansible-pull -d /tmp/playbooks -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/awssm-server.yml  -vvv'
