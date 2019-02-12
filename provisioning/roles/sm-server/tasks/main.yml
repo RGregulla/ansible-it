@@ -7,7 +7,7 @@
 
 - name: copy ITSM Archive from S3
   aws_s3:
-    bucket: gregulla.itsm.stuff
+    bucket: "" {{s3.bucket }} ""
     object: "{{ s3.bin_path }}/{{ source.sm_bin }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ installation.filepath }}/{{ source.sm_bin }}"
@@ -77,8 +77,8 @@
 
 - name: copy ITSM Patch from S3
   aws_s3:
-    bucket: gregulla.itsm.stuff
-    object: "{{ s3.bin_path }}/{{ patch.patch_file }}"
+    bucket: "{{ s3.bucket }}"
+    object: "{{ s3.patch_path }}/{{ patch.patch_file }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ patch.patch_path }}/{{ patch.patch_file }}"
     mode: get
