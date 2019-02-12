@@ -7,7 +7,7 @@
 
 - name: copy ITSM Archive from S3
   aws_s3:
-    bucket: "" {{ s3.bucket }} ""
+    bucket: "{{ s3.bucket }}"
     object: "{{ s3.bin_path }}/{{ source.sm_bin }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ installation.filepath }}/{{ source.sm_bin }}"
