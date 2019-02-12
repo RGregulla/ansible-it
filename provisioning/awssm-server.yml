@@ -6,20 +6,17 @@
 #      http_proxy: http://webproxy.comp.db.de:8080
 #      https_proxy: http://webproxy.comp.db.de:8080
     install_user: ec2-user
-    s3:
-      bucket: itsm-classic-src
-      bin_path: Hersteller_Software
-      patch_path: Hersteller_Software_Patch
-    patch:
-      patch_file: HPSM_00946.tar
-    db:
-      dbname: smdb
-      dbschema: sm
-      dbuser: smuser
-      dbpassword: smpassw0rd
-      postgres_user: postgres
-      server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
-      server_dbport: 5432
+    s3_bucket: itsm-classic-src
+    s3_bin_path: Hersteller_Software
+    s3_patch_path: Hersteller_Software_Patch
+    sm_patch_file: HPSM_00946.tar
+    sm_dbname: smdb
+    sm_dbschema: sm
+    sm_dbuser: smuser
+    sm_dbpassword: smpassw0rd
+    sm_postgres_user: postgres
+    sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+    sm_server_dbport: 5432
     java:
       home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
       source:

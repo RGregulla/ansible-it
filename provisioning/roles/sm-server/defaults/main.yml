@@ -3,45 +3,36 @@
 install_user: vagrant
 
 version: servicemanager-9.6.0
-s3:
-  bucket: gregulla.itsm.stuff
-  bin_path: itsm
-source:
-  remote: yes
-  sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
-installation:
-  filepath: /opt/itsm
-  bin_path: /opt/itsm/Installation/Server
-  bin: setupLinuxX64-9.60.bin
-  install_dir: /opt/MicroFocus
-  install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
-  server_port: 13080
-  server_dbhost: localhost
-patch:
-  patch_path: /opt/itsm/patches
-  patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
-  patch_patch: sm9.61.0019_Linux-x86.tar
-  patch_cmd: PatchSetup.sh
-  patch_backup: /opt/itsm/backup
-db:
-  dbname: smdb
-  dbschema: sm
-  dbuser: smuser
-  dbpassword: smpassw0rd
-  postgres_user: postgres
-  server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
-  server_dbport: 5432
+s3_bucket: gregulla.itsm.stuff
+s3_bin_path: itsm
+sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
+install_filepath: /opt/itsm
+install_bin_path: /opt/itsm/Installation/Server
+install_bin: setupLinuxX64-9.60.bin
+sm_install_dir: /opt/MicroFocus
+sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+sm_server_port: 13080
+sm_server_dbhost: localhost
+sm_patch_path: /opt/itsm/patches
+sm_patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
+sm_patch_patch: sm9.61.0019_Linux-x86.tar
+sm_patch_cmd: PatchSetup.sh
+sm_patch_backup: /opt/itsm/backup
+sm_dbname: smdb
+sm_dbschema: sm
+sm_dbuser: smuser
+sm_dbpassword: smpassw0rd
+sm_postgres_user: postgres
+sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+sm_server_dbport: 5432
 
-datasource:
-  name: postgresql
-  qualifier: org.postgresql
-  namespace: org/postgresql
-  class: org.postgresql.Driver
-  driver: postgresql-9.4.1208.jar
-  source:
-    remote: true
-    path: http://lwie0artif01/artifactory/external-applications/postgres/postgresql-9.4.1208.jar
-  connection:
-    url: jdbc:postgresql://lwie0keydb01/keycloak_sso
-    user: keycloak_sso
-    password: Ohchoo9ueloo8uquoigh2chaiw3Shi
+# datasource_name: postgresql
+# datasource_qualifier: org.postgresql
+# datasource_namespace: org/postgresql
+# datasource_class: org.postgresql.Driver
+# datasource_driver: postgresql-9.4.1208.jar
+# datasource_source_path: http://lwie0artif01/artifactory/external-applications/postgres/postgresql-9.4.1208.jar
+# datasource_remote: true
+# datasource_url: jdbc:postgresql://lwie0keydb01/keycloak_sso
+# datasource_user: keycloak_sso
+# datasource_password: Ohchoo9ueloo8uquoigh2chaiw3Shi
