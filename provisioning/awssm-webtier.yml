@@ -8,7 +8,7 @@
     sm_serverHost: internal-itsm-EC2El-RCCD7NEON9LZ-1615163355.eu-central-1.elb.amazonaws.com
 
   roles:
-    - common
+#    - common
 #    - jdk
     - sm-webtier
 
