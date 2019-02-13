@@ -1,19 +1,5 @@
 ---
 
-- name: install python module botocore
-  pip:
-    name: botocore
-    state: latest
-  tags: prepare
-  become: yes
-
-- name: install python module boto
-  pip:
-    name: boto3
-    state: latest
-  tags: prepare
-  become: yes
-
 - name: install Tomcat for Service Manger Webtier
   yum:
     name:
@@ -27,7 +13,7 @@
     bucket: "{{ s3_bucket }}"
     object: "{{ s3_webtier_path }}/{{ s3_webtier_archive }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
-    dest: "{{ itsm_web.webtier_target }}/{{ s3_webtier_archive }}"
+    dest: "{{ webtier_target }}/{{ s3_webtier_archive }}"
     mode: get
 
 - name: Unarchive webtier Archive
