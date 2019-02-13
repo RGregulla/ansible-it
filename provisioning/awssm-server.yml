@@ -10,11 +10,11 @@
     s3_bin_path: Hersteller_Software
     s3_patch_path: Hersteller_Software_Patch
     sm_patch_file: HPSM_00946.tar
-    sm_dbname: smdb
+    sm_dbname: postgres
     sm_dbschema: sm
-    sm_dbuser: smuser
-    sm_dbpassword: smpassw0rd
-    sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+    sm_dbuser: postgres
+    sm_dbpassword: DBsystel99test2
+    sm_server_dbhost:  itsm-test-db.cxnuybpt78fh.eu-central-1.rds.amazonaws.com
     sm_server_dbport: 5432
     java_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
     java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
