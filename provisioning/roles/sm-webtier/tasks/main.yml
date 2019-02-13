@@ -62,6 +62,10 @@
 # force execution of handler to restart tomcat
 - meta: flush_handlers
 
+# Pause for 30 seconds to extract webarchive
+- pause:
+    seconds: 30
+
 - name: copy web.xml with target sm server
   template:
     src: web.xml.j2
