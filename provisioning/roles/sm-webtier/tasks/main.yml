@@ -17,7 +17,7 @@
     mode: get
 
 - name: Unarchive webtier Archive
-  unarchive: src={{ itsm_web.webtier_target }}/{{ s3.webtier_archive }} dest={{ itsm_web.webtier_path }} mode=0755 owner={{ tomcat_user}} group={{ tomcat_group }}
+  unarchive: src={{ webtier_target }}/{{ s3_webtier_archive }} dest={{ s3_webtier_path }} mode=0755 owner={{ tomcat_user}} group={{ tomcat_group }}
   tags: prepare
   become: yes
 
