@@ -62,7 +62,7 @@
 - name: link jre in sm installation
   command: "{{ sm_install_server_dir }}/RUN/setupLinks.sh jre"
   environment:
-    JAVA_HOME: "{{ java.home }}"
+    JAVA_HOME: "{{ java_home }}"
   tags: install
 
 - name: create patches installdir
