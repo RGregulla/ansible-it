@@ -11,7 +11,7 @@ then
   yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
   yum update
   yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip
-  pip install -U awscli ansible setuptools
+  pip install -U awscli ansible setuptools botocore boto3 pexpect
 else
   # Add Hostname to /etc/hosts
   echo 127.0.0.1 `hostname` >>/etc/hosts

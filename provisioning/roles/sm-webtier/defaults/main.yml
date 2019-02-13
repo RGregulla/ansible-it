@@ -8,7 +8,7 @@ tomcat_webtier_path: /usr/share/tomcat/webapps
 tomcat_config_path: /etc/tomcat
 tomcat_keystore: /usr/share/tomcat/.keystore
 s3_bucket: gregulla.itsm.stuff
-tomcat_webtier_path: itsm
-tomcat_webtier_archive: webtier-9.61.zip
+s3_webtier_path: itsm
+s3_webtier_archive: webtier-9.61.zip
 webxml_path: /usr/share/tomcat/webapps/webtier-9.61/WEB-INF/web.xml
 sm_serverHost: localhost
