@@ -22,9 +22,9 @@ sm_dbname: smdb
 sm_dbschema: sm
 sm_dbuser: smuser
 sm_dbpassword: smpassw0rd
-sm_postgres_user: postgres
 sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 sm_server_dbport: 5432
+postgres_user: postgres
 
 # datasource_name: postgresql
 # datasource_qualifier: org.postgresql

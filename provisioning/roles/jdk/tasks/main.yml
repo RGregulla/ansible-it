@@ -13,7 +13,7 @@
 
 - name: install openjdk 32bit
   yum:
-    name: "{{ java.source.download_url }}"
+    name: "{{ java_download_url }}"
   tags: java_install
   become: yes
 
