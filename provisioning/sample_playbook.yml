@@ -1,0 +1,95 @@
+---
+
+- hosts: all
+  remote_user: ec2-user
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    sm_server_dbhost: = dummy
+
+  tasks:
+
+    - name: get all ec2 facts
+      ec2_metadata_facts:
+
+    - name: debug all facts
+      debug: var=ansible_facts
+
+    # - name: get ec2 tags
+    #   local_action:
+    #     module: ec2_tag
+    #     region: "{{ ansible_ec2_placement_region }}"
+    #     resource: "{{ ansible_ec2_instance_id }}"
+    #     state: list
+    #   register: my_ec2_tags
+
+    - name: get ec2 tags
+      ec2_tag:
+        region: "{{ ansible_ec2_placement_region }}"
+        resource: "{{ ansible_ec2_instance_id }}"
+        state: list
+      register: my_ec2_tags
+
+    - name: debug ec2 tags
+      debug: var=my_ec2_tags
+
+    - name: debug some rds facts
+      debug:
+        msg: "Configured Database is : {{ my_ec2_tags.tags.Database_id }}"
+
+    - name: get rds facts
+      rds_instance_facts:
+        db_instance_identifier: "{{ my_ec2_tags.tags.Database_id }}"
+        region: eu-central-1
+      register: my_database_facts
+
+    - name: debug rds facts
+      debug: var=my_database_facts
+
+    - name: debug Endpoint before
+      debug:
+        msg: "Database Endpoint before : {{ sm_server_dbhost }}"
+
+    - name: debug some rds facts
+      debug:
+        msg: "RDS Database is reachable under : {{ my_database_facts.instances[0].endpoint.address }}"
+
+    - name: debug some rds facts
+      set_fact:
+        sm_server_dbhost: "{{ my_database_facts.instances[0].endpoint.address }}"
+
+    - name: debug Endpoint after
+      debug:
+        msg: "Database Endpoint before : {{ sm_server_dbhost }}"
+
+    # - name: debug all facts
+    #   debug: var=ansible_facts
+
+# sm-server:
+# Environment: demo
+# Name: sm-server
+# Type: server
+# rds:
+# Environment: demo
+# Type: itsm-db
+# workload-type: other
+# sm-webtier:
+# Environment: demo
+# Type: webtier
+#
+
+    # - name: get itsm rds facts
+    #   rds:
+    #     command: facts
+    #     instance_name: itsm-db
+    #     region: eu-central-1
+    #   register: itsm_database_facts
+
+    # - name: debug all facts
+    #   debug: var=ansible_facts
+
+    # - name: Dump
+    #   delegate_to: localhost
+    #   run_once: true
+    #   copy:
+    #     content: "{{ hostvars[inventory_hostname] | to_nice_json }}"
+    #     dest: ./setup-dump.json

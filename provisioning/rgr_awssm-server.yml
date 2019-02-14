@@ -32,6 +32,7 @@
 
   roles:
     - common
+    - get-rdsfacts
 #    - sm-postgres
 #    - prepare-postgres
     - jdk

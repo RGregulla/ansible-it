@@ -1,0 +1,25 @@
+---
+
+- name: get all ec2 facts
+  ec2_metadata_facts:
+
+- name: get ec2 tags
+  ec2_tag:
+    region: "{{ ansible_ec2_placement_region }}"
+    resource: "{{ ansible_ec2_instance_id }}"
+    state: list
+  register: my_ec2_tags
+
+- name: debug some rds facts
+  debug:
+    msg: "Setting Database-Id to : {{ my_ec2_tags.tags.Database_id }}"
+
+- name: get rds facts
+  rds_instance_facts:
+    db_instance_identifier: "{{ my_ec2_tags.tags.Database_id }}"
+    region: eu-central-1
+  register: my_database_facts
+
+- name: debug some rds facts
+  set_fact:
+    sm_server_dbhost: "{{ my_database_facts.instances[0].endpoint.address }}"

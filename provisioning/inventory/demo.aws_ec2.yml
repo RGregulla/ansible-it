@@ -3,5 +3,18 @@ plugin: aws_ec2
 regions:
   - eu-central-1
 
-hostnames:
-  - tag:Environment=Demo,type=itsm-db  # return specific hosts only
+keyed_groups:
+  # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
+  - key: tags.Name
+    prefix: tag_Name_
+    separator: ""
+  - key: tags.Type
+    prefix: tag_Type_
+    separator: ""
+
+#hostnames:
+#  - tag:Environment=Demo,type=itsm-db  # return specific hosts only
+
+#plugin: aws_rds
+#regions:
+#  - eu-central-1
