@@ -11,7 +11,7 @@
     sm_dbuser: smuser
     sm_dbpassword: smpassw0rd
     sm_postgres_user: postgres
-    sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+    #sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
     sm_server_dbport: 5432
     java:
       home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
