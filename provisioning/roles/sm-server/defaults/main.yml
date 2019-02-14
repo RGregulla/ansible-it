@@ -5,6 +5,7 @@ install_user: vagrant
 version: servicemanager-9.6.0
 s3_bucket: gregulla.itsm.stuff
 s3_bin_path: itsm
+s3_patch_path: itsm
 sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
 install_filepath: /opt/itsm
 install_bin_path: /opt/itsm/Installation/Server
