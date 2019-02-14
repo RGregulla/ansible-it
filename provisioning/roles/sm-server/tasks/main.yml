@@ -59,11 +59,14 @@
 #  tags: prepare
 #  become: yes
 
-- name: link jre in sm installation
-  command: "{{ sm_install_server_dir }}/RUN/setupLinks.sh jre"
-  environment:
-    JAVA_HOME: "{{ java_home }}"
-  tags: install
+# - name: link jre in sm installation
+#   command: "{{ sm_install_server_dir }}/RUN/setupLinks.sh jre"
+#   environment:
+#     JAVA_HOME: "{{ java_home }}"
+#   tags: install
+
+- name: link jre in sm directory manually
+  command: "ln -s {{ java_home }} {{ sm_install_server_dir }}/RUN/jre"
 
 - name: create patches installdir
   file: path={{ sm_patch_path }} state=directory mode=0755 owner={{ install_user }}

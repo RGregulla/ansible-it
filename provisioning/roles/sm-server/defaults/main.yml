@@ -10,7 +10,8 @@ sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
 install_filepath: /opt/itsm
 install_bin_path: /opt/itsm/Installation/Server
 install_bin: setupLinuxX64-9.60.bin
-java_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
+#java_home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
+java_home: /usr/lib/jvm/jre
 sm_install_dir: /opt/MicroFocus
 sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
 sm_server_port: 13080

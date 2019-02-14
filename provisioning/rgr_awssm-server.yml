@@ -14,7 +14,7 @@
     #sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
     sm_server_dbport: 5432
     java:
-      home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i386/jre
+      home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
       source:
         #download_url: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/java-1.8.0-openjdk-headless-1.8.0.181-7.b13.el7.i686.rpm
         download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
