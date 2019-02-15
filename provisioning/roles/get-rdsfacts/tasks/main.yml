@@ -12,11 +12,11 @@
 
 - name: debug some rds facts
   debug:
-    msg: "Setting Database-Id to : {{ my_ec2_tags.tags.Database_id }}"
+    msg: "Setting Database-Id to : {{ my_ec2_tags.tags.SMDB_Id }}"
 
 - name: get rds facts
   rds_instance_facts:
-    db_instance_identifier: "{{ my_ec2_tags.tags.Database_id }}"
+    db_instance_identifier: "{{ my_ec2_tags.tags.SMDB_Id }}"
     region: eu-central-1
   register: my_database_facts
 
