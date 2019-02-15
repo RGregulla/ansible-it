@@ -1,0 +1,19 @@
+---
+
+- name: get all ec2 facts
+  ec2_metadata_facts:
+
+- name: get ec2 tags
+  ec2_tag:
+    region: "{{ ansible_ec2_placement_region }}"
+    resource: "{{ ansible_ec2_instance_id }}"
+    state: list
+  register: my_ec2_tags
+
+- name: debug Setting Endpoint
+  debug:
+    msg: "Setting SMServer Endpoint to : {{ my_ec2_tags.tags.ELB_SM_Endpoint }}"
+
+- name: set ELB as SM Endpoint
+  set_fact:
+    sm_serverHost: "{{ my_ec2_tags.tags.ELB_SM_Endpoint }}"

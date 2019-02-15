@@ -13,6 +13,7 @@
   roles:
 #    - common
 #    - jdk
+    - get-smelbfacts
     - sm-webtier
 
   environment:
