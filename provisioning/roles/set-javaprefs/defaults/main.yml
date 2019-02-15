@@ -1,0 +1,7 @@
+---
+
+java_prefs_homedir: /etc
+java_prefs_javadir: .java
+java_prefs_dir: .systemPrefs
+java_prefs_lockfile: .system.lock
+java_prefs_modfile: .systemRootModFile

@@ -1,0 +1,31 @@
+---
+
+- name: create .java
+  file:
+    path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}"
+    mode: 755
+  tags: patch
+  become: yes
+
+- name: create .systemPrefs
+  file:
+    path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}/{{ java_prefs_dir }}"
+    mode: 755
+  tags: patch
+  become: yes
+
+- name: create .system.lock
+  file:
+    path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}/{{ java_prefs_dir }}/{{ java_prefs_lockfile }}"
+    state: touch
+    mode: 544
+  tags: patch
+  become: yes
+
+- name: create .systemRootModFile
+  file:
+    path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}/{{ java_prefs_dir }}/{{ java_prefs_modfile }}"
+    state: touch
+    mode: 544
+  tags: patch
+  become: yes
