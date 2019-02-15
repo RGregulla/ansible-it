@@ -4,6 +4,7 @@
   file:
     path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}"
     mode: 755
+    state: directory
   tags: patch
   become: yes
 
@@ -11,6 +12,7 @@
   file:
     path: "{{ java_prefs_homedir }}/{{ java_prefs_javadir }}/{{ java_prefs_dir }}"
     mode: 755
+    state: directory
   tags: patch
   become: yes
 
