@@ -5,7 +5,7 @@
     install_user: ec2-user
     java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
     java_home: /usr/lib/jvm/jre
-    sm_serverHost: 18.196.183.62
+    sm_serverHost: 52.28.115.201
 
   roles:
 #    - common
