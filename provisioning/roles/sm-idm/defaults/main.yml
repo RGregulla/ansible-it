@@ -1,6 +1,6 @@
 ---
 
-s3_bucket: itsm
+s3_bucket: gregulla.itsm.stuff
 s3_idm_path: itsm/idm
 s3_idm_archive: idm-service-1.15.4.war
 webtier_target: /tmp
