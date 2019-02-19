@@ -25,5 +25,6 @@
     mode: 0755
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
+    remote_src: yes
   tags: prepare
   become: yes
