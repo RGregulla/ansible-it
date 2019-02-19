@@ -7,4 +7,4 @@
     sm_server_dbhost: = dummy
 
   roles:
-    - sm-idm
+    - tomcat

@@ -1,0 +1,29 @@
+---
+
+- name: install openjdk 8
+  yum:
+    name:
+       - java-1.8.0-openjdk
+    state: present
+  tags: openjdk
+  become: yes
+
+- name: create tomcat directory
+  file:
+    path: "{{ tomcat_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+  tags: prepare
+  become: yes
+
+- name: Unarchive tomcat install
+  unarchive:
+    src: "{{ tomcat_url }}"
+    dest: "{{ tomcat_path }}"
+    mode: 0755
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+  tags: prepare
+  become: yes
