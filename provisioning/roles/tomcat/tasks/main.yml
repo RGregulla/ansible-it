@@ -1,5 +1,19 @@
 ---
 
+- name: Ensure group "tomcat" exists
+  group:
+    name: tomcat
+    state: present
+  become: yes
+
+- name: create user tomcat
+  user:
+    name: tomcat
+    comment: tomcat default user
+    group: tomcat
+    state: present
+  become: yes
+
 - name: install openjdk 8
   yum:
     name:
@@ -25,6 +39,24 @@
     mode: 0755
     owner: "{{ tomcat_user }}"
     group: "{{ tomcat_group }}"
+    extra_opts: [--strip-components=1]
     remote_src: yes
   tags: prepare
   become: yes
+
+- name: generate ssl truststore
+  command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
+  become: yes
+
+- name: change owner keystore
+
+- name: copy server.xml with ssl activated
+  copy:
+    src: server.xml
+    dest: "{{ tomcat_config_path }}"
+    #owner: "{{ tomcat_user }}"
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    mode: 0755
+  become: yes
+#  notify: restart tomcat

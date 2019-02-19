@@ -7,4 +7,4 @@ webtier_target: /tmp
 
 tomcat_user: tomcat
 tomcat_group: tomcat
-tomcat_webtier_path: /usr/share/tomcat/webapps
+tomcat_webtier_path: /opt/tomcat/webapps

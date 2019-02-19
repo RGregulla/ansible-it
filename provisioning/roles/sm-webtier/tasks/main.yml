@@ -1,12 +1,12 @@
 ---
 
-# - name: install Tomcat for Service Manger Webtier
-#   yum:
-#     name:
-#        - tomcat
-#     state: present
-#   tags: tomcat
-#   become: yes
+- name: install Tomcat for Service Manger Webtier
+  yum:
+    name:
+       - tomcat
+    state: present
+  tags: tomcat
+  become: yes
 
 - name: copy webtier Archive from S3
   aws_s3:
