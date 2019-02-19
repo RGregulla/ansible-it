@@ -9,3 +9,5 @@ tomcat_temp: /tmp
 tomcat_path: /opt/tomcat
 tomcat_keystore: /opt/tomcat/conf/.keystore
 tomcat_config_path: /opt/tomcat/conf
+tomcat_service_path: /etc/systemd/system
+tomcat_service_file: tomcat.service

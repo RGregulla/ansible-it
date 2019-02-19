@@ -44,11 +44,32 @@
   tags: prepare
   become: yes
 
+- name: add tomcat.service
+  template:
+    src: tomcat.service.j2
+    dest: "{{ tomcat_service_path }}/{{ tomcat_service_file }}"
+    mode: 0755
+  become: true
+
+- name: install tomcat as service
+  shell: systemctl daemon-reload
+  become: true
+
+- name: enable tomcat service
+  shell: systemctl enable tomcat.service
+  become: true
+
 - name: generate ssl truststore
   command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
   become: yes
 
 - name: change owner keystore
+  file:
+    path: "{{ tomcat_keystore }}"
+    owner: "{{ tomcat_user }}"
+    group: "{{ tomcat_group }}"
+    state: file
+  become: yes
 
 - name: copy server.xml with ssl activated
   copy:
@@ -59,4 +80,4 @@
     group: "{{ tomcat_group }}"
     mode: 0755
   become: yes
-#  notify: restart tomcat
+  notify: restart tomcat

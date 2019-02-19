@@ -10,5 +10,6 @@
   roles:
 #    - common
 #    - jdk
+    - tomcat
     - sm-webtier
     - sm-idm

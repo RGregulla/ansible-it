@@ -1,0 +1,6 @@
+---
+
+- name: restart tomcat
+  shell:
+    command: /opt/tomcat/bin/shutdown.sh
+    command: /opt/tomcat/bin/startup.sh

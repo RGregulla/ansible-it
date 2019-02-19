@@ -1,0 +1,30 @@
+# Systemd unit file for default tomcat
+#
+# To create clones of this service:
+# DO NOTHING, use tomcat@.service instead.
+
+[Unit]
+Description=Apache Tomcat Web Application Container
+After=syslog.target network.target
+
+[Service]
+Type=forking
+
+User={{ tomcat_user }}
+Group={{ tomcat_group }}
+
+WorkingDirectory={{ tomcat_path }}
+
+Environment="JAVA_HOME=/usr/lib/jvm/jre/"
+# Environment="JAVA_OPTS=-Djava.security.egd=file:///dev/urandom"
+
+#Environment="CATALINA_PID=/var/tomcat/%i/run/tomcat.pid"
+Environment="CATALINA_BASE={{ tomcat_path }}"
+Environment="CATALINA_HOME={{ tomcat_path }}"
+# Environment="CATALINA_OPTS=-Xms512M -Xmx1024M -server -XX:+UseParallelGC"
+
+ExecStart={{ tomcat_path }}/bin/startup.sh
+ExecStop={{ tomcat_path }}/bin/shutdown.sh
+
+[Install]
+WantedBy=multi-user.target
