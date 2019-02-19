@@ -1,0 +1,22 @@
+---
+
+- name: copy idm from S3
+  aws_s3:
+    bucket: "{{ s3_bucket }}"
+    object: "{{ s3_idm_path }}/{{ s3_idm_archive }}"
+    # version: 48c9ee5131af7a716edc22df9772aa6f
+    dest: "{{ webtier_target }}/{{ s3_idm_archive }}"
+    mode: get
+  tags: idm_install
+
+- name: copy idm war
+  copy:
+    src: "{{ webtier_target }}/{{ s3_idm_archive }}"
+    dest: "{{ tomcat_webtier_path }}"
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
+    remote_src: yes
+  tags: idm_install
+  become: yes
+  notify: restart tomcat

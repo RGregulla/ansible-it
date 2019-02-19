@@ -1,0 +1,10 @@
+---
+
+s3_bucket: itsm
+s3_idm_path: itsm/idm
+s3_idm_archive: idm-service-1.15.4.war
+webtier_target: /tmp
+
+tomcat_user: tomcat
+tomcat_group: tomcat
+tomcat_webtier_path: /usr/share/tomcat/webapps

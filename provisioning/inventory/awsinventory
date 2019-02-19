@@ -1,2 +1,5 @@
 [sm-server]
-localhost   ansible_connection=local
+52.28.115.201
+
+[sm-webtier]
+3.121.160.64
