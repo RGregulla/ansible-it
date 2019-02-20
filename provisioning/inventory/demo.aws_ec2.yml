@@ -1,16 +1,69 @@
+---
 # demo.aws_ec2.yml
 plugin: aws_ec2
 regions:
   - eu-central-1
 
+plugin: aws_ec2
+regions:
+  - eu-central-1
 keyed_groups:
   # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
-  - key: tags.Name
-    prefix: tag_Name_
-    separator: ""
   - key: tags.Type
     prefix: tag_Type_
     separator: ""
+
+plugin: aws_ec2
+regions:
+  - eu-central-1
+keyed_groups:
+  # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
+  - prefix: test
+    key: tags.Environment
+    value: 'test'
+    separator: ""
+
+plugin: aws_ec2
+regions:
+  - eu-central-1
+groups:
+  # add hosts to the group development if any of the dictionary's keys or values is the word 'devel'
+ test: "'Environment' in (tags|list)"
+# compose:
+#   # set the ansible_host variable to connect with the private IP address without changing the hostname
+#   ansible_host: private_ip_address
+
+# # Example using filters, ignoring permission errors, and specifying the hostname precedence
+# plugin: aws_ec2
+# regions:
+#   - eu-central-1
+# filters:
+#   # all instances with their `Environment` tag set to `dev`
+#   tag:Environment: test
+#   # # all dev and QA hosts
+#   # tag:Environment:
+#   #   - test
+#   #   - qa
+
+plugin: aws_ec2
+regions: # populate inventory with instances in these regions
+    - eu-central-1
+filters:
+    instance-state-name: running
+
+# demo.aws_ec2.yml
+# plugin: aws_ec2
+# regions:
+#   - eu-central-1
+#
+# keyed_groups:
+#   # add hosts to tag_Name_value groups for each aws_ec2 host's tags.Name variable
+#   - key: tags.Name
+#     prefix: tag_Name_
+#     separator: ""
+#   - key: tags.Type
+#     prefix: tag_Type_
+#     separator: ""
 
 #hostnames:
 #  - tag:Environment=Demo,type=itsm-db  # return specific hosts only

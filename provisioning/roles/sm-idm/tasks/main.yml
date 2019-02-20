@@ -20,3 +20,9 @@
   tags: idm_install
   become: yes
   notify: restart tomcat
+
+# <CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor"/>
+- name: add cookieprocessor to context xml
+  xml:
+    path: "{{ tomcat_conf_path }}/context.xml"
+    content:

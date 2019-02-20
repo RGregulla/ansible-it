@@ -8,3 +8,4 @@ webtier_target: /tmp
 tomcat_user: tomcat
 tomcat_group: tomcat
 tomcat_webtier_path: /opt/tomcat/webapps
+tomcat_conf_path: /opt/tomcat/conf
