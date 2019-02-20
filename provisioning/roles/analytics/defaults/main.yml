@@ -1,0 +1,15 @@
+---
+
+install_user: ec2_user
+analytics_user: ec2_user
+analytics_group: ec2_group
+
+s3_bucket: gregulla.itsm.stuff
+s3_analytics_path: itsm/analytics
+s3_analytics_archive: setupSmartAnalyticsLinuxX64.bin
+analytics_target: /tmp
+
+tomcat_user: tomcat
+tomcat_group: tomcat
+tomcat_webtier_path: /opt/tomcat/webapps
+tomcat_conf_path: /opt/tomcat/conf

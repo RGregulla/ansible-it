@@ -1,0 +1,25 @@
+#!/bin/bash
+
+yum update
+
+# RedHat only
+if [ -f "/etc/redhat-release" ]
+then
+  # Add Hostname to /etc/hosts
+  echo 127.0.0.1 `hostname` >>/etc/hosts
+
+  yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+  yum update
+  yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip postgresql.i686
+  pip install -U awscli ansible setuptools botocore boto3 pexpect
+else
+  # Add Hostname to /etc/hosts
+  echo 127.0.0.1 `hostname` >>/etc/hosts
+
+  yum install -y libffi-dev g++ libssl-dev python-pip python-dev git
+  pip install -U awscli ansible setuptools
+fi
+
+#ansible-pull -d /tmp/playbooks -i /tmp/playbooks/provisioning/inventory/awsinventory -U https://github.com/RGregulla/ansible-it provisioning/smserver.yml -vvv
+#runuser ec2-user -l -c 'ansible-pull -d /tmp/playbooks -C 'master' -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/rgr_awssm-analytics.yml  -vvv'
+runuser ec2-user -l -c 'ansible-pull -d /tmp/playbooks -C 'smart-analytics' -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/rgr_awssm-analytics.yml  -vvv'

@@ -1,0 +1,10 @@
+---
+
+- name: copy idm from S3
+  aws_s3:
+    bucket: "{{ s3_bucket }}"
+    object: "{{ s3_analytics_path }}/{{ s3_analytics_archive }}"
+    # version: 48c9ee5131af7a716edc22df9772aa6f
+    dest: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    mode: get
+  tags: analytics_install
