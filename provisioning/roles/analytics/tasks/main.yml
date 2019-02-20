@@ -8,3 +8,10 @@
     dest: "{{ analytics_target }}/{{ s3_analytics_archive }}"
     mode: get
   tags: analytics_install
+
+- name: chmod Installation Files
+  file:
+    path: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    mode: 0755
+  tags: prepare
+  become: yes
