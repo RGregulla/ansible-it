@@ -171,7 +171,7 @@
       #'Enter Postgres Schema': '{{ dbschema }}'
       'Enter Postgres Schema': ''
       'Case Insensitive?': 'N'
-      'Do you wish to load Service Manager application and demo data to the Database': 'Y'
+      'Do you wish to load Service Manager application and demo data to the Database': 'N'
   # there are some ignorable errors in the output
   ignore_errors: yes
   tags: configure
