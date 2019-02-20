@@ -1,8 +1,8 @@
 ---
 
-install_user: ec2_user
-analytics_user: ec2_user
-analytics_group: ec2_group
+install_user: ec2-user
+analytics_user: ec2-user
+analytics_group: ec2-group
 
 s3_bucket: gregulla.itsm.stuff
 s3_analytics_path: itsm/analytics
