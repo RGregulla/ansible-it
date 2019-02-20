@@ -21,7 +21,7 @@
     path: "{{ analytics_install_dir }}"
     state: directory
     owner: "{{ analytics_user }}"
-    mode: 0755
+    #mode: 0755
   tags: prepare
   become: yes
 
