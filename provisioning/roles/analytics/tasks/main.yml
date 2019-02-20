@@ -15,3 +15,164 @@
     mode: 0755
   tags: prepare
   become: yes
+
+- name: create target analytics directory
+  file:
+    path: "{{ analytics_install_dir }}"
+    state: directory
+    owner: "{{ analytics_user }}"
+    mode: 0755
+  tags: prepare
+  become: yes
+
+# PRESS <ENTER> TO CONTINUE
+# ''
+# DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT? (Y/N)
+# -> Y
+# Would you like to install a new Smart Analytics or upgrade from an old one?
+#
+#  ->1- New Installation
+#    2- Upgrade
+#
+# ENTER THE NUMBER FOR YOUR CHOICE, OR PRESS <ENTER> TO ACCEPT THE DEFAULT::
+# -> 1
+#
+# ENTER AN ABSOLUTE PATH, OR PRESS <ENTER> TO ACCEPT THE DEFAULT
+# -> /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
+#
+# INSTALL FOLDER IS: /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
+#   IS THIS CORRECT? (Y/N)
+# -> Y
+# Select an installation type:
+#
+# Quick Install - deploy minimum required components.
+# Advance Install - choose different installation scenarios.
+#
+#   ->1- Quick Install
+#     2- Advanced Install
+#
+# ENTER THE NUMBER FOR YOUR CHOICE, OR PRESS <ENTER> TO ACCEPT THE DEFAULT::
+# -> 1
+#
+# Configure SM Server IP
+# Specify the IP address of SM server. Please use a valid FQDN or IP Address for
+# the server address. Do not use localhost or 127.0.0.1.
+#
+# SM Server IP:
+# -> <serverip>
+#
+# Please specify port numbers for the following components.
+#   NOTE: Make sure that the port numbers are not used by other applications.
+#   ---SM Smart Analytics Main Server---
+#   Server Port:
+#    (Default: 9000):
+# -> 9000
+# The index port will be 9001
+# The service port will be 9002
+# IS THIS CORRECT? (Y/N):
+# -> Y
+#
+# --Main Content Server---
+#    Server Port:
+#     (Default: 10010):
+# -> 10010
+# The index port will be 10011
+# The service port will be 10012
+# IS THIS CORRECT? (Y/N):
+# ---Smart Search Proxy Server---
+#    Server Port:
+#     (Default: 20010): 20010
+# -> 20010
+# The index port will be 20011
+#The service port will be 20012
+# IS THIS CORRECT? (Y/N)
+# -> Y
+# Replicas (0 or 1):
+#     (Default: 0):
+# -> 0
+# ---Smart Search Content Server1---
+#   Server Port:
+#    (Default: 30010):
+# -> 30010
+# The index port will be 30011
+# The service port will be 30012
+# IS THIS CORRECT? (Y/N)
+# -> Y
+# --Smart Search Content Server2---
+#    Server Port:
+#    (Default: 30020):
+# -> 30020
+# The index port will be 30021
+# The service port will be 30022
+# IS THIS CORRECT? (Y/N):
+# -> Y
+# ---Image Server---
+#   Server Port:
+#    (Default: 18000):
+# -> 18000
+# The service port will be 18001
+# IS THIS CORRECT? (Y/N):
+# -> Y
+# ---CFS---
+#    Server Port:
+#    (Default: 7000):
+# -> 7000
+# The service port will be 7001
+# IS THIS CORRECT? (Y/N):
+# -> Y
+# ===============================================================================
+# Pre-Installation Summary
+# ------------------------
+#
+# Please Review the Following Before Continuing:
+#
+# Product Name:
+#     Service Manager 9.60 Smart Analytics
+#
+# Install Folder:
+#     /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
+#
+# Link Folder:
+#     DO NOT INSTALL
+#
+# Product Features:
+#     SM Smart Analytics Proxy Server,
+#     Image Server,
+#     CFS Server
+#
+# Disk Space Information (for Installation Target):
+#     Required:  2.647.211.528 Bytes
+#     Available: 26.284.314.624 Bytes
+#
+# PRESS <ENTER> TO CONTINUE:
+# -> ''
+# PRESS <ENTER> TO EXIT THE INSTALLER:
+# -> ''
+
+- name: install analytics
+  expect:
+    command: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    responses:
+      'PRESS \<ENTER\> TO CONTINUE:' : ''
+      'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
+      'IS THIS CORRECT?' : 'Y'
+      'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
+      'ENTER THE NUMBER FOR YOUR CHOICE, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT': '1'
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ analytics_install_dir }}"
+      #   ---SM Smart Analytics Main Server---
+      'Server Port: (Default: 9000)': '9000'
+      # --Main Content Server---
+      'Server Port: (Default: 10010)': '10010'
+      # ---Smart Search Proxy Server---
+      'Server Port: (Default: 20010)': '20010'
+      'Replicas (0 or 1)': '0'
+      # ---Smart Search Content Server1---
+      'Server Port: (Default: 30010)': '30010'
+      # --Smart Search Content Server2---
+      'Server Port: (Default: 30020)': '30020'
+      # ---Image Server---
+      'Server Port: (Default: 18000)': '18000'
+      # ---CFS---
+      'Server Port: (Default: 7000)': '7000'
+    timeout: 90
+  tags: install

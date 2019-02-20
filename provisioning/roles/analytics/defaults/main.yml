@@ -8,6 +8,7 @@ s3_bucket: gregulla.itsm.stuff
 s3_analytics_path: itsm/analytics
 s3_analytics_archive: setupSmartAnalyticsLinuxX64.bin
 analytics_target: /tmp
+analytics_install_dir: /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
 
 tomcat_user: tomcat
 tomcat_group: tomcat
