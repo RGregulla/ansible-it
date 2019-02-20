@@ -159,6 +159,7 @@
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
       'ENTER THE NUMBER FOR YOUR CHOICE, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT': '1'
       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ analytics_install_dir }}"
+      'SM Server IP:': " {{ sm_serverHost }}"
       #   ---SM Smart Analytics Main Server---
       'Server Port: (Default: 9000)': '9000'
       # --Main Content Server---
