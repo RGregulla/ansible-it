@@ -161,19 +161,19 @@
       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ analytics_install_dir }}"
       'SM Server IP:': " {{ sm_serverHost }}"
       #   ---SM Smart Analytics Main Server---
-      'Server Port: (Default: 9000)': '9000'
+      '(Default: 9000)': '9000'
       # --Main Content Server---
-      'Server Port: (Default: 10010)': '10010'
+      '(Default: 10010)': '10010'
       # ---Smart Search Proxy Server---
-      'Server Port: (Default: 20010)': '20010'
+      '(Default: 20010)': '20010'
       'Replicas (0 or 1)': '0'
       # ---Smart Search Content Server1---
-      'Server Port: (Default: 30010)': '30010'
+      '(Default: 30010)': '30010'
       # --Smart Search Content Server2---
-      'Server Port: (Default: 30020)': '30020'
+      '(Default: 30020)': '30020'
       # ---Image Server---
-      'Server Port: (Default: 18000)': '18000'
+      '(Default: 18000)': '18000'
       # ---CFS---
-      'Server Port: (Default: 7000)': '7000'
+      '(Default: 7000)': '7000'
     timeout: 90
   tags: install
