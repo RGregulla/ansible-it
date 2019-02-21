@@ -47,7 +47,7 @@
   tags: install
 
 - name: add sm.ini
-  copy:
+  template:
     src: sm.ini
     dest: "{{ sm_install_server_dir }}/RUN"
     owner: "{{ install_user }}"

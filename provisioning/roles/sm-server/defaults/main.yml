@@ -29,6 +29,8 @@ sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 sm_server_dbport: 5432
 postgres_user: postgres
 
+smini_enable_ldap: 0
+
 # datasource_name: postgresql
 # datasource_qualifier: org.postgresql
 # datasource_namespace: org/postgresql
