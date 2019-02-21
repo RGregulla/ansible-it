@@ -177,3 +177,14 @@
       '\(Default: 7000\)' : "{{ cfs_port }}"
     timeout: 90
   tags: install
+
+- name: Register analytics in sm-server
+  uri:
+    url: "http://{{ sm_serverHost }}/{{ sm_server_port }}/{{ sm_Rest_URL }}"
+    method: POST
+    user: "{{ sm_Rest_User }}"
+    password: "{{ sm_Rest_User_Pwd }}"
+    body: "{{ lookup('file', 'REST_register_analytics.body') }}"
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json

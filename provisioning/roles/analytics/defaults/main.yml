@@ -16,5 +16,12 @@ smart_search_content1_port: 30010
 smart_search_content2_port: 30020
 image_server_port: 18000
 cfs_port: 7000
+sm_Rest_User: System.Admin
+sm_Rest_User_Pwd:
+sma_AnalyticsServer: localhost
+sma_CFSServer: localhost
+sma_AnhangServer: localhost
 
 sm_serverHost: 52.28.115.201
+sm_server_port: 13080
+sm_Rest_URL: /SM/9/rest/idolserverinfos/2
