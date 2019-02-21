@@ -9,5 +9,12 @@ s3_analytics_path: itsm/analytics
 s3_analytics_archive: setupSmartAnalyticsLinuxX64.bin
 analytics_target: /tmp
 analytics_install_dir: /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
+analytics_main_port: 9000
+analytics_main_content_port: 10010
+smart_search_proxy_port: 20010
+smart_search_content1_port: 30010
+smart_search_content2_port: 30020
+image_server_port: 18000
+cfs_port: 7000
 
 sm_serverHost: 52.28.115.201
