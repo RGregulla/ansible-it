@@ -1,5 +1,7 @@
 ---
 
+development_mode: true
+
 install_user: ec2-user
 analytics_user: ec2-user
 analytics_group: ec2-group

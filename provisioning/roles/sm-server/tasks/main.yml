@@ -158,30 +158,37 @@
   # Updating new configuration to sm.ini...
   # Validating SQL connectivity.... Please wait....
 
-- name: configure itsm
-  expect:
-    command: "{{ sm_install_server_dir }}/configure -consolemode"
-    chdir: "{{ sm_install_server_dir }}"
-    responses:
-      'Enter httpPort' : "{{ sm_server_port }}"
-      'Choose Database Type' : '1'
-      'Enter Database name' : 'host={{ sm_server_dbhost }} port={{ sm_server_dbport }} dbname={{ sm_dbname }}'
-      'Enter SQL user' : '{{ sm_dbuser }}'
-      'Enter SQL password' : '{{ sm_dbpassword }}'
-      #'Enter Postgres Schema': '{{ dbschema }}'
-      'Enter Postgres Schema': ''
-      'Case Insensitive?': 'N'
-      'Do you wish to load Service Manager application and demo data to the Database': 'N'
-  # there are some ignorable errors in the output
-  ignore_errors: yes
-  tags: configure
+# - name: configure itsm
+#   expect:
+#     command: "{{ sm_install_server_dir }}/configure -consolemode"
+#     chdir: "{{ sm_install_server_dir }}"
+#     responses:
+#       'Enter httpPort' : "{{ sm_server_port }}"
+#       'Choose Database Type' : '1'
+#       'Enter Database name' : 'host={{ sm_server_dbhost }} port={{ sm_server_dbport }} dbname={{ sm_dbname }}'
+#       'Enter SQL user' : '{{ sm_dbuser }}'
+#       'Enter SQL password' : '{{ sm_dbpassword }}'
+#       #'Enter Postgres Schema': '{{ dbschema }}'
+#       'Enter Postgres Schema': ''
+#       'Case Insensitive?': 'N'
+#       'Do you wish to load Service Manager application and demo data to the Database': 'N'
+#   # there are some ignorable errors in the output
+#   ignore_errors: yes
+#   tags: configure
+
+- name: unlock database
+  shell: "{{ sm_install_server_dir }}/RUN/sm -unlockdatabase"
+  args:
+    executable: /bin/bash
+    chdir: "{{ sm_install_server_dir }}/RUN"
+  tags: unlock_database
 
 - name: start sm
   shell: "{{ sm_install_server_dir }}/RUN/smstart"
   args:
     executable: /bin/bash
     chdir: "{{ sm_install_server_dir }}/RUN"
-  tags: start
+  tags: start_sm
 
 # - name: shutdown sm
 #   shell: "{{ sm_install_server_dir }}/RUN/sm -shutdown"
