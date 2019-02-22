@@ -3,15 +3,15 @@
 - name: copy idm from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
-    object: "{{ s3_analytics_path }}/{{ s3_analytics_archive }}"
+    object: "{{ s3_analytics_path }}/{{ analytics_archive }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
-    dest: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    dest: "{{ analytics_target }}/{{ analytics_archive }}"
     mode: get
   tags: analytics_install
 
 - name: chmod Installation Files
   file:
-    path: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    path: "{{ analytics_target }}/{{ analytics_archive }}"
     mode: 0755
   tags: prepare
   become: yes
@@ -151,7 +151,7 @@
 
 - name: install analytics
   expect:
-    command: "{{ analytics_target }}/{{ s3_analytics_archive }}"
+    command: "{{ analytics_target }}/{{ analytics_archive }}"
     responses:
       'PRESS \<ENTER\> TO CONTINUE:' : ''
       'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'

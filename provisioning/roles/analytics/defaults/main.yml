@@ -8,7 +8,7 @@ analytics_group: ec2-group
 
 s3_bucket: gregulla.itsm.stuff
 s3_analytics_path: itsm/analytics
-s3_analytics_archive: setupSmartAnalyticsLinuxX64.bin
+analytics_archive: setupSmartAnalyticsLinuxX64.bin
 analytics_target: /tmp
 analytics_install_dir: /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
 analytics_main_port: 9000
