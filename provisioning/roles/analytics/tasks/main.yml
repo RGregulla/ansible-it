@@ -187,7 +187,7 @@
 
 - name: Register analytics in sm-server
   uri:
-    url: "http://{{ sm_serverHost }}/{{ sm_server_port }}/{{ sm_Rest_URL }}"
+    url: "http://{{ sm_serverHost }}:{{ sm_server_port }}/{{ sm_Rest_URL }}"
     method: POST
     user: "{{ sm_Rest_User }}"
     password: "{{ sm_Rest_User_Pwd }}"
