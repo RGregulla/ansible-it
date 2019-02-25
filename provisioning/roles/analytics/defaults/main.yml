@@ -20,7 +20,7 @@ smart_search_content2_port: 30020
 image_server_port: 18000
 cfs_port: 7000
 sm_Rest_User: System.Admin
-sm_Rest_User_Pwd:
+sm_Rest_User_Pwd: ""
 sma_AnalyticsServer: localhost
 sma_CFSServer: localhost
 sma_AnhangServer: localhost
