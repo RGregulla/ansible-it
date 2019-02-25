@@ -6,6 +6,7 @@ install_user: ec2-user
 analytics_user: ec2-user
 analytics_group: ec2-group
 
+temp_dir: /tmp
 s3_bucket: gregulla.itsm.stuff
 s3_analytics_path: itsm/analytics
 analytics_archive: setupSmartAnalyticsLinuxX64.bin
