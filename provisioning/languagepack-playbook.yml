@@ -1,0 +1,5 @@
+hosts: all
+  vars:
+    install_user: ec2-user
+  roles:
+    - languagepack

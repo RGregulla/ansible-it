@@ -1,0 +1,52 @@
+- name: create languagepack installdir
+  file: path={{ install_filepath }} state=directory mode=0755 owner={{ install_user }}
+  tags: prepare
+  become: yes
+
+- name: copy LanguagePack Archive from S3
+  aws_s3:
+    bucket: "{{ s3_bucket }}"
+    object: "{{ s3_bin_path }}/{{ languagepack_bin }}"
+    dest: "{{ install_filepath }}/{{ languagepack_bin }}"
+    mode: get
+
+- name: Unarchive ITSM Archive
+  unarchive:
+    src: {{ install_filepath }}/{{ languagepack_bin }}
+    dest: {{ install_filepath }}
+    mode: 0755
+    owner: {{ install_user }}
+  tags: prepare
+  become: yes
+
+- name: chmod Installation Files
+  file:
+    path: "{{ install_bin_path }}/{{ install_bin }}"
+    mode: 0777
+  tags: prepare
+  become: yes
+
+# brauchen wir folgendes? - wahrscheinlich geht die Installation eh ins sm_install_dir
+#------
+- name: create target itsm directory
+  file:
+    path: "{{ sm_install_dir }}"
+    state: directory
+    owner: "{{ install_user }}"
+    mode: 0755
+  tags: prepare
+  become: yes
+#------
+
+#WIP
+ name: install languagepack
+  expect:
+    command: "{{ install_bin_path }}/{{ install_bin }} -i console"
+    responses:
+      'PRESS \<ENTER\> TO CONTINUE:' : ''
+      'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
+      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
+      'IS THIS CORRECT?' : 'Y'
+      'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
+    timeout: 90
+  tags: install
