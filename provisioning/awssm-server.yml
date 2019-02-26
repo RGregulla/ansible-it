@@ -23,6 +23,7 @@
     java_dir: jre1.8.0_192
     sm_server_port: 13080
     postgres_user: postgres
+    smini_enable_ldap: 1
 
   roles:
     - common

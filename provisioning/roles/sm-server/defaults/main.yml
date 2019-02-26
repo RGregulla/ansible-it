@@ -27,7 +27,16 @@ sm_dbuser: smuser
 sm_dbpassword: smpassw0rd
 sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 sm_server_dbport: 5432
+sm_server_dbname: servicemanagement
 postgres_user: postgres
+
+# Config for smini
+# enable ldap: 0 (disabled) or 1 (enabled)
+smini_enable_ldap: 0
+smini_ldap_server: bku.db.de%636%DC=bku,DC=db,DC=de
+smini_ldap_binddn: CN=itsmdbsitsmbkuadau,OU=Benutzer,OU=Administratoren,OU=Verwaltung,DC=bku,DC=db,DC=de
+smini_ldap_passwd: isnothere
+
 
 # datasource_name: postgresql
 # datasource_qualifier: org.postgresql

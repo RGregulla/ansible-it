@@ -1,0 +1,12 @@
+---
+# file: webservers.yml
+- hosts: all
+  vars:
+    install_user: ec2-user
+    sm_serverHost: 52.28.115.201
+    remote_src: no
+
+  roles:
+    - get-smelbfacts
+    - get-analyticselbfacts
+    - analytics
