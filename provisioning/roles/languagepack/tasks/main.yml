@@ -12,10 +12,10 @@
 
 - name: Unarchive ITSM Archive
   unarchive:
-    src: {{ install_filepath }}/{{ languagepack_bin }}
-    dest: {{ install_filepath }}
+    src: "{{ install_filepath }}/{{ languagepack_bin }}"
+    dest: "{{ install_filepath }}"
     mode: 0755
-    owner: {{ install_user }}
+    owner: "{{ install_user }}"
   tags: prepare
   become: yes
 
