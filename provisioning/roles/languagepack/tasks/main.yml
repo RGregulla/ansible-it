@@ -10,12 +10,13 @@
     dest: "{{ install_filepath }}/{{ languagepack_bin }}"
     mode: get
 
-- name: Unarchive ITSM Archive
+- name: Unarchive languagepack Archive
   unarchive:
     src: "{{ install_filepath }}/{{ languagepack_bin }}"
     dest: "{{ install_filepath }}"
     mode: 0755
     owner: "{{ install_user }}"
+    remote_src: yes
   tags: prepare
   become: yes
 
