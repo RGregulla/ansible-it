@@ -21,9 +21,9 @@ image_server_port: 18000
 cfs_port: 7000
 sm_Rest_User: System.Admin
 sm_Rest_User_Pwd: ""
-sma_AnalyticsServer: localhost
-sma_CFSServer: localhost
-sma_AnhangServer: localhost
+sma_AnalyticsServer: 18.184.241.191
+sma_CFSServer: 18.184.241.191
+sma_AnhangServer: 18.184.241.191
 
 sm_serverHost: 52.28.115.201
 sm_server_port: 13080
