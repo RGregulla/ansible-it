@@ -4,7 +4,7 @@ s3_bucket: itsm-classic-src
 s3_bin_path: Hersteller_Software
 languagepack_bin: Service_Manager_9.60_Language_Pack_SM960_LanguagePack.zip
 install_filepath: /opt/itsm/languagepack
-install_bin_path: /opt/itsm/de/Installation
+install_bin_path: /opt/itsm/languagepack/de/Installation
 install_bin: setupLinuxX64.bin
 #brauchen wir folgendes?
 #------
