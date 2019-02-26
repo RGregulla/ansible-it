@@ -5,6 +5,9 @@
     install_user: ec2-user
     sm_serverHost: 52.28.115.201
     remote_src: no
+    s3_bucket: itsm-classic-src
+    s3_analytics_path: Hersteller_Software/Smart_Analytics
+
 
   roles:
     - get-smelbfacts
