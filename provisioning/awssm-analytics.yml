@@ -7,6 +7,8 @@
     remote_src: no
     s3_bucket: itsm-classic-src
     s3_analytics_path: Hersteller_Software/Smart_Analytics
+    sm_Rest_User: user003test
+    sm_Rest_User_Pwd: 123456
 
 
   roles:

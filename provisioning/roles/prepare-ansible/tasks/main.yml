@@ -1,8 +1,16 @@
 ---
 
+- name: install Epel
+  yum:
+    name: "{{ epel_url }}"
+    state: installed
+  tags: prepare
+  become: yes
+  when: ansible_distribution == 'RedHat'
+
 - name: install Python Module Manager
   yum:
-    name: python2-pip
+    name: python-pip
     state: latest
   tags: prepare
   become: yes
