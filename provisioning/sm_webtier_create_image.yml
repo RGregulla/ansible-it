@@ -30,7 +30,7 @@
             volume_type: gp2
             volume_size: 30
         instance_tags:
-          Name: sm-server-ami
+          Name: sm-webtier-ami
           Version: "{{ sm_server_version }}"
         instance_profile_name: "{{ iam_role }}"
         # Wait for the instance
