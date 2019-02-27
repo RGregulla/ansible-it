@@ -27,27 +27,24 @@
   tags: prepare
   become: yes
 
-# # brauchen wir folgendes? - wahrscheinlich geht die Installation eh ins sm_install_dir
-# #------
-# - name: create target itsm directory
-#   file:
-#     path: "{{ sm_install_dir }}"
-#     state: directory
-#     owner: "{{ install_user }}"
-#     mode: 0755
-#   tags: prepare
-#   become: yes
-# #------
-#
-# #WIP
-#  name: install languagepack
-#   expect:
-#     command: "{{ install_bin_path }}/{{ install_bin }} -i console"
-#     responses:
-#       'PRESS \<ENTER\> TO CONTINUE:' : ''
-#       'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
-#       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
-#       'IS THIS CORRECT?' : 'Y'
-#       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
-#     timeout: 90
-#   tags: install
+- name: install languagepack
+  expect:
+    command: "{{ install_bin_path }}/{{ install_bin }} -i console"
+    responses:
+      'CHOOSE LOCALE BY NUMBER:' : '1'
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'SIND SIE MIT DEN BEDINGUNGEN DIESES LIZENZVERTRAGS EINVERSTANDEN? (J/N):' : 'J'
+      'GEBEN SIE EINEN ABSOLUTEN PFAD EIN, ODER DRÜCKEN SIE DIE EINGABETASTE, UM DIE STANDARDEINSTELLUNG ZU ÜBERNEHMEN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM FORTZUFAHREN:' : ''
+      'DRÜCKEN SIE DIE EINGABETASTE, UM DEN INSTALLER ZU BEENDEN:' : ''
+    timeout: 90
+  tags: install
