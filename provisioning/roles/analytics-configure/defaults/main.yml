@@ -1,0 +1,25 @@
+---
+
+development_mode: true
+
+install_user: ec2-user
+analytics_user: ec2-user
+analytics_group: ec2-group
+
+analytics_install_dir: /opt/MicroFocus/ServiceManager9.60/SmartAnalytics
+analytics_main_port: 9000
+analytics_main_content_port: 10010
+smart_search_proxy_port: 20010
+smart_search_content1_port: 30010
+smart_search_content2_port: 30020
+image_server_port: 18000
+cfs_port: 7000
+sm_Rest_User: System.Admin
+sm_Rest_User_Pwd: ""
+sma_AnalyticsServer: 18.184.241.191
+sma_CFSServer: 18.184.241.191
+sma_AnhangServer: 18.184.241.191
+
+sm_serverHost: 52.28.115.201
+sm_server_port: 13080
+sm_Rest_URL: /SM/9/rest/idolserverinfos/2

@@ -22,57 +22,16 @@
   become: yes
   notify: restart tomcat
 
-# - name: Copy webtier Archive and Unarchive it
-#   unarchive:
-#     src: "{{ itsm_web.webtier_archive }}"
-#     dest: "{{ itsm_web.webtier_path }}"
-#     mode: "0755"
-#     owner: "{{ tomcat_user }}"
-#     group: "{{ tomcat_group }}"
-#   tags: webapp
-#   become: yes
+- name: generate ssl truststore
+  command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
+  become: yes
 
-#keytool -genkey -noprompt \
-# -alias alias1 \
-# -dname "CN=mqttserver.ibm.com, OU=ID, O=IBM, L=Hursley, S=Hants, C=GB" \
-# -keystore keystore \
-# -storepass password \
-# -keypass password
-
-# - name: change target hostname to sm-server
-#   xml:
-#     path: /web-app/context-param/bar.xml
-#     xpath: /web-app/servlet/init-param/param-name/serverHost
-#     value: 11
-
-# - name: generate ssl truststore
-#   command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
-#   become: yes
-#
-# - name: copy server.xml with ssl activated
-#   copy:
-#     src: server.xml
-#     dest: "{{ tomcat_config_path }}"
-#     #owner: "{{ tomcat_user }}"
-#     owner: root
-#     group: "{{ tomcat_group }}"
-#     mode: 0755
-#   become: yes
-#   notify: restart tomcat
-
-# force execution of handler to restart tomcat
-- meta: flush_handlers
-
-# Pause for 30 seconds to extract webarchive
-- pause:
-    seconds: 30
-
-- name: copy web.xml with target sm server
-  template:
-    src: web.xml.j2
-    dest: "{{ webxml_path }}"
-    owner: "{{ tomcat_user }}"
-    #owner: root
+- name: copy server.xml with ssl activated
+  copy:
+    src: server.xml
+    dest: "{{ tomcat_config_path }}"
+    #owner: "{{ tomcat_user }}"
+    owner: root
     group: "{{ tomcat_group }}"
     mode: 0755
   become: yes

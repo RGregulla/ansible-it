@@ -15,6 +15,13 @@
   tags: prepare
   become: yes
 
+- name: install Unzip
+  yum:
+    name: unzip
+    state: latest
+  tags: prepare
+  become: yes
+
 - name: install python module pexpect
   pip:
     name: pexpect

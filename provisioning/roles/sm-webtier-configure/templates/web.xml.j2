@@ -1,0 +1,1428 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- (C) Copyright Hewlett-Packard Development Company, L.P. All Rights Reserved. -->
+<web-app version="2.5" metadata-complete="true" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+  <display-name>Service Manager</display-name>
+  <description>Service Manager</description>
+  <!--
+    ********************************************************************
+    Service Manager context parameters.
+    ********************************************************************
+  -->
+  <!-- Control sorting of the system navigator  -->
+  <context-param>
+    <param-name>sortNavItems</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>useJavaDynamicVersioning</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!--
+    ********************************************************************
+    Context parameters used to configure the CWC framework.
+    ********************************************************************
+  -->
+  <!-- Determines if the Navigation Frame is set to a specific width
+       If this param is not set, the Navigation Frame is resizable. -->
+  <!-- context-param>
+    <param-name>navFrameWidth</param-name>
+    <param-value>100</param-value>
+  </context-param -->
+  <!--Enable Enable More context Menu-->
+  <context-param>
+    <param-name>enableMoreContextMenu</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+
+  <!-- Use of the right panel (default is true, set to false to disable global search-->
+  <context-param>
+    <param-name>isRightPanelUsed</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!-- Enables to retain the collapse/expand state of list frame on list-detail page on page refreshed in session scope (default is false) -->
+  <context-param>
+    <param-name>enableListFrameStateRetain</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!-- Show the spell check button (default is false) -->
+  <context-param>
+    <param-name>showSpellCheck</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!-- Show the cwc help button (default is true) -->
+  <context-param>
+    <param-name>showHelp</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!-- The number of seconds that the mask message delays to display along with
+   the mask. The minimum is 1 second, the maximum is 30 seconds. The application
+   will use the default value 5 if any invalid value specified.
+  -->
+  <context-param>
+    <param-name>maskMessageDelay</param-name>
+    <param-value>1</param-value>
+  </context-param>
+
+  <!-- Specifies the delay before which the mask is automatically closed. This
+       parameter must be set to a value >= 60 seconds. If an invalid value is
+       specified, the default value 180 seconds will be used.
+   -->
+  <context-param>
+    <param-name>autoCloseMaskDelay</param-name>
+    <param-value>180</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>isCustomAuthenticationUsed</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <!-- Show the refresh nav tree button (default is false). This variable was changed
+  when standardizing from refresh/reset/reload to the "reload" naming convention.
+  -->
+  <context-param>
+    <param-name>showReloadNavButton</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!-- Show the favorite manager button (default is true) -->
+  <context-param>
+    <param-name>showFavMgrButton</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!-- Show the add favorite button (default is true) -->
+  <context-param>
+    <param-name>showAddFavButton</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!--show nav menu icon or not, the default value is false-->
+  <context-param>
+    <param-name>showNavIcon</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!--enable sidebar menu support, the default value is true-->
+  <context-param>
+    <param-name>enableSidebarMenu</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!--message bar, the format is showOrNot:autoHideOrNot:durationBeforeAutoHide(in seconds unit)-->
+  <context-param>
+    <param-name>messageBarInfo</param-name>
+    <param-value>true:true:4</param-value>
+  </context-param>
+  <context-param>
+    <param-name>messageBarWarning</param-name>
+    <param-value>true:true:6</param-value>
+  </context-param>
+  <context-param>
+    <param-name>messageBarError</param-name>
+    <param-value>true:false</param-value>
+  </context-param>
+  <context-param>
+    <param-name>startDayOfWeek</param-name>
+    <param-value>0</param-value>
+  </context-param>
+  <!-- enable recordlist odd/even row style. -->
+  <context-param>
+    <param-name>enableRecordlistOddEvenRowStyle</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!--
+    Control the encryption of network communication between the browser and the application server.
+    Set "secureLogin" to false if you do not use SSL connection to the web server.
+    Set the correct value for "sslPort" according to your current web server configurations.
+  -->
+  <context-param>
+    <param-name>secureLogin</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <context-param>
+    <param-name>sslPort</param-name>
+    <param-value>8443</param-value>
+  </context-param>
+  <!--
+    Enable CAC login mode.
+    Set "CACLogin" to false if you use basic authentication, to true if you want to enable CAC login mode.
+  -->
+  <context-param>
+    <param-name>CACLogin</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!-- Spring configuration files
+    Apps should use the ST security component as is, configuring
+    it via a security.properties file.  This app provides specifies
+    custom security in it's application-context.xml to change
+    the behavior, making it more suitable to the application.
+  -->
+  <context-param>
+    <param-name>contextConfigLocation</param-name>
+    <param-value>classpath*:application-context.xml classpath*:uimContext-sm.xml</param-value>
+  </context-param>
+
+  <!-- default size limitation for each file is 10 * 1024 kb = 10 M-->
+  <context-param>
+    <param-name>MaxAttachUploadSize</param-name>
+    <param-value>10240</param-value>
+  </context-param>
+  <!-- default size limitation for each file is 50 * 1024 kb = 50 M-->
+  <context-param>
+    <param-name>MaxTotalAttachUploadSize</param-name>
+    <param-value>51200</param-value>
+  </context-param>
+  <!-- if the duplicated attachment name is allowed when uploading attachment-->
+  <context-param>
+    <param-name>preventDuplicatedAttachmentName</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!--
+    Key bindings for commom operations. These key numbers are combined w/ the ALT key
+    to produce the complete keystroke.
+    Take note that certain third-party browser toolbars trap ALT+<key> for their own use.
+    Be sure to select keys that will not confict w/ such toolbar key mappings.
+  -->
+
+  <!-- The following are straight function keys without any futher key modifier (though you might need to use shift on Firefox) -->
+
+  <context-param>
+    <param-name>disableKeyHelp</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <param-name>functionKeyHelpCallback</param-name>
+    <param-value>showHelpInfo</param-value>
+  </context-param>
+
+  <!-- Method used for all Function Key call backs-->
+  <context-param>
+    <param-name>functionKeyCallback</param-name>
+    <param-value>smKeyHandler</param-value>
+  </context-param>
+
+  <!-- target page for application login, the default is cwc/login.jsp -->
+  <context-param>
+    <param-name>loginUrl</param-name>
+    <param-value>/smlogin.jsp</param-value>
+  </context-param>
+
+  <!-- target page for application logout, the default is cwc/login.jsp -->
+  <context-param>
+    <param-name>logoutUrl</param-name>
+    <!-- param-value>/goodbye.jsp</param-value -->
+    <param-value>goodbye.jsp</param-value>
+  </context-param>
+
+  <!-- if true, include auto-test api used by auto test frameworkjs -->
+  <context-param>
+    <param-name>autoTestSupport</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <!-- if true, uses non-minified debug versions of the js -->
+  <context-param>
+    <param-name>jsDebug</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!--
+    Soft limit for the number of application tabs a user can open in his browser before
+    getting a warning message. This parameter is NOT related in any way to the RAD Thread
+    number limiter defined on the Service Manager Server.
+    Defaults to 15.
+   -->
+  <context-param>
+    <param-name>openTabsSoftLimit</param-name>
+    <param-value>15</param-value>
+  </context-param>
+  <context-param>
+    <param-name>compactLayout</param-name>
+    <param-value>false</param-value>
+  </context-param>
+  <context-param>
+    <param-name>enableDialogPopup</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!--
+    branding related images and configuration files are stored in this folder,
+    specify the full path of a folder which has write privilege
+  -->
+  <context-param>
+    <param-name>customize-folder</param-name>
+    <param-value/>
+  </context-param>
+  <!--
+    It is reuqried to set it to true for Service Manager.
+  -->
+  <context-param>
+    <param-name>setPageLoadingStatus</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <!--
+    Path and file name of the icon file used by the browser to display a custom icon in the address bar.
+    This can be used by the customer to publish his own custom icon.
+    The icon file needs to be of the ICO format, and needs to contain at least one 16x16 bitmap (bit depth can be 8, 16, 24 or 32).
+    You can provide a relative URL (without the context root) or an absolute URL.
+    When not specified, the default icon will be the HP logo icon.
+    Uncomment this parameter to change the default value.
+  -->
+  <!--
+  <context-param>
+    <param-name>applicationIcon</param-name>
+    <param-value>/images/HPLogoSolidBlue.ico</param-value>
+  </context-param>
+  -->
+
+  <!--
+    Disable autocomplete for the login page by default. Set this parameter to false to enable autocomplete.
+  -->
+  <context-param>
+    <param-name>disableLoginAutoComplete</param-name>
+    <param-value>true</param-value>
+  </context-param>
+
+  <!--
+    There are three different styles for array field display in recordlist
+    1 - Truncation of the original content length of this column to the value defined by recordListArrayMaxChars (default)
+    2 - The array type column is not to be displayed
+    3 - Keep the original value, no change
+  -->
+  <context-param>
+    <param-name>recordListArrayDisplayStyle</param-name>
+    <param-value>1</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>recordListArrayMaxChars</param-name>
+    <param-value>100</param-value>
+  </context-param>
+
+  <!--The toggle of the Jump Address component on the toolbar, the default value is enable-->
+  <context-param>
+    <param-name>disableJumpAddress</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!--Enable auto complete for comfill widgets globally-->
+  <context-param>
+    <param-name>comfillAutoComplete</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!--This number indicates record number size fetched from server side at first time-->
+  <context-param>
+    <param-name>autoCompleteListSize</param-name>
+    <param-value>10</param-value>
+  </context-param>
+  <!--Delay time in milliseconds to trigger auto complete after user stopps typing characters-->
+  <context-param>
+    <param-name>autoCompleteDelayTime</param-name>
+    <param-value>200</param-value>
+  </context-param>
+  <!--The length of characters starting to trigger Auto Complete-->
+  <context-param>
+    <param-name>autoCompleteMinChars</param-name>
+    <param-value>3</param-value>
+  </context-param>
+  <!--If the character is contained in user input, auto complete will not cache values-->
+  <context-param>
+    <param-name>autoCompleteSkipCachingChar</param-name>
+    <param-value>/</param-value>
+  </context-param>
+
+  <context-param>
+    <param-name>enableExitConfirmMessage</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!-- Enable to add the magnify function for tables in the detail form -->
+  <context-param>
+    <param-name>enableTableMagnify</param-name>
+    <param-value>true</param-value>
+  </context-param>
+  <!-- set to 'true' to make editable table columns show '...' if cell value is too long,
+       and the whole table doesn't have horizontal scrollbar -->
+  <context-param>
+    <param-name>enableTableEllipsis</param-name>
+    <param-value>false</param-value>
+  </context-param>
+
+  <!-- if the count of side bar buttons is bigger than or equal to this configured number, these buttons will be collapsed.  -->
+  <context-param>
+    <param-name>sideBarButtonNumberToCollapse</param-name>
+    <param-value>4</param-value>
+  </context-param>
+
+  <mime-mapping>
+    <extension>properties</extension>
+    <mime-type>text/text</mime-type>
+  </mime-mapping>
+
+  <mime-mapping>
+    <extension>eot</extension>
+    <mime-type>application/octet-stream</mime-type>
+  </mime-mapping>
+
+  <!--
+    ********************************************************************
+    Filters and filter-mapping
+    Do not change the order of filters and filter-mapping.
+    ********************************************************************
+  -->
+
+  <filter>
+    <filter-name>LogFilter</filter-name>
+    <filter-class>com.hp.ov.sm.client.webtier.LogFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>DoSMitigationFilter</filter-name>
+    <filter-class>com.hp.ov.sm.client.webtier.DoSMitigationFilter</filter-class>
+    <init-param>
+      <param-name>maxRequestPerSecond</param-name>
+      <param-value>50</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>SetCharacterEncoding</filter-name>
+    <filter-class>com.hp.ov.cwc.web.EncodingFilter</filter-class>
+  </filter>
+
+  <!-- Response Compression filter used by the CWC framework -->
+  <filter>
+    <filter-name>Compression Filter</filter-name>
+    <filter-class>org.apache.compressionFilters.CompressionFilter</filter-class>
+    <init-param>
+      <param-name>compressionThreshold</param-name>
+      <param-value>512</param-value>
+    </init-param>
+    <init-param>
+      <param-name>debug</param-name>
+      <param-value>0</param-value>
+    </init-param>
+  </filter>
+
+  <!-- Spring security filter (proxy for the spring bean filter chain) -->
+  <filter>
+    <filter-name>Spring Security Filter Chain Proxy</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetBeanName</param-name>
+      <param-value>filterChainProxy</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>CacheControl</filter-name>
+    <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    <init-param>
+      <param-name>targetBeanName</param-name>
+      <param-value>cacheControlProxy</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>SMWebFilter</filter-name>
+    <filter-class>com.hp.ov.sm.client.webtier.Webfilter</filter-class>
+  </filter>
+  <filter>
+    <filter-name>UIMMainFilter</filter-name>
+    <filter-class>com.hp.bsm.uim.web.UIMFilter</filter-class>
+  </filter>
+
+
+  <!-- LWSSO filter for integrations using HP lightweight single sign-on
+       PLEASE NOTE: Uncomment this filter and the associated filter-mapping,
+       and see application-context.xml for additional configuration needed
+       for LWSSO. -->
+  <!--
+  <filter>
+    <filter-name>LWSSO</filter-name>
+    <filter-class>com.hp.sw.bto.ast.security.lwsso.LWSSOFilter</filter-class>
+  </filter>
+  -->
+
+  <!-- filter for IDM SSO integration -->
+  <filter>
+    <filter-name>IdmAuthFilter</filter-name>
+    <filter-class>com.hp.ccue.identity.web.filter.IdmAuthFilter</filter-class>
+    <init-param>
+      <param-name>lazyInit</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>multipleInstance</param-name>
+      <param-value>false</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>antiCSRFFilter</filter-name>
+    <filter-class>com.hp.ov.web.csrf.AntiCSRFFilter</filter-class>
+    <init-param>
+      <param-name>antiCSRFEnabled</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </filter>
+
+  <filter>
+    <filter-name>userLocaleFilter</filter-name>
+    <filter-class>com.hp.ov.sm.client.webtier.util.UserLocaleFilter</filter-class>
+  </filter>
+
+  <filter>
+    <filter-name>loginFilter</filter-name>
+    <filter-class>com.hp.ov.sm.client.webtier.LoginFilter</filter-class>
+  </filter>
+  <!--*****************************************************************************************
+      Filter Mappings
+
+      It is important to maintain the order of the filter mapping definitions
+      as defined below:
+        - filter mappings for compression for outbound response
+        - filter mappings for cache control for outbound requests
+        - filter mappings for Spring security filter chain proxy
+        - filter mappings for jsf and myfaces extensions and cwc extensions
+        - filter mappings for sitemesh
+        - filter mappings for menu navigator forwarder
+        - filter mappings for on-line help
+       In general, it is safer to remove unused filter mapping definitions, but always
+       maintain the order of the definitions in this section.
+   **********************************************************************************************
+  -->
+
+  <!-- log filter mapping -->
+  <filter-mapping>
+    <filter-name>LogFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+    <url-pattern>/cwc/nav.menu</url-pattern>
+    <url-pattern>/images/*</url-pattern>
+    <url-pattern>/servlet/*</url-pattern>
+    <url-pattern>/api/*</url-pattern>
+    <url-pattern>/attachments/*</url-pattern>
+    <url-pattern>/remotejs</url-pattern>
+    <url-pattern>/svgservice/*</url-pattern>
+    <url-pattern>/ce</url-pattern>
+    <url-pattern>/wf</url-pattern>
+    <url-pattern>/cm</url-pattern>
+    <url-pattern>/composition_manager/*</url-pattern>
+    <url-pattern>/uim/*</url-pattern>
+    <url-pattern>/branding/*</url-pattern>
+    <url-pattern>/colorindicator/css/*</url-pattern>
+    <url-pattern>/popupsubform</url-pattern>
+  </filter-mapping>
+
+  <!-- encoding filter mapping, must be put on the top of filter mapping list -->
+  <filter-mapping>
+    <filter-name>SetCharacterEncoding</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>DoSMitigationFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+  </filter-mapping>
+
+  <!--
+    Filter mappings for the CWC compression filter.
+    These are listed first so compression is the last change made to the outgoing response.
+  -->
+
+  <filter-mapping>
+    <filter-name>Compression Filter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>*.html</url-pattern>
+    <url-pattern>*.jsp</url-pattern>
+    <url-pattern>*.css</url-pattern>
+    <url-pattern>*.js</url-pattern>
+    <url-pattern>*.jpg</url-pattern>
+    <url-pattern>*.eot</url-pattern>
+    <url-pattern>*.ttf</url-pattern>
+    <url-pattern>*.woff</url-pattern>
+    <url-pattern>/wf/*</url-pattern>
+    <url-pattern>/api/calendar/*</url-pattern>
+  </filter-mapping>
+
+  <!-- filter mappings for Cache Control -->
+  <filter-mapping>
+    <filter-name>CacheControl</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <!-- LWSSO filter-mapping, please read description for LWSSO filter above
+       before uncommenting this. -->
+  <!--
+  <filter-mapping>
+    <filter-name>LWSSO</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  -->
+
+  <!-- filter mapping for IdmAuthFilter -->
+  <filter-mapping>
+    <filter-name>IdmAuthFilter</filter-name>
+    <url-pattern>*.do</url-pattern>
+    <url-pattern>/goodbye.jsp</url-pattern>
+  </filter-mapping>
+
+  <!-- filter mappings for Spring Security -->
+  <filter-mapping>
+    <filter-name>Spring Security Filter Chain Proxy</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+  <filter-mapping>
+    <filter-name>SMWebFilter</filter-name>
+    <url-pattern>/uim/*</url-pattern>
+    <url-pattern>/composition_manager/*</url-pattern>
+    <url-pattern>/createUimComponent.jsp</url-pattern>
+  </filter-mapping>
+  <!-- UIM filters -->
+  <filter-mapping>
+    <filter-name>UIMMainFilter</filter-name>
+    <url-pattern>/uim/*</url-pattern>
+    <url-pattern>/composition_manager/*</url-pattern>
+    <url-pattern>/createUimComponent.jsp</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>antiCSRFFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>userLocaleFilter</filter-name>
+    <url-pattern>/*</url-pattern>
+  </filter-mapping>
+
+  <filter-mapping>
+    <filter-name>loginFilter</filter-name>
+    <url-pattern>/login/*</url-pattern>
+  </filter-mapping>
+
+  <!--
+    ****************************
+    Listeners
+    ****************************
+  -->
+  <!-- Register Wink RuntimeDelegateImpl to avoid the confilict between Wink and Jersey in weblogic -->
+  <listener>
+    <listener-class>com.hp.ov.sm.client.webtier.WinkRuntimeDelegateContextListener</listener-class>
+  </listener>
+
+  <!-- CWC bootstrapping -->
+  <listener>
+    <listener-class>com.hp.ov.cwc.web.CwcServletContextListener</listener-class>
+  </listener>
+
+  <!--
+    Loads the root application context of this web app at startup.
+    The application context is then available via
+    WebApplicationContextUtils.getWebApplicationContext(servletContext).
+  -->
+  <listener>
+    <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+  </listener>
+  <listener>
+    <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  </listener>
+
+  <!--
+    Spring Security
+    The HttpSessionEventPublisher will publish HttpSessionCreatedEvent
+    and HttpSessionDestroyedEvent to the WebApplicationContext.
+  -->
+  <listener>
+    <listener-class>org.springframework.security.web.session.HttpSessionEventPublisher</listener-class>
+  </listener>
+
+  <!--
+    Apache Fileupload
+    This listener will clean up temp files generated via uploading files
+
+   -->
+  <listener>
+    <listener-class>
+      org.apache.commons.fileupload.servlet.FileCleanerCleanup
+    </listener-class>
+  </listener>
+
+  <!--
+    ****************************
+    Servlets
+    ****************************
+  -->
+  <servlet>
+    <description/>
+    <display-name>HP Service Manager Web</display-name>
+    <servlet-name>HP Service Manager Web</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.WebControllerServlet</servlet-class>
+    <!--
+    ********************************************************
+      The following parameters can also be supplied in the URL
+    ********************************************************
+    -->
+    <init-param>
+      <!-- Specify the HP Service Manager server host and port location -->
+      <param-name>serverHost</param-name>
+      <param-value>{{ sm_serverHost }}</param-value>
+    </init-param>
+    <init-param>
+      <param-name>serverPort</param-name>
+      <param-value>13080</param-value>
+    </init-param>
+    <init-param>
+      <param-name>honorUrlHost</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <init-param>
+      <param-name>honorUrlPort</param-name>
+      <param-value>false</param-value>
+    </init-param>
+
+    <!-- Sets the timeout in seconds when reading from the socket. A timeout equals to or
+         less than zero means the socket connection will never time out.
+    -->
+    <init-param>
+      <param-name>socketReadTimeout</param-name>
+      <param-value>180</param-value>
+    </init-param>
+
+    <!-- Sets the timeout in seconds to acquire the lock of the connection to the SM server.
+         The value must be greater than 0.
+    -->
+    <init-param>
+      <param-name>lockWaitTimeout</param-name>
+      <param-value>15</param-value>
+    </init-param>
+    <!--
+      ESS users would override this with URL param.
+      But the application could be set to always operate in ESS mode if this
+      were set to true. If so the user will not need to have that parameter set.
+      When it is true the server is notifed so that the correct applications are initialized.
+    -->
+    <init-param>
+      <param-name>essuser</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <!-- Enable background checking of status messages. When enabled
+      the user's browser issues requests back to the server on timed
+      basis and updates the client's message bar with new messages if
+      any are supplied. -->
+    <init-param>
+      <param-name>refreshMessages</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <!-- Number of milliseconds between message refresh check -->
+      <param-name>refreshMessagesInterval</param-name>
+      <param-value>15000</param-value>
+    </init-param>
+    <!-- Enable to support the display of active note messages -->
+    <init-param>
+      <param-name>viewactivenotes</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <!-- Specify the location of help server. If defined, the browser
+      provides the user with a link to online help page -->
+    <init-param>
+      <param-name>helpServerHost</param-name>
+      <param-value/>
+    </init-param>
+    <init-param>
+      <param-name>helpServerPort</param-name>
+      <param-value/>
+    </init-param>
+    <!-- Enable to prompt the user to save their changes if they modify a record
+         and then attempt to leave the screen without saving -->
+    <init-param>
+      <param-name>viewpromptforsave</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- Enables split list/detail display after a search is performed. -->
+    <init-param>
+      <param-name>viewrecordlist</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- Enables submission of forms when the user presses the ENTER key. -->
+    <init-param>
+      <param-name>autoSubmit</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- Enables secure encoding of queries -->
+    <init-param>
+      <param-name>querySecurity</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- Use of the custom tab orders defined in the form designer to set the tabindex
+         attributes. Default is false and the tabindex is set to blanks which will
+         let the browsers determine the tab orders. -->
+    <init-param>
+      <param-name>useservertabs</param-name>
+      <param-value>false</param-value>
+    </init-param>
+    <!-- Switch to change backgroundstyle of labels from Solid Background Bar to Underline.
+         Default is true and the background style of  labels is underline -->
+    <init-param>
+      <param-name>labelbgunderline</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!--
+    ********************************************************
+      The following parameters can't be supplied in the URL: they can only be changed in web.xml
+    ********************************************************
+    -->
+    <!-- Control the encryption of network communication between the application server
+         and the HP Service Manager server -->
+    <init-param>
+      <param-name>ssl</param-name>
+      <param-value>false</param-value>
+    </init-param>
+
+    <!-- Specify the CA certificate store to use in encrypted communication.
+         Currently, the JDK's default jre/lib/security/cacerts file is used. -->
+    <!-- If this is a relative path, it will be relative to the web application's deploy directory
+         but still needs a leading slash.
+         Sample: /WEB-INF/cacerts -->
+    <init-param>
+      <param-name>cacerts</param-name>
+      <param-value/>
+    </init-param>
+    <!-- Specify the client's private keystore to use in encrypted communication. This is necessary
+         for client authentication when using single sign-on, but not for a standard SSL connection. -->
+    <!-- If this is a relative path, it will be relative to the web application's deploy directory
+         but still needs a leading slash.
+         Sample: /WEB-INF/client.keystore -->
+    <init-param>
+      <param-name>keystore</param-name>
+      <param-value/>
+    </init-param>
+    <!-- Specify the JCE Provider name here -->
+    <init-param>
+      <param-name>JCEProviderName</param-name>
+      <param-value/>
+    </init-param>
+    <!-- Specify the JCE Provider class name here, the full name includes the package name -->
+    <init-param>
+      <param-name>JCEProviderClassName</param-name>
+      <param-value/>
+    </init-param>
+
+    <!-- Specify whether the webtier connects to an external load balancer or not.
+         Default is false  -->
+    <init-param>
+      <param-name>externalLB</param-name>
+      <param-value>true</param-value>
+    </init-param>
+
+    <!-- Accept browser language preference for TSO language settings if "lang" parameter
+         is not set in the URL. By default browser language perference has higher priority
+         than the language defined in the operator's profile. If you want operator's
+         profile language setting to take effect when no "lang" parameter in the TSO
+         environment, please set this value to false.  -->
+    <init-param>
+      <param-name>acceptBrowserLang</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <!-- Compress network communication between the application server
+         and the HP Service Manager server -->
+    <init-param>
+      <param-name>compress_soap</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <description>A compression capable servlet used for downloading file
+      attachments associated with the current DBMS record.
+    </description>
+    <display-name>Attachment Download Servlet</display-name>
+    <servlet-name>AttachmentDownload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileDownloadServlet</servlet-class>
+    <init-param>
+      <param-name>scope</param-name>
+      <param-value>attachmentsOnly</param-value>
+    </init-param>
+    <init-param>
+      <param-name>disableCompression</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceDownload</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>A compression capable servlet used for downloading file
+      attachments associated with the current DBMS record.
+    </description>
+    <display-name>File Download Servlet</display-name>
+    <servlet-name>FileDownload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileDownloadServlet</servlet-class>
+    <init-param>
+      <param-name>scope</param-name>
+      <param-value>attachmentsOnly</param-value>
+    </init-param>
+    <init-param>
+      <param-name>forceDownload</param-name>
+      <param-value>true</param-value>
+    </init-param>
+    <init-param>
+      <param-name>disableCompression</param-name>
+      <param-value>true</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>File Upload Servlet.</description>
+    <display-name>File Upload Servlet</display-name>
+    <servlet-name>FileUpload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileUploadServlet</servlet-class>
+    <init-param>
+      <param-name>allowed</param-name>
+      <param-value>bmp,jpg,jpeg,png,gif,txt,log,unl,csv</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Image Upload Servlet.</description>
+    <display-name>Image Upload Servlet</display-name>
+    <servlet-name>ImageUpload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.ImageUploadServlet</servlet-class>
+    <init-param>
+      <param-name>success</param-name>
+      <param-value>../imageUploaded.jsp</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Attachment upload servlet</description>
+    <display-name>Attachment Upload Servlet</display-name>
+    <servlet-name>AttachmentUpload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileUploadServlet</servlet-class>
+    <init-param>
+      <param-name>allowed</param-name>
+      <param-value>bmp,jpg,jpeg,png,gif,txt,log,unl,csv</param-value>
+    </init-param>
+    <init-param>
+      <param-name>success</param-name>
+      <param-value>../attachmentUploaded.jsp</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Attachment upload servlet for AJAX request</description>
+    <display-name>Attachment Upload Servlet for AJAX request</display-name>
+    <servlet-name>AttachmentUploadAjax</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileUploadAjaxServlet</servlet-class>
+    <init-param>
+      <param-name>allowed</param-name>
+      <param-value>bmp,jpg,jpeg,png,gif,txt,log,unl,csv</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Attachment upload servlet for Html Editor AJAX request</description>
+    <display-name>Attachment Upload Servlet for Html Editor AJAX request</display-name>
+    <servlet-name>HtmlEditorUploadAjax</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileUploadHtmlEditorAjaxServlet</servlet-class>
+    <init-param>
+      <param-name>allowed</param-name>
+      <param-value>bmp,jpg,jpeg,png,gif,txt,log,unl,csv</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Unique attachment upload servlet</description>
+    <display-name>Unique Upload Servlet</display-name>
+    <servlet-name>UniqueUpload</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.FileUploadServlet</servlet-class>
+    <init-param>
+      <param-name>allowed</param-name>
+      <param-value>bmp,jpg,jpeg,png,gif,txt,log,unl,csv</param-value>
+    </init-param>
+    <init-param>
+      <param-name>success</param-name>
+      <param-value>../uniqueUploaded.jsp</param-value>
+    </init-param>
+  </servlet>
+  <servlet>
+    <description>Servlet allowing download of an attachment from any record in the database</description>
+    <display-name>Attachment Servlet</display-name>
+    <servlet-name>Attachment</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.AttachmentServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet allowing download of an attachment image from any record in the database and scale it for display</description>
+    <display-name>Image Servlet</display-name>
+    <servlet-name>Image</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.ImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Export Diagram</description>
+    <display-name>Export Diagram Servlet</display-name>
+    <servlet-name>ExportDiagram</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.MXGraphExportServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Customize Image</description>
+    <display-name>Customize Image Servlet</display-name>
+    <servlet-name>CustomizeImage</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.branding.BrandingImageServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Color Indicator CSS</description>
+    <display-name>Color Indicator Servlet</display-name>
+    <servlet-name>ColorIndicatorCss</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.colorIndicator.ColorIndicatorCssServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Branding Configuration</description>
+    <display-name>Branding Configuration Servlet</display-name>
+    <servlet-name>BrandingConfiguration</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.branding.BrandingServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Branding CSS</description>
+    <display-name>Branding CSS Servlet</display-name>
+    <servlet-name>BrandingCss</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.branding.BrandingCssServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet to get a graph definition or update from an application</description>
+    <display-name>Graph Servlet</display-name>
+    <servlet-name>Graph</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.GraphServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet to get content of a Popup Subform</description>
+    <display-name>Popup Subform</display-name>
+    <servlet-name>PopupSubform</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.HoverFormServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet in charge of messages management</description>
+    <display-name>Messages</display-name>
+    <servlet-name>Messages</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.MessagesServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet allowing download of HTML content to display in HTML viewer</description>
+    <display-name>Html Viewer</display-name>
+    <servlet-name>HtmlViewer</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.HtmlViewerServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Servlet to open a record or list from a link in the HTML viewer</description>
+    <display-name>Record Link</display-name>
+    <servlet-name>RecordLink</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.LinkServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Navigation Menu Servlet</description>
+    <display-name>Navigation Menu</display-name>
+    <servlet-name>NavMenu</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.NavMenuServlet</servlet-class>
+  </servlet>
+  <!-- UIM servlets -->
+  <servlet>
+    <servlet-name>PageGalleryServicesServlet</servlet-name>
+    <servlet-class>com.hp.bsm.uim.compositionmng.server.services.PageGalleryServicesImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ComponentDefsGalleryServicesServlet</servlet-name>
+    <servlet-class>com.hp.bsm.uim.compositionmng.server.services.ComponentDefsGalleryServicesImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>EventServicesServlet</servlet-name>
+    <servlet-class>com.hp.bsm.uim.compositionmng.server.services.EventServicesImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>SecurityServicesServlet</servlet-name>
+    <servlet-class>com.hp.bsm.uim.compositionmng.server.services.SecurityServicesImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>remoteLoggerServiceImpl</servlet-name>
+    <servlet-class>com.allen_sauer.gwt.log.server.RemoteLoggerServiceImpl</servlet-class>
+  </servlet>
+  <servlet>
+    <servlet-name>ExportsServlet</servlet-name>
+    <servlet-class>com.hp.bsm.uim.web.ExportsServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <description>WorkflowCrudServlet</description>
+    <display-name>WorkflowCrudServlet</display-name>
+    <servlet-name>WorkflowCrudServlet</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.servlets.WorkflowCrudServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <description>ConditionEditorServlet</description>
+    <display-name>ConditionEditorServlet</display-name>
+    <servlet-name>ConditionEditorServlet</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.servlets.ConditionEditorServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>ChangeModelServlet</description>
+    <display-name>ChangeModelServlet</display-name>
+    <servlet-name>ChangeModelServlet</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.servlets.ChangeModelServlet</servlet-class>
+  </servlet>
+
+  <servlet>
+    <description>Calendar Rest application</description>
+    <servlet-name>CalendarApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.calendar.CalendarApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.calendar.CalendarApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <description>In-Tool report application</description>
+    <servlet-name>ReportApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.report.ReportApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.report.ReportApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <description>SMC Rest application</description>
+    <servlet-name>SmcApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.smc.SmcApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.smc.SmcApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet>
+    <description>TodoAlert Rest application</description>
+    <servlet-name>TodoAlertApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.todoalert.TodoAlertApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.todoalert.TodoAlertApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <description>Live Content Application</description>
+    <servlet-name>LiveContentApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.live.LiveContentApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.live.LiveContentApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <description>Healthz Rest Application</description>
+    <servlet-name>HealthzApplication</servlet-name>
+    <servlet-class>org.apache.wink.server.internal.servlet.RestServlet</servlet-class>
+    <init-param>
+      <param-name>javax.ws.rs.Application</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.healthz.HealthzApplication</param-value>
+    </init-param>
+    <init-param>
+      <param-name>requestProcessorAttribute</param-name>
+      <param-value>com.hp.ov.sm.client.webtier.healthz.HealthzApplication</param-value>
+    </init-param>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+
+  <servlet>
+    <description>SVGConverterServlet</description>
+    <display-name>SVGConverterServlet</display-name>
+    <servlet-name>SVGConverterServlet</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.report.SVGConverterServlet</servlet-class>
+  </servlet>
+  <servlet>
+    <description>Service Manager - Remote JavaScript Call Servlet</description>
+    <display-name>Remote JavaScript Call</display-name>
+    <servlet-name>remotejs</servlet-name>
+    <servlet-class>com.hp.ov.sm.client.webtier.remotejs.RemoteJavaScriptServlet</servlet-class>
+  </servlet>
+
+
+  <!-- ******************************************************** Servlet Mappings
+    ******************************************************** -->
+
+  <servlet-mapping>
+     <servlet-name>CalendarApplication</servlet-name>
+     <url-pattern>/api/calendar/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ReportApplication</servlet-name>
+    <url-pattern>/api/report/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SmcApplication</servlet-name>
+    <url-pattern>/api/smc/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>TodoAlertApplication</servlet-name>
+    <url-pattern>/api/todoalert/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>LiveContentApplication</servlet-name>
+    <url-pattern>/api/live/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>HealthzApplication</servlet-name>
+    <url-pattern>/api/healthz/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>SVGConverterServlet</servlet-name>
+    <url-pattern>/svgservice/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ConditionEditorServlet</servlet-name>
+    <url-pattern>/ce</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>WorkflowCrudServlet</servlet-name>
+    <url-pattern>/wf</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>ChangeModelServlet</servlet-name>
+    <url-pattern>/cm</url-pattern>
+  </servlet-mapping>
+
+  <!-- Servlet Mappings for UIM -->
+  <servlet-mapping>
+    <servlet-name>remoteLoggerServiceImpl</servlet-name>
+    <url-pattern>/composition_manager/gwt-log</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/gwt-log</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PageGalleryServicesServlet</servlet-name>
+    <url-pattern>/composition_manager/PageGalleryServices_srv</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/PageGalleryServices_srv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ComponentDefsGalleryServicesServlet</servlet-name>
+    <url-pattern>/composition_manager/ComponentDefsGalleryServices_srv</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/ComponentDefsGalleryServices_srv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>EventServicesServlet</servlet-name>
+    <url-pattern>/composition_manager/EventServices_srv</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/EventServices_srv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>SecurityServicesServlet</servlet-name>
+    <url-pattern>/composition_manager/SecurityServices_srv</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/SecurityServices_srv</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportsServlet</servlet-name>
+    <url-pattern>/composition_manager/exportData/*</url-pattern>
+    <url-pattern>/uim/9.61.0019/composition_manager/exportData/*</url-pattern>
+  </servlet-mapping>
+
+  <servlet-mapping>
+    <servlet-name>HP Service Manager Web</servlet-name>
+    <url-pattern>*.do</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileDownload</servlet-name>
+    <url-pattern>/servlet/download/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AttachmentDownload</servlet-name>
+    <url-pattern>/attachments/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>FileUpload</servlet-name>
+    <url-pattern>/servlet/upload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ImageUpload</servlet-name>
+    <url-pattern>/servlet/imageupload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AttachmentUpload</servlet-name>
+    <url-pattern>/servlet/attachmentupload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>AttachmentUploadAjax</servlet-name>
+    <url-pattern>/servlet/attachmentuploadAjax</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HtmlEditorUploadAjax</servlet-name>
+    <url-pattern>/servlet/htmlEditorUploadAjax</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>UniqueUpload</servlet-name>
+    <url-pattern>/servlet/uniqueupload</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Attachment</servlet-name>
+    <url-pattern>/servlet/attachment/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Image</servlet-name>
+    <url-pattern>/servlet/image</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ExportDiagram</servlet-name>
+    <url-pattern>/servlet/ExportDiagram</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>CustomizeImage</servlet-name>
+    <url-pattern>/images/*</url-pattern>
+    <url-pattern>/branding/imageupload</url-pattern>
+    <url-pattern>/chM/images/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BrandingConfiguration</servlet-name>
+    <url-pattern>/branding/configuration</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>ColorIndicatorCss</servlet-name>
+    <url-pattern>/colorindicator/css/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>BrandingCss</servlet-name>
+    <url-pattern>/branding/css/*</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Graph</servlet-name>
+    <url-pattern>/servlet/graph</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>PopupSubform</servlet-name>
+    <url-pattern>/popupsubform</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>Messages</servlet-name>
+    <url-pattern>/servlet/messages</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>HtmlViewer</servlet-name>
+    <url-pattern>/servlet/htmlviewer</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>RecordLink</servlet-name>
+    <url-pattern>/servlet/recordlink</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>NavMenu</servlet-name>
+    <url-pattern>/cwc/nav.menu</url-pattern>
+  </servlet-mapping>
+  <servlet-mapping>
+    <servlet-name>remotejs</servlet-name>
+    <url-pattern>/remotejs</url-pattern>
+  </servlet-mapping>
+  <!-- The following session-timeout value is in minutes. If a user closes a browser
+  window without logging out, the application server will wait this long before
+  sending HP Service Manager a request to end the user's scenter process. -->
+  <session-config>
+    <session-timeout>15</session-timeout>
+  </session-config>
+
+  <!--
+    ****************************
+    Welcome and error pages.
+    ****************************
+  -->
+  <!-- Required entry (default is cwc/index.jsp)
+  Not recommended to be anything other than /cwc/index.jsp. In index.jsp,
+  if user is not authenticated, then jsp redirects to "loginUrl" parameter.
+  -->
+  <welcome-file-list>
+    <welcome-file>index.html</welcome-file>
+  </welcome-file-list>
+
+  <error-page>
+    <error-code>401</error-code>
+    <location>/cwc/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>403</error-code>
+    <location>/cwc/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/cwc/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>405</error-code>
+    <location>/cwc/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>503</error-code>
+    <location>/cwc/error.jsp</location>
+  </error-page>
+  <error-page>
+    <error-code>500</error-code>
+    <location>/goodbye.jsp</location>
+  </error-page>
+
+  <!-- Required entry. Location of error page to display (default is /cwc/error.jsp).
+    You may add additional exception types and the associated JSP to display
+    the specific errors. -->
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/smerror.jsp</location>
+  </error-page>
+
+  <jsp-config>
+    <!-- UIM taglib -->
+    <taglib>
+      <taglib-uri>/tags/jstl-core</taglib-uri>
+      <taglib-location>/WEB-INF/act/tlds/c.tld</taglib-location>
+    </taglib>
+    <jsp-property-group>
+      <url-pattern>*.jsp</url-pattern>
+      <el-ignored>false</el-ignored>
+      <page-encoding>UTF-8</page-encoding>
+    </jsp-property-group>
+  </jsp-config>
+
+  <!--
+    ****************************
+    env-entry
+    ****************************
+  -->
+  <!-- Location of the Log4J properties file (default is /WEB-INF/classes/log4j.properties) -->
+  <env-entry>
+    <description>Log4j configuration properties file location</description>
+    <env-entry-name>log.properties</env-entry-name>
+    <env-entry-type>java.lang.String</env-entry-type>
+    <env-entry-value>/WEB-INF/log4j.properties</env-entry-value>
+  </env-entry>
+
+
+</web-app>

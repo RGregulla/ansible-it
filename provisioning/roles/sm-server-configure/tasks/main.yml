@@ -7,6 +7,13 @@
     owner: "{{ install_user }}"
     mode: 0755
 
+- name: create temporary license
+  shell: "{{ sm_install_server_dir }}/RUN/sm -instanton"
+  args:
+    executable: /bin/bash
+    chdir: "{{ sm_install_server_dir }}/RUN"
+  tags: license
+
 - name: unlock database
   shell: "{{ sm_install_server_dir }}/RUN/sm -unlockdatabase"
   args:
