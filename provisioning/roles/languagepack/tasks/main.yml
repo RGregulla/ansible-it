@@ -35,6 +35,7 @@
       'PRESS \<ENTER\> TO CONTINUE:' : ''
       'DO YOU ACCEPT THE TERMS OF THIS LICENSE AGREEMENT?' : 'Y'
       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
+      'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
     timeout: 90
   tags: install
