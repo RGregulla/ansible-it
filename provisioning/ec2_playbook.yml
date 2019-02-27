@@ -10,6 +10,7 @@
     # Red Hat Base Image
     main_image: ami-c86c3f23
     vpc_subnet_id: subnet-0b2309824de2d87bb
+    iam_role: S3Reader
 
   tasks:
     - name: create ec2 instance from ami
@@ -29,6 +30,7 @@
             volume_size: 30
         instance_tags:
           Name: sm-server-ami
+        instance_profile_name: "{{ iam_role }}"
         # Wait for the instance
       register: ec2
 
