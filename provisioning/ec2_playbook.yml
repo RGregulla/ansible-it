@@ -11,6 +11,7 @@
     main_image: ami-c86c3f23
     vpc_subnet_id: subnet-0b2309824de2d87bb
     iam_role: S3Reader
+    sm_server_version: 9.61
 
   tasks:
     - name: create ec2 instance from ami
@@ -30,6 +31,7 @@
             volume_size: 30
         instance_tags:
           Name: sm-server-ami
+          Version: "{{ sm_server_version }}"
         instance_profile_name: "{{ iam_role }}"
         # Wait for the instance
       register: ec2
@@ -88,6 +90,7 @@
     sm_postgres_user: postgres
     #sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
     sm_server_dbport: 5432
+    remote_src: yes
     java:
       home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
       source:
@@ -108,12 +111,8 @@
   roles:
     - prepare-ansible
     - common
-    - get-rdsfacts
-#    - sm-postgres
-#    - prepare-postgres
     - jdk
     - sm-server
-#    - sm-webtier
 
 #
 # Create AMI from Temporary Instance

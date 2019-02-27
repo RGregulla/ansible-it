@@ -1,0 +1,22 @@
+---
+
+- name: add sm.ini
+  template:
+    src: sm.ini
+    dest: "{{ sm_install_server_dir }}/RUN"
+    owner: "{{ install_user }}"
+    mode: 0755
+
+- name: unlock database
+  shell: "{{ sm_install_server_dir }}/RUN/sm -unlockdatabase"
+  args:
+    executable: /bin/bash
+    chdir: "{{ sm_install_server_dir }}/RUN"
+  tags: unlock_database
+
+- name: start sm
+  shell: "{{ sm_install_server_dir }}/RUN/smstart"
+  args:
+    executable: /bin/bash
+    chdir: "{{ sm_install_server_dir }}/RUN"
+  tags: start_sm
