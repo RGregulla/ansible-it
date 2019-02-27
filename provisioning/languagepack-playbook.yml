@@ -1,6 +1,6 @@
 ---
 - hosts: all
-  ansible_user: ec2-user
+  remote_user: ec2-user
   vars:
     install_user: ec2-user
   roles:
