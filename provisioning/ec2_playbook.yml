@@ -42,8 +42,12 @@
       with_items: "{{ ec2.instances }}"
 
     - name: Wait for SSH to come up
-      wait_for: host={{ item.private_ip }} port=22 delay=120 timeout=320 state=started
+      wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
       with_items: "{{ ec2.instances }}"
+
+    # - name: Wait for SSH to come up
+    #   wait_for: host={{ item.private_ip }} port=22 delay=180 timeout=320 state=started
+    #   with_items: "{{ ec2.instances }}"
 
 #
 # Wait for the Image
@@ -52,6 +56,7 @@
   remote_user: ec2-user
   vars:
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    host_key_checking: false
 
   tasks:
 
@@ -59,7 +64,12 @@
       retries: 20
       register: cmd_res
       changed_when: false
-      until: cmd_res | success
+      #until: cmd_res | success
+      until: cmd_res is success
+
+    - name: some output
+      debug:
+        msg: "System up & running"
 
 #
 # Install sm-server om the created aws instance
@@ -77,12 +87,46 @@
     - name: debug all facts
       debug: var=ansible_facts
 
-    - name: debug all facts
-      debug: var=ec2
+    - name: some output
+      local_action:
+        module: debug
+        var: hostvars
 
-#
-# Terminate temporary Instance
-#
+    # - name: some output
+    #   local_action:
+    #     module: debug
+    #     msg: "System is {{ hostvars[groups['sm-server'][0]]['instance_id'] }}"
+
+- hosts: sm-server
+  remote_user: ec2-user
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+
+  tasks:
+
+    - name: get all ec2 facts
+      ec2_metadata_facts:
+
+    - name: dummy
+      local_action: command echo "Willy" >> ~/.dummy
+
+    - name: Show instance-id
+      local_action:
+        module: debug
+        msg: "System Instance-Id is {{ ec2_instance_id }}"
+
+    # Basic AMI Creation
+    - name: create AMI
+      local_action:
+        module:  ec2_ami
+        instance_id: "{{ ec2_instance_id }}"
+        region: "{{ ec2_placement_region }}"
+        wait: yes
+        name: newtest
+        tags:
+          Name: sm-server
+
+# # Terminate temporary Instance
 # - hosts: sm-server
 #   remote_user: ec2-user
 #   vars:
@@ -95,7 +139,7 @@
 #             module: ec2
 #             region: "{{ aws_region }}"
 #             state: 'absent'
-#             instance_ids: "{{ hostvars[groups['launched'][0]]['instance_id'] }}"
+#             instance_ids: "{{ hostvars[groups['sm-server'][0]]['instance_id'] }}"
 #             wait: True
 #         tags: terminateInstance
 #       with_items: "{{ ec2.instances }}"

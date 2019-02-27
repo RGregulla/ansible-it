@@ -175,7 +175,7 @@
       '\(Default: 18000\)' : "{{ image_server_port }}"
       # ---CFS---
       '\(Default: 7000\)' : "{{ cfs_port }}"
-    timeout: 90
+    timeout: 120
   tags: install_analytics
 
 # - name: add register.body
