@@ -1,0 +1,19 @@
+---
+
+install_user: vagrant
+
+version: servicemanager-9.6.0
+s3_bucket: gregulla.itsm.stuff
+s3_bin_path: itsm
+s3_patch_path: itsm
+sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
+install_filepath: /opt/itsm
+install_bin_path: /opt/itsm/Installation/Server
+java_home: /usr/lib/jvm/jre
+sm_install_dir: /opt/MicroFocus
+sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+sm_patch_path: /opt/itsm/patches
+sm_patch_file: HPSM_00946-SM-Server-Patch-Linux-961.tar
+sm_patch_patch: sm9.61.0019_Linux-x86.tar
+sm_patch_cmd: PatchSetup.sh
+sm_patch_backup: /opt/itsm/backup

@@ -1,13 +1,13 @@
 ---
 
-- name: install Tomcat for Service Manger Webtier
-  yum:
-    name:
-       - tomcat
-    state: present
-  tags: tomcat
-  become: yes
-
+# - name: install Tomcat for Service Manger Webtier
+#   yum:
+#     name:
+#        - tomcat
+#     state: present
+#   tags: tomcat
+#   become: yes
+#
 - name: copy webtier Archive from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
@@ -17,22 +17,30 @@
     mode: get
 
 - name: Unarchive webtier Archive
-  unarchive: src={{ webtier_target }}/{{ s3_webtier_archive }} dest={{ tomcat_webtier_path }} mode=0755 owner={{ tomcat_user}} group={{ tomcat_group }}
+  unarchive:
+    src: "{{ webtier_target }}/{{ s3_webtier_archive }}"
+    dest: "{{ tomcat_webtier_path }}"
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
+    remote_src: "{{ remote_src }}"
   tags: prepare
   become: yes
   notify: restart tomcat
 
-- name: generate ssl truststore
-  command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
-  become: yes
-
-- name: copy server.xml with ssl activated
-  copy:
-    src: server.xml
-    dest: "{{ tomcat_config_path }}"
-    #owner: "{{ tomcat_user }}"
-    owner: root
-    group: "{{ tomcat_group }}"
-    mode: 0755
-  become: yes
-  notify: restart tomcat
+# Moved to tomcat Role !!
+#
+# - name: generate ssl truststore
+#   command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
+#   become: yes
+#
+# - name: copy server.xml with ssl activated
+#   copy:
+#     src: server.xml
+#     dest: "{{ tomcat_config_path }}"
+#     #owner: "{{ tomcat_user }}"
+#     owner: root
+#     group: "{{ tomcat_group }}"
+#     mode: 0755
+#   become: yes
+#   notify: restart tomcat

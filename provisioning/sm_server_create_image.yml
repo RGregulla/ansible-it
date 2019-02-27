@@ -114,6 +114,7 @@
     - common
     - jdk
     - sm-server
+    - sm-server-patch
 
 #
 # Create AMI from Temporary Instance

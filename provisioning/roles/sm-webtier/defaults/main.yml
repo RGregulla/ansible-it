@@ -10,3 +10,4 @@ s3_webtier_path: itsm
 s3_webtier_archive: webtier-9.61.zip
 webxml_path: /opt/tomcat/webapps/webtier-9.61/WEB-INF/web.xml
 sm_serverHost: localhost
+remote_src: yes
