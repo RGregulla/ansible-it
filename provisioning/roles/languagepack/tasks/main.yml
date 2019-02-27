@@ -37,5 +37,5 @@
       'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
       'IS THIS CORRECT?' : 'Y'
       'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
-    timeout: 90
+    timeout: 600
   tags: install
