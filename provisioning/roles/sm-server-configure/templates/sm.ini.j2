@@ -33,7 +33,7 @@ ldapbindpass: {{ smini_ldap_passwd }}
 ldapsslallownocert:1
 ldapauthenticateonly
 #ldapdisable -> 0 aktiviert, 1 deaktiviert
-ldapdisable:"{{ smini_enable_ldap }}"
+ldapdisable:{{ smini_enable_ldap }}
 #[E-Mail Out Settings]
 #tbd
 

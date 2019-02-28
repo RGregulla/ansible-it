@@ -20,6 +20,6 @@
     force_basic_auth: yes
     status_code: 200
     body_format: json
-    remote_src: true
+    remote_src: "{{ remote_src }}"
     return_content: yes
   tags: register_analytics

@@ -23,3 +23,4 @@ sma_AnhangServer: 18.184.241.191
 sm_serverHost: 52.28.115.201
 sm_server_port: 13080
 sm_Rest_URL: /SM/9/rest/idolserverinfos/2
+remote_src: yes
