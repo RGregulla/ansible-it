@@ -15,3 +15,7 @@
     - get-smelbfacts
     - get-analyticselbfacts
     - analytics
+
+  environment:
+    http_proxy: http://webproxy.comp.db.de:8080
+    https_proxy: http://webproxy.comp.db.de:8080
