@@ -1,0 +1,10 @@
+install_user: ec2-user
+
+s3_bucket: itsm-classic-src
+s3_bin_path: Hersteller_Software
+languagepack_bin: Service_Manager_9.60_Language_Pack_SM960_LanguagePack.zip
+install_filepath: /opt/itsm/languagepack
+install_bin_path: /opt/itsm/languagepack/de/Installation
+install_bin: setupLinuxX64.bin
+sm_install_dir: /opt/MicroFocus
+sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
