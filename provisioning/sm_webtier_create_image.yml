@@ -58,9 +58,9 @@
 #
 - hosts: sm-webtier
   remote_user: ec2-user
+  host_key_checking: false
   vars:
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
-    host_key_checking: false
 
   tasks:
 
@@ -82,6 +82,7 @@
 - hosts: sm-webtier
   remote_user: ec2-user
   vars:
+    host_key_checking: false
     install_user: ec2-user
     java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
     java_home: /usr/lib/jvm/jre
@@ -99,9 +100,11 @@
 - hosts: sm-webtier
   remote_user: ec2-user
   vars:
+    host_key_checking: false
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
     ami_name: SM-Webtier
     sm_version: 9.61
+    host_key_checking: false
 
   tasks:
     - name: get all ec2 facts
@@ -119,7 +122,7 @@
         instance_id: "{{ ansible_ec2_instance_id }}"
         region: "{{ ansible_ec2_placement_region }}"
         wait: yes
-        name: "{{ ami_name }}-{{ sm_version }}"
+        name: "{{ ami_name }}-{{ sm_version }}.{{ ansible_date_time.date }}.{{  ansible_date_time.hour }}.{{  ansible_date_time.minute }}"
         tags:
           Name: sm-webtier
           Version: "{{ sm_version }}"
@@ -130,6 +133,7 @@
 - hosts: sm-webtier
   remote_user: ec2-user
   vars:
+    host_key_checking: false
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
 
   tasks:
