@@ -29,11 +29,9 @@
     - common
     - get-rdsfacts
     - set-javaprefs
-#    - sm-postgres
-#    - prepare-postgres
     - jdk
     - sm-server
-#    - sm-webtier
+    - languagepack
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
