@@ -2,9 +2,10 @@
 
 - name: add sm.ini
   template:
-    src: sm.ini
-    dest: "{{ sm_install_server_dir }}/RUN"
+    src: sm.ini.j2
+    dest: "{{ sm_install_server_dir }}/RUN/sm.ini"
     owner: "{{ install_user }}"
+    force: yes
     mode: 0755
 
 - name: create temporary license

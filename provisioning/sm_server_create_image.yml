@@ -116,6 +116,7 @@
     - jdk
     - sm-server
     - sm-server-patch
+    - languagepack
 
 #
 # Create AMI from Temporary Instance
