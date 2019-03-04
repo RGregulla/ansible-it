@@ -8,6 +8,14 @@
     force: yes
     mode: 0755
 
+- name: add sm.cfg
+  copy:
+    src: sm.cfg
+    dest: "{{ sm_install_server_dir }}/RUN/sm.cfg"
+    owner: "{{ install_user }}"
+    force: yes
+    mode: 0755
+
 - name: create temporary license
   shell: "{{ sm_install_server_dir }}/RUN/sm -instanton"
   args:
