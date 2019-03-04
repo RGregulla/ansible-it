@@ -113,8 +113,7 @@
 
   roles:
     - prepare-ansible
-    - tomcat
-    - sm-webtier
+    - analytics
 #    - sm-idm
 #
 # Create AMI from Temporary Instance
