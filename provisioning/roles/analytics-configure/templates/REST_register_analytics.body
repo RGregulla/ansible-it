@@ -3,10 +3,10 @@
    {
      "SmartAnalyticsServer": "http://{{ sma_AnalyticsServer }}:{{ analytics_main_port }}/",
      "CFSStandardserver": "http://{{ sma_CFSServer }}:{{ cfs_port }}/",
-     "AnhangServer": "http://{{ sma_AnhangServer }}:{{ image_server_port }}/"
+     "AnhangServer": "http://{{ sma_AnhangServer }}:{{ image_server_port }}/",
      "searchSVC": "",
      "indexSVC": "",
      "installerSVC": "",
-     "configSVC": ""     
+     "configSVC": ""
    }
 }
