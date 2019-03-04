@@ -6,7 +6,7 @@
     executable: /bin/bash
     chdir: "{{ analytics_install_dir }}/scripts"
   tags: start_analytics
-  ignore_erros: yes
+  ignore_errors: yes
 
 - name: Register analytics in sm-server
   uri:
