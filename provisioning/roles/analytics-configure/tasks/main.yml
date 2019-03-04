@@ -1,10 +1,10 @@
 ---
 
 - name: start analytics
-  shell: "{{ sm_install_server_dir }}/scripts/StartAll.sh"
+  shell: "{{ analytics_install_dir }}/scripts/StartAll.sh"
   args:
     executable: /bin/bash
-    chdir: "{{ sm_install_server_dir }}/scripts"
+    chdir: "{{ analytics_install_dir }}/scripts"
   tags: start_analytics
 
 - name: Register analytics in sm-server
