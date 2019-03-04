@@ -5,5 +5,5 @@ tomcat_group: tomcat
 
 webtier_target: /tmp
 tomcat_webtier_path: /opt/tomcat/webapps
-webxml_path: /opt/tomcat/webapps/webtier-9.61/WEB-INF/web.xml
+webxml_path: /opt/tomcat/webapps/webtier-9.62/WEB-INF/web.xml
 sm_serverHost: localhost
