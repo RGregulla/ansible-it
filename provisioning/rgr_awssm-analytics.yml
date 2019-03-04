@@ -9,4 +9,4 @@
   roles:
     - get-smelbfacts
     - get-analyticselbfacts
-    - analytics
+    - analytics-configure
