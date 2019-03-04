@@ -7,7 +7,7 @@ webtier_target: /tmp
 tomcat_webtier_path: /opt/tomcat/webapps
 s3_bucket: gregulla.itsm.stuff
 s3_webtier_path: itsm
-s3_webtier_archive: webtier-9.61.zip
+s3_webtier_archive: sm9.62.0016_Web_Tier.zip
 webxml_path: /opt/tomcat/webapps/webtier-9.61/WEB-INF/web.xml
 sm_serverHost: localhost
 remote_src: yes

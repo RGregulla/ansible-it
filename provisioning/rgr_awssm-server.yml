@@ -36,6 +36,7 @@
     - get-rdsfacts
 #    - sm-postgres
 #    - prepare-postgres
-    - jdk
-    - sm-server
+#    - jdk
+#    - sm-server
+    - sm-server-configure
 #    - sm-webtier

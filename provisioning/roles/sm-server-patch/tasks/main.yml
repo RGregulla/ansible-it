@@ -1,5 +1,12 @@
 ---
 
+# Prepare for interated JRE in 9.62
+- name: install glibc for java
+  yum:
+    name: glibc.i686
+  tags: java_install
+  become: yes
+
 - name: create patches installdir
   file: path={{ sm_patch_path }} state=directory mode=0755 owner={{ install_user }}
   tags: patch
@@ -46,6 +53,14 @@
 - name: create logdir
   file: path="{{ sm_install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
   tags: patch
+
+# chown because we will copy jre to SM Directory
+- name: chown of patch files
+  command: chown -R "{{ install_user }}" "{{ sm_patch_path }}"
+
+# Special in 9.62 because we have no jre in SM Server Directory
+- name: copy jre to SM
+  command: cp -R "{{ sm_patch_path }}/RUN/jre" "{{ sm_install_server_dir }}/RUN"
 
 - name: install itsm patch
   expect:

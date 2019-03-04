@@ -49,10 +49,17 @@
       wait_for: host={{ item.public_ip }} port=22 delay=60 timeout=320 state=started
       with_items: "{{ ec2.instances }}"
 
+    # - name: upgrade all packages
+    #   #environment: "{{ proxy_env }}"
+    #   yum:
+    #     name: '*'
+    #     state: latest
+    #   become: yes
+    #
     # - name: Wait for SSH to come up
     #   wait_for: host={{ item.private_ip }} port=22 delay=180 timeout=320 state=started
     #   with_items: "{{ ec2.instances }}"
-
+#ftp://SP21fa31:}IK3tg*A@ftp-pro.houston.softwaregrp.com/
 #
 # Wait for the Image
 #
@@ -71,6 +78,21 @@
       changed_when: false
       #until: cmd_res | success
       until: cmd_res is success
+
+    - name: Workaround for install Problem
+      command: rpm -Va --nofiles --nodigest
+      become: yes
+
+    - name: install epel
+      yum:
+        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
+      become: yes
+
+    - name: install pscs lite
+      yum:
+        name: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/pcsc-lite-devel-1.8.8-8.el7.x86_64.rpm
+        state: latest
+      become: yes
 
     - name: some output
       debug:
