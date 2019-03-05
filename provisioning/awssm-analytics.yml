@@ -14,7 +14,7 @@
   roles:
     - get-smelbfacts
     - get-analyticselbfacts
-    - analytics
+    - analytics-configure
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

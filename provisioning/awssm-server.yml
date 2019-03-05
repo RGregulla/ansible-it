@@ -26,12 +26,8 @@
     smini_enable_ldap: 1
 
   roles:
-    - common
     - get-rdsfacts
-    - set-javaprefs
-    - jdk
-    - sm-server
-    - languagepack
+    - sm-server-configure 
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

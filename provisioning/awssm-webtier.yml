@@ -14,8 +14,7 @@
 #    - common
 #    - jdk
     - get-smelbfacts
-    - tomcat
-    - sm-webtier
+    - sm-webtier-configure
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
