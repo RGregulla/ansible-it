@@ -1,0 +1,12 @@
+---
+
+- name: copy web.xml with target sm server
+  template:
+    src: web.xml.j2
+    dest: "{{ webxml_path }}"
+    owner: "{{ tomcat_user }}"
+    #owner: root
+    group: "{{ tomcat_group }}"
+    mode: 0755
+  become: yes
+  notify: restart tomcat

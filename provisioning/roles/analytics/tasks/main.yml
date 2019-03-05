@@ -177,6 +177,8 @@
       '\(Default: 7000\)' : "{{ cfs_port }}"
     timeout: 120
   tags: install_analytics
+<<<<<<< HEAD
+=======
 
 # - name: add register.body
 #   template:
@@ -202,3 +204,4 @@
     remote_src: "{{ remote_src }}"
     return_content: yes
   tags: register_analytics
+>>>>>>> 54fe6260e9dc42385a60f4dabb6dc067011b8662

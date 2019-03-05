@@ -24,10 +24,17 @@
     sm_server_port: 13080
     postgres_user: postgres
     smini_enable_ldap: 1
+    remote_src: yes
 
   roles:
+<<<<<<< HEAD
     - get-rdsfacts
     - sm-server-configure 
+=======
+#    - common
+    - get-rdsfacts
+    - sm-server-configure
+>>>>>>> 4e2f72410aacf5efa3ea1237e8a0368ddb9841ed
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

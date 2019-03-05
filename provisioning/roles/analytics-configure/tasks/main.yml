@@ -1,0 +1,26 @@
+---
+
+- name: start analytics
+  shell: "{{ analytics_install_dir }}/scripts/StartAll.sh"
+  args:
+    executable: /bin/bash
+    chdir: "{{ analytics_install_dir }}/scripts"
+  tags: start_analytics
+  ignore_errors: yes
+
+- name: Register analytics in sm-server
+  uri:
+    url: "http://{{ sm_serverHost }}:{{ sm_server_port }}{{ sm_Rest_URL }}"
+    method: POST
+    headers:
+      Content-Type: "application/json"
+    user: "{{ sm_Rest_User }}"
+    password: "{{ sm_Rest_User_Pwd }}"
+    #body: "{{ lookup('file', '{{ temp_dir }}/REST_register_analytics.body') }}"
+    body: "{{ lookup('template', 'REST_register_analytics.body') }}"
+    force_basic_auth: yes
+    status_code: 200
+    body_format: json
+    remote_src: "{{ remote_src }}"
+    return_content: yes
+  tags: register_analytics

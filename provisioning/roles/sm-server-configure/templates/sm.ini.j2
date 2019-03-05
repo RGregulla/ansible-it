@@ -8,7 +8,7 @@ external_lb:1
 system:{{ sm_server_port }}
 httpPort:{{ sm_server_port }}
 sslConnector:0
-shared_memory:200000000
+#shared_memory:200000000
 numberoflogfiles:20
 maxlogsize:10485760
 querysecurity:1
@@ -26,6 +26,7 @@ sqllogin:{{ sm_dbuser }}/{{ sm_dbpassword }}
 plugin0:libkmplugin.so
 
 #[ldap]
+ldapnostrictlogin:1
 ldapserver1:{{ smini_ldap_server }}
 ldapbinddn:{{ smini_ldap_binddn }}
 #LDAP Passwort

@@ -12,6 +12,7 @@
     sm_dbuser: smuser
     sm_dbpassword: smpassw0rd
     sm_postgres_user: postgres
+    sm_server_dbname: smdb
     #sm_server_dbhost: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
     sm_server_dbport: 5432
     java:
@@ -36,6 +37,7 @@
     - get-rdsfacts
 #    - sm-postgres
 #    - prepare-postgres
-    - jdk
-    - sm-server
+#    - jdk
+#    - sm-server
+    - sm-server-configure
 #    - sm-webtier
