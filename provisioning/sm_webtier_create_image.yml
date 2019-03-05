@@ -84,6 +84,9 @@
         name: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/pcsc-lite-devel-1.8.8-8.el7.x86_64.rpm
         state: latest
       become: yes
+      environment:
+        http_proxy: http://webproxy.comp.db.de:8080
+        https_proxy: http://webproxy.comp.db.de:8080
 
     - name: some output
       debug:
