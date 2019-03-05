@@ -124,7 +124,7 @@
     host_key_checking: false
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
     ami_name: SM-Analytics
-    sm_version: 9.61
+    sm_version: 9.62
     host_key_checking: false
 
   tasks:

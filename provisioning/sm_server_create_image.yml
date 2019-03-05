@@ -11,7 +11,7 @@
     main_image: ami-c86c3f23
     vpc_subnet_id: subnet-0b2309824de2d87bb
     iam_role: S3Reader
-    sm_server_version: 9.61
+    sm_server_version: 9.62
 
   tasks:
     - name: create ec2 instance from ami
@@ -131,7 +131,7 @@
     host_key_checking: false
     ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
     ami_name: SM-Server
-    sm_version: 9.61
+    sm_version: 9.62
 
   tasks:
     - name: get all ec2 facts
