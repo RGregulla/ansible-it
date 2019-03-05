@@ -79,15 +79,6 @@
       #until: cmd_res | success
       until: cmd_res is success
 
-    - name: Workaround for install Problem
-      command: rpm -Va --nofiles --nodigest
-      become: yes
-
-    - name: install epel
-      yum:
-        name: https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm
-      become: yes
-
     - name: install pscs lite
       yum:
         name: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/pcsc-lite-devel-1.8.8-8.el7.x86_64.rpm
