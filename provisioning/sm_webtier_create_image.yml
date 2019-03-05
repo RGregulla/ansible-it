@@ -4,12 +4,12 @@
   gather_facts: False
   remote_user: ec2-user
   vars:
-    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
     aws_region: eu-central-1
     instance_type: t3.large
     # Red Hat Base Image
-    main_image: ami-c86c3f23
-    vpc_subnet_id: subnet-0b2309824de2d87bb
+    main_image: ami-00677e8682d38cbcd
+    vpc_subnet_id: subnet-a2ae0cef
     iam_role: S3Reader
     sm_server_version: 9.62
 
@@ -21,18 +21,18 @@
         image: "{{ main_image }}"
         region: "{{ aws_region }}"
         wait: yes
-        group: MySGPublic
+        group_id: sg-fc096296
         count: 1
         vpc_subnet_id: "{{ vpc_subnet_id }}"
         assign_public_ip: yes
         volumes:
           - device_name: /dev/sda1
             volume_type: gp2
-            volume_size: 30
+            volume_size: 10
         instance_tags:
           Name: sm-webtier-ami
           Version: "{{ sm_server_version }}"
-        instance_profile_name: "{{ iam_role }}"
+        # instance_profile_name: "{{ iam_role }}"
         # Wait for the instance
       register: ec2
 
@@ -67,7 +67,7 @@
   remote_user: ec2-user
   vars:
     host_key_checking: false
-    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
 
   tasks:
 
@@ -123,7 +123,7 @@
   remote_user: ec2-user
   vars:
     host_key_checking: false
-    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
     ami_name: SM-Webtier
     sm_version: 9.62
     host_key_checking: false
@@ -156,7 +156,7 @@
   remote_user: ec2-user
   vars:
     host_key_checking: false
-    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
 
   tasks:
     # Get all Data from Temporary Instance
