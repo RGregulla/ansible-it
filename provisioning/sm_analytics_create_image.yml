@@ -32,7 +32,7 @@
         instance_tags:
           Name: sm-analytics-ami
           Version: "{{ sm_server_version }}"
-        #instance_profile_name: "{{ iam_role }}"
+        instance_profile_name: "{{ iam_role }}"
         # Wait for the instance
       register: ec2
 
