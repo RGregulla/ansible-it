@@ -10,6 +10,7 @@
   roles:
 #    - common
 #    - jdk
-    - tomcat
-    - sm-webtier
-    - sm-idm
+#    - tomcat
+    - get-smelbfacts
+    - sm-webtier-configure
+#    - sm-idm

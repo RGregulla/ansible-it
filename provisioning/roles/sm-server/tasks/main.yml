@@ -17,7 +17,13 @@
     mode: get
 
 - name: Unarchive ITSM Archive
-  unarchive: src={{ install_filepath }}/{{ sm_bin }} dest={{ install_filepath }} mode=0755 owner={{ install_user }}
+  unarchive:
+    src: "{{ install_filepath }}/{{ sm_bin }}"
+    dest: "{{ install_filepath }}"
+    mode: 0755
+    owner: "{{ install_user }}"
+    remote_src: "{{ remote_src }}"
+
   tags: prepare
   become: yes
 
@@ -50,7 +56,7 @@
   tags: install
 
 - name: add sm.ini
-  template:
+  copy:
     src: sm.ini
     dest: "{{ sm_install_server_dir }}/RUN"
     owner: "{{ install_user }}"
@@ -62,140 +68,11 @@
 #  tags: prepare
 #  become: yes
 
-- name: link jre in sm installation
-  command: "{{ sm_install_server_dir }}/RUN/setupLinks.sh jre"
-  environment:
-    JAVA_HOME: "{{ java_home }}"
-  tags: install
+# - name: link jre in sm installation
+#   command: "{{ sm_install_server_dir }}/RUN/setupLinks.sh jre"
+#   environment:
+#     JAVA_HOME: "{{ java_home }}"
+#   tags: install
 
 # - name: link jre in sm directory manually
 #   command: "ln -s {{ java_home }} {{ sm_install_server_dir }}/RUN/jre"
-
-- name: create patches installdir
-  file: path={{ sm_patch_path }} state=directory mode=0755 owner={{ install_user }}
-  tags: patch
-  become: yes
-
-#- name: copy itsm patch and unarchive it
-#  unarchive: src={{ patch_file }} dest={{ patch_path }} mode=0755 owner={{ install_user }}
-#  tags: patch
-#  become: yes
-
-- name: copy ITSM Patch from S3
-  aws_s3:
-    bucket: "{{ s3_bucket }}"
-    object: "{{ s3_patch_path }}/{{ sm_patch_file }}"
-    # version: 48c9ee5131af7a716edc22df9772aa6f
-    dest: "{{ sm_patch_path }}/{{ sm_patch_file }}"
-    mode: get
-
-- name: unarchive patch
-  unarchive:
-    src: "{{ sm_patch_path }}/{{ sm_patch_file }}"
-    dest: "{{ sm_patch_path }}"
-    mode: 0755
-    owner: "{{ install_user }}"
-    remote_src: yes
-  tags: patch
-  become: yes
-
-- name: unarchive patchfile
-  unarchive:
-    src: "{{ sm_patch_path }}/{{ sm_patch_patch }}"
-    dest: "{{ sm_patch_path }}"
-    mode: 0755
-    owner: "{{ install_user }}"
-    remote_src: yes
-  tags: patch
-  become: yes
-
-- name: create patches backupdir
-  file: path={{ sm_patch_backup }} state=directory mode=0755 owner={{ install_user }}
-  tags: patch
-  become: yes
-
-# - name: change owner server_dir to install_user
-#   file:
-#     path: "{{ sm_install_server_dir }}"
-#     owner: "{{ install_user }}"
-#     recurse: yes
-#   tags: prepare
-#   become: yes
-
-- name: create logdir
-  file: path="{{ sm_install_server_dir }}/logs" state=directory mode=0755 owner={{ install_user }}
-  tags: patch
-
-- name: install itsm patch
-  expect:
-    command: "{{ sm_patch_path }}/{{ sm_patch_cmd }}"
-    chdir: "{{ sm_install_server_dir }}"
-    responses:
-      'SM Server installation directory' : "{{ sm_install_server_dir }}"
-      'SM Server backup directory' : "{{ sm_patch_backup }}"
-      'ENTER AN ABSOLUTE PATH, OR PRESS \<ENTER\> TO ACCEPT THE DEFAULT' : "{{ sm_install_server_dir }}"
-      'IS THIS CORRECT?' : 'Y'
-      'PRESS \<ENTER\> TO EXIT THE INSTALLER' : ''
-  tags: patch
-
-- name: create temporary license
-  shell: "{{ sm_install_server_dir }}/RUN/sm -instanton"
-  args:
-    executable: /bin/bash
-    chdir: "{{ sm_install_server_dir }}/RUN"
-  tags: license
-
-  # [vagrant@localhost Server]$ ./configure -consolemode
-  # WARNING: This program is meant for out-of-box system configuration.
-  # It will overwrite your current settings in sm.ini.
-  # Please backup your sm.ini file.
-  # Enter httpPort (Current value - 13080 ):
-  # Choose Database Type:
-  # (0) Oracle 12c
-  # (1) PostgreSQL (Current value - 1 ):
-  # Enter Database name (Current value - host=localhost port=5432 dbname=smdb ):
-  # Enter SQL user (Current value -  ):smuser
-  # Enter SQL password (Current value -  ):smpassw0rd
-  # Enter Postgres Schema (Current value - sm ):sm
-  # Case Insensitive?(Y or N) (Current value - Y ):N
-  # Updating new configuration to sm.ini...
-  # Validating SQL connectivity.... Please wait....
-
-# - name: configure itsm
-#   expect:
-#     command: "{{ sm_install_server_dir }}/configure -consolemode"
-#     chdir: "{{ sm_install_server_dir }}"
-#     responses:
-#       'Enter httpPort' : "{{ sm_server_port }}"
-#       'Choose Database Type' : '1'
-#       'Enter Database name' : 'host={{ sm_server_dbhost }} port={{ sm_server_dbport }} dbname={{ sm_dbname }}'
-#       'Enter SQL user' : '{{ sm_dbuser }}'
-#       'Enter SQL password' : '{{ sm_dbpassword }}'
-#       #'Enter Postgres Schema': '{{ dbschema }}'
-#       'Enter Postgres Schema': ''
-#       'Case Insensitive?': 'N'
-#       'Do you wish to load Service Manager application and demo data to the Database': 'N'
-#   # there are some ignorable errors in the output
-#   ignore_errors: yes
-#   tags: configure
-
-- name: unlock database
-  shell: "{{ sm_install_server_dir }}/RUN/sm -unlockdatabase"
-  args:
-    executable: /bin/bash
-    chdir: "{{ sm_install_server_dir }}/RUN"
-  tags: unlock_database
-
-- name: start sm
-  shell: "{{ sm_install_server_dir }}/RUN/smstart"
-  args:
-    executable: /bin/bash
-    chdir: "{{ sm_install_server_dir }}/RUN"
-  tags: start_sm
-
-# - name: shutdown sm
-#   shell: "{{ sm_install_server_dir }}/RUN/sm -shutdown"
-#   args:
-#     executable: /bin/bash
-#     chdir: "{{ sm_install_server_dir }}/RUN"
-#   tags: license

@@ -1,0 +1,23 @@
+---
+
+install_user: vagrant
+
+sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+sm_server_port: 13080
+sm_server_dbhost: localhost
+sm_patch_path: /opt/itsm/patches
+sm_dbname: smdb
+sm_dbschema: sm
+sm_dbuser: smuser
+sm_dbpassword: smpassw0rd
+sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+sm_server_dbport: 5432
+sm_server_dbname: servicemanagement
+postgres_user: postgres
+
+# Config for smini
+# enable ldap: 0 (disabled) or 1 (enabled)
+smini_enable_ldap: 0
+smini_ldap_server: bku.db.de%636%DC=bku,DC=db,DC=de
+smini_ldap_binddn: CN=itsmdbsitsmbkuadau,OU=Benutzer,OU=Administratoren,OU=Verwaltung,DC=bku,DC=db,DC=de
+smini_ldap_passwd: isnothere
