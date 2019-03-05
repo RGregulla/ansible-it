@@ -16,7 +16,7 @@
   tasks:
     - name: create ec2 instance from ami
       ec2:
-        key_name: KeyPairSierra
+        key_name: itsm-tu
         instance_type: "{{ instance_type }}"
         image: "{{ main_image }}"
         region: "{{ aws_region }}"
