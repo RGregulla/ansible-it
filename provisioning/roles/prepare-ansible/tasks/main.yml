@@ -41,6 +41,13 @@
 
 - name: install python module boto
   pip:
+    name: boto
+    state: latest
+  tags: prepare
+  become: yes
+
+- name: install python module boto3
+  pip:
     name: boto3
     state: latest
   tags: prepare
