@@ -1,13 +1,13 @@
 ---
 
-# - name: install Epel
-#   yum:
-#     name: "{{ epel_url }}"
-#     state: installed
-#   tags: prepare
-#   become: yes
-#   when: ansible_distribution == 'RedHat'
-#   ignore_errors: yes
+- name: install Epel
+  yum:
+    name: "{{ epel_url }}"
+    state: installed
+  tags: prepare
+  become: yes
+  when: ansible_distribution == 'RedHat'
+  ignore_errors: yes
 
 - name: install Python Module Manager
   yum:
