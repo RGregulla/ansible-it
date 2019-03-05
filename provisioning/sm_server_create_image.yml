@@ -10,7 +10,7 @@
     # Red Hat Base Image
     main_image: ami-08ad373afd9b14f5c
     vpc_subnet_id: subnet-a2ae0cef
-    iam_role: Project-ITSM-InstanceRole
+    iam_role: Project-ITSM-InstanceProfile
     sm_server_version: 9.62
 
   tasks:
