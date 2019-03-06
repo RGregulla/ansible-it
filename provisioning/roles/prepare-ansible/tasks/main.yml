@@ -55,7 +55,7 @@
 
 - name: install aws cli
   pip:
-    name: "awscli"
+    name: awscli
     state: latest
   tags: prepare
   become: yes
