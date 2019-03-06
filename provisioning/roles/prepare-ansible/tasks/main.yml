@@ -52,3 +52,10 @@
     state: latest
   tags: prepare
   become: yes
+
+- name: install aws cli
+  pip:
+    name: "awscli"
+    state: latest
+  tags: prepare
+  become: yes
