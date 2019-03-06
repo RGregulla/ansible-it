@@ -14,6 +14,7 @@
     object: "{{ s3_webtier_path }}/{{ s3_webtier_archive }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ webtier_target }}/{{ s3_webtier_archive }}"
+    validate_certs: no
     mode: get
 
 - name: Unarchive webtier Archive
