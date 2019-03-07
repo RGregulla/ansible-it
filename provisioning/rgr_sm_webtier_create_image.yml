@@ -9,7 +9,7 @@
     instance_type: t3.large
     # Red Hat Base Image
     main_image: ami-00677e8682d38cbcd
-    vpc_subnet_id: subnet-a2ae0cef
+    vpc_subnet_id: subnet-0b2309824de2d87bb
     iam_role: Project-ITSM-InstanceProfile
     sm_server_version: 9.62
 
@@ -127,7 +127,6 @@
     ansible_ssh_private_key_file: ~/.ssh/id_rsa
     ami_name: SM-Webtier
     sm_version: 9.62
-    host_key_checking: false
 
   tasks:
     - name: get all ec2 facts

@@ -28,15 +28,15 @@
 
   roles:
 # create concrete Instance
-    # - get-rdsfacts
-    # - sm-server-configure
+    - get-rdsfacts
+    - sm-server-configure
 
 # create AMI
-    - prepare-ansible
-    - common
-    - sm-server
-    - sm-server-patch
-    - languagepack
+    # - prepare-ansible
+    # - common
+    # - sm-server
+    # - sm-server-patch
+    # - languagepack
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
