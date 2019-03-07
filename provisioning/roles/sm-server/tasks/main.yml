@@ -9,6 +9,7 @@
   become: yes
 
 - name: copy ITSM Archive from S3
+  become: no
   aws_s3:
     bucket: "{{ s3_bucket }}"
     object: "{{ s3_bin_path }}/{{ sm_bin }}"
