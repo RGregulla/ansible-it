@@ -96,7 +96,7 @@
     s3_bucket: itsm-classic-src
     s3_bin_path: Hersteller_Software
     s3_patch_path: Hersteller_Software_Patch
-
+    sm_bin: Service_Manager_9.60_English_File_1_SM960-1.zip
 
     # java:
     #   home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
