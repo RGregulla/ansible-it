@@ -12,13 +12,13 @@
 
   roles:
 # create concrete Instance
-    - get-smelbfacts
-    - sm-webtier-configure
+    # - get-smelbfacts
+    # - sm-webtier-configure
 
 # create AMI
-    # - prepare-ansible
-    # - tomcat
-    # - sm-webtier
+    - prepare-ansible
+    - tomcat
+    - sm-webtier
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

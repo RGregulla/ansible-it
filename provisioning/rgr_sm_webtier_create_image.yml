@@ -1,0 +1,175 @@
+---
+
+- hosts: localhost
+  gather_facts: False
+  remote_user: ec2-user
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    aws_region: eu-central-1
+    instance_type: t3.large
+    # Red Hat Base Image
+    main_image: ami-00677e8682d38cbcd
+    vpc_subnet_id: subnet-a2ae0cef
+    iam_role: Project-ITSM-InstanceProfile
+    sm_server_version: 9.62
+
+  tasks:
+    - name: create ec2 instance from ami
+      ec2:
+        key_name: itsm-tu
+        instance_type: "{{ instance_type }}"
+        image: "{{ main_image }}"
+        region: "{{ aws_region }}"
+        wait: yes
+        group_id: sg-fc096296
+        count: 1
+        vpc_subnet_id: "{{ vpc_subnet_id }}"
+        assign_public_ip: no
+        volumes:
+          - device_name: /dev/sda1
+            volume_type: gp2
+            volume_size: 10
+        instance_tags:
+          Name: sm-webtier-ami
+          Version: "{{ sm_server_version }}"
+        instance_profile_name: "{{ iam_role }}"
+        # Wait for the instance
+      register: ec2
+
+    - name: some output
+      debug: var=ec2
+
+    - name: Add the newly created host so that we can further contact it
+      add_host:
+        name: "{{ item.private_ip }}"
+        groups: sm-webtier
+      with_items: "{{ ec2.instances }}"
+
+    - name: Wait for SSH to come up
+      wait_for: host={{ item.private_ip }} port=22 delay=60 timeout=320 state=started
+      with_items: "{{ ec2.instances }}"
+
+    # - name: upgrade all packages
+    #   #environment: "{{ proxy_env }}"
+    #   yum:
+    #     name: '*'
+    #     state: latest
+    #   become: yes
+    #
+    # - name: Wait for SSH to come up
+    #   wait_for: host={{ item.private_ip }} port=22 delay=180 timeout=320 state=started
+    #   with_items: "{{ ec2.instances }}"
+#ftp://SP21fa31:}IK3tg*A@ftp-pro.houston.softwaregrp.com/
+#
+# Wait for the Image
+#
+- hosts: sm-webtier
+  remote_user: ec2-user
+  vars:
+    host_key_checking: false
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+  tasks:
+
+    - name: check for boot finished
+      raw: test -f /var/lib/cloud/instance/boot-finished
+      retries: 20
+      register: cmd_res
+      changed_when: false
+      #until: cmd_res | success
+      until: cmd_res is success
+
+    - name: install pscs lite
+      yum:
+        name: https://rpmfind.net/linux/centos/7.6.1810/os/x86_64/Packages/pcsc-lite-devel-1.8.8-8.el7.x86_64.rpm
+        state: latest
+      become: yes
+      environment:
+        http_proxy: http://webproxy.comp.db.de:8080
+        https_proxy: http://webproxy.comp.db.de:8080
+
+    - name: some output
+      debug:
+        msg: "System up & running"
+
+#
+# Install sm-server on temporary Instance
+#
+- hosts: sm-webtier
+  remote_user: ec2-user
+  vars:
+    host_key_checking: false
+    install_user: ec2-user
+    java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
+    java_home: /usr/lib/jvm/jre
+    sm_serverHost: 52.28.115.201
+    s3_bucket: itsm-classic-src
+    s3_webtier_path: Hersteller_Software_Patch
+    remote_src: yes
+
+  roles:
+    - prepare-ansible
+    - tomcat
+    - sm-webtier
+#    - sm-idm
+
+  environment:
+    http_proxy: http://webproxy.comp.db.de:8080
+    https_proxy: http://webproxy.comp.db.de:8080
+
+#
+# Create AMI from Temporary Instance
+#
+- hosts: sm-webtier
+  remote_user: ec2-user
+  vars:
+    host_key_checking: false
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+    ami_name: SM-Webtier
+    sm_version: 9.62
+    host_key_checking: false
+
+  tasks:
+    - name: get all ec2 facts
+      ec2_metadata_facts:
+
+    - name: Show instance-id
+      local_action:
+        module: debug
+        msg: "System Instance-Id is {{ ansible_ec2_instance_id }}"
+
+    # Basic AMI Creation
+    - name: create AMI
+      local_action:
+        module:  ec2_ami
+        instance_id: "{{ ansible_ec2_instance_id }}"
+        region: "{{ ansible_ec2_placement_region }}"
+        wait: yes
+        name: "{{ ami_name }}-{{ sm_version }}.{{ ansible_date_time.date }}.{{  ansible_date_time.hour }}.{{  ansible_date_time.minute }}"
+        tags:
+          Name: sm-webtier
+          Version: "{{ sm_version }}"
+
+#
+# Terminate temporary Instance
+#
+- hosts: sm-webtier
+  remote_user: ec2-user
+  vars:
+    host_key_checking: false
+    ansible_ssh_private_key_file: ~/.ssh/id_rsa
+
+  tasks:
+    # Get all Data from Temporary Instance
+    - name: get all ec2 facts
+      ec2_metadata_facts:
+
+    # Destroy Instance
+    - name: Terminate aws instance
+      local_action:
+        module: ec2
+        state: 'absent'
+        instance_ids: "{{ ansible_ec2_instance_id }}"
+        region: "{{ ansible_ec2_placement_region }}"
+        wait: True
+      tags: terminateInstance
