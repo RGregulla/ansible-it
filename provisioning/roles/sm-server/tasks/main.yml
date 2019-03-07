@@ -9,13 +9,13 @@
   become: yes
 
 - name: copy ITSM Archive from S3
-  become: no
   aws_s3:
     bucket: "{{ s3_bucket }}"
     object: "{{ s3_bin_path }}/{{ sm_bin }}"
     # version: 48c9ee5131af7a716edc22df9772aa6f
     dest: "{{ install_filepath }}/{{ sm_bin }}"
     mode: get
+  become: false
 
 - name: Unarchive ITSM Archive
   unarchive:
