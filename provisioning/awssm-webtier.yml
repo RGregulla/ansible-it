@@ -4,7 +4,7 @@
   vars:
     s3_bucket: itsm-classic-src
     s3_webtier_path: Hersteller_Software
-    s3_webtier_archive: webtier-9.61.zip
+    s3_webtier_archive: sm9.62.0016_Web_Tier.zip
     install_user: ec2-user
     java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
     java_home: /usr/lib/jvm/jre
@@ -12,13 +12,13 @@
 
   roles:
 # create concrete Instance
-    - get-smelbfacts
-    - sm-webtier-configure
+    # - get-smelbfacts
+    # - sm-webtier-configure
 
 # create AMI
-    # - prepare-ansible
-    # - tomcat
-    # - sm-webtier
+    - prepare-ansible
+    - tomcat
+    - sm-webtier
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

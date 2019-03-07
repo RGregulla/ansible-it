@@ -13,12 +13,12 @@
 
   roles:
 # create concrete Instance
-    - get-smelbfacts
-    - get-analyticselbfacts
-    - analytics-configure
+    # - get-smelbfacts
+    # - get-analyticselbfacts
+    # - analytics-configure
 # create AMI
-    # - prepare-ansible
-    # - analytics
+    - prepare-ansible
+    - analytics
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

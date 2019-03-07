@@ -9,7 +9,7 @@
     s3_bucket: itsm-classic-src
     s3_bin_path: Hersteller_Software
     s3_patch_path: Hersteller_Software_Patch
-    sm_patch_file: HPSM_00946.tar
+    sm_patch_file: HPSM_00969_Linux_Server.tar
     sm_dbname: servicemanagement
     sm_dbschema: sm
     sm_dbuser: postgres
@@ -28,15 +28,15 @@
 
   roles:
 # create concrete Instance
-    - get-rdsfacts
-    - sm-server-configure
+    # - get-rdsfacts
+    # - sm-server-configure
 
 # create AMI
-    # - prepare-ansible
-    # - common
-    # - sm-server
-    # - sm-server-patch
-    # - languagepack
+    - prepare-ansible
+    - common
+    - sm-server
+    - sm-server-patch
+    - languagepack
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
