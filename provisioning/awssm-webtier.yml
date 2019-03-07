@@ -11,10 +11,14 @@
     sm_serverHost: internal-itsm-EC2El-RCCD7NEON9LZ-1615163355.eu-central-1.elb.amazonaws.com
 
   roles:
-#    - common
-#    - jdk
+# create concrete Instance
     - get-smelbfacts
     - sm-webtier-configure
+
+# create AMI
+    # - prepare-ansible
+    # - tomcat
+    # - sm-webtier
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080

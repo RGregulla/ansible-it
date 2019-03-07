@@ -27,14 +27,16 @@
     remote_src: yes
 
   roles:
-<<<<<<< HEAD
-    - get-rdsfacts
-    - sm-server-configure 
-=======
-#    - common
+# create concrete Instance
     - get-rdsfacts
     - sm-server-configure
->>>>>>> 4e2f72410aacf5efa3ea1237e8a0368ddb9841ed
+
+# create AMI
+    # - prepare-ansible
+    # - common
+    # - sm-server
+    # - sm-server-patch
+    # - languagepack
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
