@@ -2,24 +2,31 @@
     "variables": {
         "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
         "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
-        "region":         "eu-central-1",
-        "source_ami"    : "ami-c86c3f23"
+        "region"        : "eu-central-1",
+        "subnet_id"     : "subnet-0b2309824de2d87bb",
+        "source_ami"    : "ami-c86c3f23",
+        "sec_group_id"  : "sg-032573d516507564c",
+        "iam_profile"   : "S3Reader",
+        "ssh_keypair"   : "KeyPairSierra",
+        "ssh_private_key_file" : "~/.ssh/AWSSierra.pem"
     },
     "builders": [
         {
-            "access_key": "{{user `aws_access_key`}}",
+            "type": "amazon-ebs",
             "ami_name": "sm-server-{{timestamp}}",
             "instance_type": "t2.micro",
             "region": "eu-central-1",
-            "secret_key": "{{user `aws_secret_key`}}",
             "source_ami": "{{user `source_ami`}}",
             "ssh_username": "ec2-user",
-            "type": "amazon-ebs",
+            "subnet_id": "{{user `subnet_id`}}",
             "tags": {
               "Name": "sm-server",
               "Version": "9.62"
             },
-            "iam_instance_profile": "S3Reader"
+            "iam_instance_profile": "{{user `iam_profile`}}",
+            "security_group_id": "{{user `sec_group_id`}}",
+            "ssh_keypair_name": "{{user `ssh_keypair`}}",
+            "ssh_private_key_file": "{{user `ssh_private_key_file`}}"
         }
     ],
     "provisioners": [
@@ -34,7 +41,7 @@
       },
         {
             "type": "ansible",
-            "playbook_file": "packer-awssm-server.yml"
+            "playbook_file": "rgr_packer-awssm-server.yml"
         },
         {
             "type": "shell",
