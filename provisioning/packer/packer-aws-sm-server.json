@@ -1,0 +1,46 @@
+{
+    "variables": {
+        "aws_access_key": "{{env `AWS_ACCESS_KEY_ID`}}",
+        "aws_secret_key": "{{env `AWS_SECRET_ACCESS_KEY`}}",
+        "region":         "eu-central-1",
+        "source_ami"    : "ami-c86c3f23"
+    },
+    "builders": [
+        {
+            "access_key": "{{user `aws_access_key`}}",
+            "ami_name": "sm-server-{{timestamp}}",
+            "instance_type": "t2.micro",
+            "region": "eu-central-1",
+            "secret_key": "{{user `aws_secret_key`}}",
+            "source_ami": "{{user `source_ami`}}",
+            "ssh_username": "ec2-user",
+            "type": "amazon-ebs",
+            "tags": {
+              "Name": "sm-server",
+              "Version": "9.62"
+            },
+            "iam_instance_profile": "S3Reader"
+        }
+    ],
+    "provisioners": [
+      {
+          "type": "shell",
+          "inline": [
+            "sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
+            "sudo yum update -y",
+            "sudo yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip postgresql.i686",
+            "sudo pip install -U awscli ansible setuptools botocore boto3 pexpect"
+          ]
+      },
+        {
+            "type": "ansible",
+            "playbook_file": "packer-awssm-server.yml"
+        },
+        {
+            "type": "shell",
+            "inline":[
+                "ls -al /opt/Microfocus"
+            ]
+        }
+    ]
+}
