@@ -1,6 +1,6 @@
 ---
 
-- name: copy idm from S3
+- name: copy Analytics from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
     object: "{{ s3_analytics_path }}/{{ analytics_archive }}"
