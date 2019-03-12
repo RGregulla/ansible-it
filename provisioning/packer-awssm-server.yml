@@ -1,0 +1,43 @@
+---
+# file: webservers.yml
+- hosts: all
+  vars:
+#    proxy_env:
+#      http_proxy: http://webproxy.comp.db.de:8080
+#      https_proxy: http://webproxy.comp.db.de:8080
+    install_user: ec2-user
+    s3_bucket: itsm-classic-src
+    s3_bin_path: Hersteller_Software
+    s3_patch_path: Hersteller_Software_Patch
+    sm_patch_file: HPSM_00969_Linux_Server.tar
+    sm_dbname: servicemanagement
+    sm_dbschema: sm
+    sm_dbuser: postgres
+    sm_dbpassword: DBsystel99test2
+    sm_server_dbhost:  itsm-test-db.cxnuybpt78fh.eu-central-1.rds.amazonaws.com
+    sm_server_dbport: 5432
+    java_home: /usr/lib/jvm/jre
+    java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
+    java_download_folder: /tmp
+    java_install_path: /opt/java
+    java_dir: jre1.8.0_192
+    sm_server_port: 13080
+    postgres_user: postgres
+    smini_enable_ldap: 1
+    remote_src: yes
+
+  roles:
+# create concrete Instance
+    # - get-rdsfacts
+    # - sm-server-configure
+
+# create AMI
+    - prepare-ansible
+    - common
+    - sm-server
+    - sm-server-patch
+    - languagepack
+
+  # environment:
+  #   http_proxy: http://webproxy.comp.db.de:8080
+  #   https_proxy: http://webproxy.comp.db.de:8080

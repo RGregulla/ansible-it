@@ -20,4 +20,4 @@ else
   pip install -U awscli ansible setuptools
 fi
 
-runuser ec2-user -c 'ansible-pull -d /tmp/playbooks -C 'image_creating' -u 'ec2-user' -i localhost, -U https://github.com/RGregulla/ansible-it provisioning/awssm-webtier.yml  -vvv'
+runuser ec2-user -c 'ansible-pull -d /tmp/playbooks -C 'image_creating' -u 'ec2-user' -i localhost, -U https://gitlab+deploy-token-125:HQL9NyBn6asDDULWLhri@git.tech.rz.db.de/cio-itsm/ansible-itsm.git provisioning/awssm-webtier.yml  -vvv'

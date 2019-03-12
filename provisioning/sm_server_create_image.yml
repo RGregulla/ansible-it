@@ -97,7 +97,6 @@
     s3_bin_path: Hersteller_Software
     s3_patch_path: Hersteller_Software_Patch
 
-
     # java:
     #   home: /usr/lib/jvm/java-1.8.0-openjdk-1.8.0.181-7.b13.el7.i386/jre
     #   source:
@@ -126,6 +125,7 @@
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
     https_proxy: http://webproxy.comp.db.de:8080
+    no_proxy: .comp.db.de,.rz.db.de,.amazonaws.com,169.254.169.254,127.0.0.1,localhost
 #
 # Create AMI from Temporary Instance
 #
