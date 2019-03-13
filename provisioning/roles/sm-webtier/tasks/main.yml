@@ -29,6 +29,20 @@
   become: yes
   notify: restart tomcat
 
+  name: Remove Tomcat default apps
+  file:
+    state: absent
+    path: "{{ webtier_target }}/docs"
+  file:
+    state: absent
+    path: "{{ webtier_target }}/examples"
+  file:
+    state: absent
+    path: "{{ webtier_target }}/host-manager"
+  file:
+    state: absent
+    path: "{{ webtier_target }}/manager"
+
 # Moved to tomcat Role !!
 #
 # - name: generate ssl truststore
