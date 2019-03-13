@@ -29,7 +29,7 @@
   become: yes
   notify: restart tomcat
 
-  name: Remove Tomcat default apps
+- name: Remove Tomcat default apps
   file:
     state: absent
     path: "{{ webtier_target }}/docs"
