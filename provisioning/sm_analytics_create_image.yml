@@ -104,18 +104,19 @@
     java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
     java_home: /usr/lib/jvm/jre
     sm_serverHost: 52.28.115.201
+    s3_bucket: itsm-classic-src
+    s3_analytics_path: Hersteller_Software/Smart_Analytics
     remote_src: yes
 
   roles:
     - prepare-ansible
     - analytics
-#    - sm-idm
 
   environment:
     http_proxy: http://webproxy.comp.db.de:8080
     https_proxy: http://webproxy.comp.db.de:8080
     no_proxy: .comp.db.de,.rz.db.de,.amazonaws.com,169.254.169.254,127.0.0.1,localhost
-    
+
 #
 # Create AMI from Temporary Instance
 #
