@@ -18,6 +18,7 @@
     - "{{ tomcat_webtier_path }}/examples"
     - "{{ tomcat_webtier_path }}/host-manager"
     - "{{ tomcat_webtier_path }}/manager"
+    - "{{ tomcat_webtier_path }}/ROOT"
 
 - name: copy webtier Archive from S3
   aws_s3:
