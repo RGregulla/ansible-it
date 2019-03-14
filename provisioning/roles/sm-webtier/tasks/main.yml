@@ -8,6 +8,17 @@
 #   tags: tomcat
 #   become: yes
 #
+- name: Delete tomcat default apps
+  file:
+    path: "{{ item }}"
+    state: absent
+    become: yes
+  with_items:
+    - "{{ tomcat_webtier_path }}/docs"
+    - "{{ tomcat_webtier_path }}/examples"
+    - "{{ tomcat_webtier_path }}/host-manager"
+    - "{{ tomcat_webtier_path }}/manager"
+
 - name: copy webtier Archive from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
@@ -28,16 +39,6 @@
   tags: prepare
   become: yes
   notify: restart tomcat
-
-- name: Delete tomcat default apps
-  file:
-    path: "{{ item }}"
-    state: absent
-  with_items:
-    - "{{ tomcat_webtier_path }}/docs"
-    - "{{ tomcat_webtier_path }}/examples"
-    - "{{ tomcat_webtier_path }}/host-manager"
-    - "{{ tomcat_webtier_path }}/manager"
 
 
 # Moved to tomcat Role !!
