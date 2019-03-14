@@ -157,6 +157,7 @@
         tags:
           Name: sm-server
           Version: "{{ sm_version }}"
+          Packer: ansible
 
 #
 # Terminate temporary Instance

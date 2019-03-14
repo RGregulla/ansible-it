@@ -53,13 +53,7 @@
       },
         {
             "type": "ansible",
-            "playbook_file": "rgr_packer-awssm-server.yml"
-        },
-        {
-            "type": "shell",
-            "inline":[
-                "ls -al /opt/MicroFocus"
-            ]
+            "playbook_file": "packer-awssm-server.yml"
         }
     ]
 }
