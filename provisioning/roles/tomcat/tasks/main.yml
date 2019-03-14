@@ -32,9 +32,14 @@
   tags: prepare
   become: yes
 
+- name: download tomcat
+  get_url:
+    url: "{{ tomcat_url }}"
+    dest: /tmp/tomcat.tar.gz
+
 - name: Unarchive tomcat install
   unarchive:
-    src: "{{ tomcat_url }}"
+    src: /tmp/tomcat.tar.gz
     dest: "{{ tomcat_path }}"
     mode: 0755
     owner: "{{ tomcat_user }}"

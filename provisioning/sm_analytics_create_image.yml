@@ -149,6 +149,7 @@
         tags:
           Name: sm-analytics
           Version: "{{ sm_version }}"
+          Packer: ansible
 
 #
 # Terminate temporary Instance

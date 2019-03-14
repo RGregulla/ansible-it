@@ -14,7 +14,7 @@
     "builders": [
         {
             "type": "amazon-ebs",
-            "ami_name": "{{user `teamname`}}-sm-server-{{isotime \"02-Jan-06 15.04\"}}",
+            "ami_name": "{{user `teamname`}}-sm-analytics-{{isotime \"02-Jan-06 15.04\"}}",
             "instance_type": "t3.large",
             "region": "eu-central-1",
             "source_ami": "{{user `source_ami`}}",
@@ -22,13 +22,13 @@
               "device_name": "/dev/sda1",
               "delete_on_termination": true,
               "encrypted": false,
-              "volume_size": "30",
+              "volume_size": "10",
               "volume_type": "gp2"
             }],
             "ssh_username": "ec2-user",
             "subnet_id": "{{user `subnet_id`}}",
             "tags": {
-              "Name": "sm-server",
+              "Name": "sm-analytics",
               "Version": "9.62",
               "Created by": "Packer",
               "Created from": "{{user `teamname`}}"
@@ -46,20 +46,14 @@
           "type": "shell",
           "inline": [
             "sudo yum install -y https://dl.fedoraproject.org/pub/epel/epel-release-latest-7.noarch.rpm",
-            "sudo yum update -y",
             "sudo yum install -y libffi-dev gcc-c++ libssl-dev python-pip python-devel git unzip postgresql.i686",
             "sudo pip install -U awscli ansible setuptools botocore boto3 pexpect"
           ]
       },
         {
             "type": "ansible",
-            "playbook_file": "rgr_packer-awssm-server.yml"
-        },
-        {
-            "type": "shell",
-            "inline":[
-                "ls -al /opt/MicroFocus"
-            ]
+            "playbook_file": "rgr_packer-awssm-analytics.yml",
+            "user": "ec2-user"
         }
     ]
 }

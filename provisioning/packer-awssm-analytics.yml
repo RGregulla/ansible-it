@@ -1,0 +1,25 @@
+---
+# packer playbook
+- hosts: all
+  vars:
+    install_user: ec2-user
+    sm_serverHost: 52.28.115.201
+    remote_src: no
+    s3_bucket: itsm-classic-src
+    s3_analytics_path: Hersteller_Software/Smart_Analytics
+    sm_Rest_User: user003test
+    sm_Rest_User_Pwd: 123456
+    remote_src: yes
+
+  roles:
+# create concrete Instance
+    # - get-rdsfacts
+    # - sm-server-configure
+
+# create AMI
+    - prepare-ansible
+    - analytics
+
+  environment:
+    http_proxy: http://webproxy.comp.db.de:8080
+    https_proxy: http://webproxy.comp.db.de:8080
