@@ -1,5 +1,16 @@
 ---
 
+- name: copy server.xml with target sm server
+  template:
+    src: server.xml.j2
+    dest: "{{ tomcat_servcerconf_path }}"
+    owner: "{{ tomcat_user }}"
+    #owner: root
+    group: "{{ tomcat_group }}"
+    mode: 0755
+  become: yes
+  notify: restart tomcat
+
 - name: copy web.xml with target sm server
   template:
     src: web.xml.j2
