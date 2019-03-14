@@ -9,7 +9,8 @@
         "sec_group_id"  : "sg-032573d516507564c",
         "iam_profile"   : "S3Reader",
         "ssh_keypair"   : "KeyPairSierra",
-        "ssh_private_key_file" : "~/.ssh/AWSSierra.pem"
+        "ssh_private_key_file" : "~/.ssh/AWSSierra.pem",
+        "kms_key_id"    : "arn:aws:kms:eu-central-1:543739120672:key/e826d4bd-b72d-4e2b-b80c-581ce611dce4"
     },
     "builders": [
         {
@@ -38,7 +39,9 @@
             "associate_public_ip_address": true,
             "ssh_interface": "public_ip",
             "ssh_keypair_name": "{{user `ssh_keypair`}}",
-            "ssh_private_key_file": "{{user `ssh_private_key_file`}}"
+            "ssh_private_key_file": "{{user `ssh_private_key_file`}}",
+            "encrypt_boot": true,
+            "kms_key_id": "{{user `kms_key_id`}}"
          }
     ],
     "provisioners": [
