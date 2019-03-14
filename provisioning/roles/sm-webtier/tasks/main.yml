@@ -12,7 +12,7 @@
   file:
     path: "{{ item }}"
     state: absent
-    become: yes
+  become: yes
   with_items:
     - "{{ tomcat_webtier_path }}/docs"
     - "{{ tomcat_webtier_path }}/examples"
