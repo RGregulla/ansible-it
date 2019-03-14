@@ -21,7 +21,7 @@
             "source_ami": "{{user `source_ami`}}",
             "launch_block_device_mappings": [{
               "device_name": "/dev/sda1",
-              "encrypted": false,
+              "encrypted": true,
               "volume_size": "10",
               "volume_type": "gp2"
             }],
