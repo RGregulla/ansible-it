@@ -54,8 +54,7 @@
       },
         {
             "type": "ansible",
-            "playbook_file": "rgr_packer-awssm-webtier.yml",
-            "extra_arguments": [ "-vvvv" ]
+            "playbook_file": "packer-awssm-webtier.yml"
         }
     ]
 }
