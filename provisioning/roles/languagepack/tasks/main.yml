@@ -6,7 +6,7 @@
 - name: copy LanguagePack Archive from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
-    object: "{{ s3_bin_path }}/{{ languagepack_bin }}"
+    object: "{{ s3_languagepack_bin_path }}/{{ languagepack_bin }}"
     dest: "{{ install_filepath }}/{{ languagepack_bin }}"
     mode: get
 
