@@ -1,5 +1,8 @@
 ---
 
+- name: load secrets into playbook
+  include_vars: secrets.yml
+  
 - name: add sm.ini
   template:
     src: sm.ini.j2
