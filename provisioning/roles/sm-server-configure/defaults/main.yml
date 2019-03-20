@@ -16,8 +16,8 @@ sm_server_dbname: servicemanagement
 postgres_user: postgres
 
 # Config for smini
-# enable ldap: 0 (disabled) or 1 (enabled)
-smini_enable_ldap: 0
+# enable ldap: 0 (enalbed) or 1 (disabled)
+smini_enable_ldap: 1
 smini_ldap_server: bku.db.de%636%DC=bku,DC=db,DC=de
 smini_ldap_binddn: CN=itsmdbsitsmbkuadau,OU=Benutzer,OU=Administratoren,OU=Verwaltung,DC=bku,DC=db,DC=de
 smini_ldap_passwd: isnothere
