@@ -12,6 +12,7 @@
   file:
     path: "{{ deploy_path }}"
     state: directory
+  become: yes
 
 
 - name: Delete tomcat default apps
