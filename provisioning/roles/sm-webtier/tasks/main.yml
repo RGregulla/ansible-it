@@ -12,6 +12,9 @@
   file:
     path: "{{ deploy_path }}"
     state: directory
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
   become: yes
 
 
