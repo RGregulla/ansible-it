@@ -122,7 +122,7 @@
 
       <Host name="localhost"  appBase="webapps"
             unpackWARs="true" autoDeploy="false" deployOnStartup="false" >
-          <Context path="/" docBase="webtier-9.62" />
+          <Context path="/" docBase="webtier" />
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->
