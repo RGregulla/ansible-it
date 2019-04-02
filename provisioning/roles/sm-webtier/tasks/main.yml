@@ -8,6 +8,16 @@
 #   tags: tomcat
 #   become: yes
 #
+- name: Create deploy folder directory
+  file:
+    path: "{{ deploy_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
+  become: yes
+
+
 - name: Delete tomcat default apps
   file:
     path: "{{ item }}"
@@ -32,7 +42,7 @@
 - name: Unarchive webtier Archive
   unarchive:
     src: "{{ webtier_target }}/{{ s3_webtier_archive }}"
-    dest: "{{ tomcat_webtier_path }}"
+    dest: "{{ deploy_path }}"
     mode: 0755
     owner: "{{ tomcat_user}}"
     group: "{{ tomcat_group }}"

@@ -121,8 +121,13 @@
       </Realm>
 
       <Host name="localhost"  appBase="webapps"
+<<<<<<< HEAD
             unpackWARs="true" autoDeploy="true">
           <Context path="/webtier" docBase="webtier-9.62" />
+=======
+            unpackWARs="true" autoDeploy="false" deployOnStartup="false" >
+          <Context path="/" docBase="webtier" />
+>>>>>>> 20186a2c04e42e1816082159862e95a524441bb1
 
         <!-- SingleSignOn valve, share authentication between web applications
              Documentation at: /docs/config/valve.html -->

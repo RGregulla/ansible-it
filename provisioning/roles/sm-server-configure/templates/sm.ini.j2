@@ -12,6 +12,7 @@ shared_memory:104857600
 numberoflogfiles:20
 maxlogsize:10485760
 querysecurity:1
+restaccessviabrowser:1
 #FQDN des Frontend ELB eintragen
 #queryhashcode:
 #IP der Lizenz? Wird geklärt
@@ -41,3 +42,9 @@ ldapdisable:{{ smini_enable_ldap }}
 #[Debug Settings]
 debugdbquery:5
 #rtm:3
+
+#
+# Certificates
+#
+truststoreFile:smtrust
+truststorePass:{{ smini_truststore_passwd }}

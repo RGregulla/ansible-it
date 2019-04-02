@@ -147,7 +147,7 @@
         wait: yes
         name: "{{ ami_name }}-{{ sm_version }}.{{ ansible_date_time.date }}.{{  ansible_date_time.hour }}.{{  ansible_date_time.minute }}"
         tags:
-          Name: sm-analytics
+          Name: itsm-sm-analytics
           Version: "{{ sm_version }}"
           Packer: ansible
 
