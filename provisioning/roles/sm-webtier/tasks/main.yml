@@ -8,6 +8,15 @@
 #   tags: tomcat
 #   become: yes
 #
+- name: Create deploy folder directory
+  file:
+    path: "{{ deploy_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
+
+
 - name: Delete tomcat default apps
   file:
     path: "{{ item }}"
