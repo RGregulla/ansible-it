@@ -32,7 +32,7 @@
 - name: Unarchive webtier Archive
   unarchive:
     src: "{{ webtier_target }}/{{ s3_webtier_archive }}"
-    dest: "{{ tomcat_webtier_path }}"
+    dest: "{{ deploy_path }}"
     mode: 0755
     owner: "{{ tomcat_user}}"
     group: "{{ tomcat_group }}"
