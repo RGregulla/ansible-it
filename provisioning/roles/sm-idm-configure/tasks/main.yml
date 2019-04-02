@@ -56,7 +56,7 @@
   #notify: restart tomcat
 
 - name: generate SAML keystore
-  shell: keytool -genkey -keyalg RSA -noprompt -alias itsmsaml -keystore samlKeystore.jks -storepass changeit -validity 1080 -keysize 2048
+  shell: keytool -genkey -keyalg RSA -noprompt -alias itsmsaml -keystore samlKeystore.jks -dname "CN={{ saml_idm_hostname }}, OU=CIO-ITSM, O=DB, L=Franfurt, S=Hessen, C=DE" -storepass changeit -validity 1080 -keysize 2048
   args:
     chdir: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/security/"
   become: yes
