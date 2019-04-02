@@ -4,7 +4,7 @@ tomcat_user: tomcat
 tomcat_group: tomcat
 tomcat_webtier_path: /opt/tomcat/webapps
 tomcat_conf_path: /opt/tomcat/conf
-idm_webinf_path: /idm-service/WEB-INF/
+idm_webinf_path: /idm-service-1.15.4/WEB-INF/
 sso_domain: mycompany.net
 sso_tenant: CIO-ITSM
 idm_db_server: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
