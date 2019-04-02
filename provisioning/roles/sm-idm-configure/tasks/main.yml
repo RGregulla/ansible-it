@@ -3,7 +3,7 @@
 - name: configure sp-initiated sso
   template:
     src: web.xml.j2
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/web.xml"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/web.xml"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -14,7 +14,7 @@
 - name: set sso domain
   template:
     src: hpssoConfig.xml.j2
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/hpssoConfig.xml"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/hpssoConfig.xml"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -23,9 +23,9 @@
   #notify: restart tomcat
 
 - name: spring saml config
-  file:
+  copy:
     src: applicationContext-saml.xml
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -34,9 +34,9 @@
   #notify: restart tomcat
 
 - name: spring v0 config
-  file:
+  copy:
     src: applicationContext-v0.xml
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -47,7 +47,7 @@
 - name: copy hpe tenant for sso
   template:
     src: com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json.j2
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/seeded/com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/classes/seeded/com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -58,13 +58,13 @@
 - name: generate SAML keystore
   shell: keytool -genkey -keyalg RSA -noprompt -alias itsmsaml -keystore samlKeystore.jks -dname "CN={{ saml_idm_hostname }}, OU=CIO-ITSM, O=DB, L=Franfurt, S=Hessen, C=DE" -storepass changeit -validity 1080 -keysize 2048
   args:
-    chdir: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/security/"
+    chdir: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/classes/security/"
   become: yes
 
-- name: copy hpe tenant for sso
-  file:
+- name: copy log4j properties
+  copy:
     src: log4j.properties
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes"
+    dest: "{{ tomcat_webtier_path }}/{{ idm_webinf_path }}/classes"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
