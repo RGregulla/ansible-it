@@ -1,0 +1,16 @@
+---
+
+- name: print configured env
+  debug:
+    msg: "Configured Environment is : {{ target_env }}"
+  ignore_errors: yes
+
+- name: include vars
+  include_vars: "{{ item }}"
+  with_first_found:
+      - "{{ target_env }}-config.yml"
+      - default.yml
+
+- name: print configured var
+  debug:
+    msg: "Configured Environment is : {{ my_variable }}"

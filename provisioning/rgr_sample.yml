@@ -1,0 +1,8 @@
+---
+# file: webservers.yml
+- hosts: localhost
+  vars:
+    my_variable: dummy
+
+  roles:
+    - rgr_sample

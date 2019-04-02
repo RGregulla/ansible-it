@@ -1,0 +1,28 @@
+---
+# file: webservers.yml
+- hosts: all
+  vars:
+    install_user: ec2-user
+    s3_bucket: gregulla.itsm.stuff
+    s3_bin_path: itsm
+    java_home: /usr/lib/jvm/jre
+    java_download_url: https://rpmfind.net/linux/centos/7.6.1810/updates/x86_64/Packages/java-1.8.0-openjdk-1.8.0.191.b12-1.el7_6.i686.rpm
+    sm_server_port: 13080
+    postgres_user: postgres
+    smini_enable_ldap: 0
+    remote_src: yes
+
+  roles:
+# create concrete Instance
+    # - get-rdsfacts
+    # - sm-server-configure
+
+# create AMI
+    - prepare-ansible
+    - tomcat
+    - sm-webtier
+    - sm-idm
+
+  # environment:
+  #   http_proxy: http://webproxy.comp.db.de:8080
+  #   https_proxy: http://webproxy.comp.db.de:8080
