@@ -2,7 +2,15 @@
 
 - name: load secrets into playbook
   include_vars: secrets.yml
-  
+
+- name: copy truststore from S3
+  aws_s3:
+    bucket: "{{ s3_bucket }}"
+    object: "{{ s3_cert_path }}/smtrust"
+    dest: "{{ sm_install_server_dir }}/RUN/smtrust"
+    mode: get
+  become: false
+
 - name: add sm.ini
   template:
     src: sm.ini.j2
