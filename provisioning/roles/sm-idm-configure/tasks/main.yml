@@ -58,7 +58,7 @@
 - name: generate SAML keystore
   command: keytool -genkey -keyalg RSA -noprompt -alias itsmsaml -keystore samlKeystore.jks -storepass changeit -validity 1080 -keysize 2048
   args:
-    chdir: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}"/classes/security
+    chdir: "{{ tomcat_webtier_path }}""{{ idm_webinf_path }}"/classes/security
   become: yes
 
 - name: copy hpe tenant for sso
