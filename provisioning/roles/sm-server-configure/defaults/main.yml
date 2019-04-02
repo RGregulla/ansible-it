@@ -2,6 +2,8 @@
 
 install_user: vagrant
 
+s3_bucket: itsm-classic-src
+s3_cert_path: Certificates
 sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
 sm_server_port: 13080
 sm_server_dbhost: localhost
@@ -17,7 +19,9 @@ postgres_user: postgres
 
 # Config for smini
 # enable ldap: 0 (enalbed) or 1 (disabled)
-smini_enable_ldap: 1
+smini_enable_ldap: 0
 smini_ldap_server: bku.db.de%636%DC=bku,DC=db,DC=de
 smini_ldap_binddn: CN=itsmdbsitsmbkuadau,OU=Benutzer,OU=Administratoren,OU=Verwaltung,DC=bku,DC=db,DC=de
 smini_ldap_passwd: isnothere
+# Password for truststore
+smini_truststore_passwd: inthevault
