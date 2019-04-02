@@ -1,0 +1,387 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app id="idm_service"
+         version="3.0"
+         xmlns="http://java.sun.com/xml/ns/javaee"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://java.sun.com/xml/ns/javaee
+         http://java.sun.com/xml/ns/javaee/web-app_3.0.xsd">
+
+    <display-name>CCUE Identity Management Service</display-name>
+
+	<!-- IDM Security Context listener -->
+  	<listener>
+		<listener-class>com.hp.ccue.identity.config.SecurityContextListener</listener-class>
+	</listener>
+
+    <!--
+    Specifies class to load configuration file
+    -->
+    <listener>
+        <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+    </listener>
+
+    <!--
+    Application context configuration for identity management service
+    -->
+    <context-param>
+        <param-name>contextConfigLocation</param-name>
+        <param-value>
+            /WEB-INF/spring/applicationContext.xml
+            /WEB-INF/spring/applicationContext-common.xml
+            <!-- START WS-Trust -->
+            <!--
+            /WEB-INF/spring/applicationContext-ws-trust.xml
+            -->
+            <!-- END WS-Trust -->
+            <!-- START SAML -->
+            /WEB-INF/spring/applicationContext-saml.xml
+            <!-- END SAML -->
+            /WEB-INF/spring/applicationContext-security.xml
+            /WEB-INF/spring/applicationContext-services.xml
+            /WEB-INF/spring/applicationContext-factories.xml
+        </param-value>
+    </context-param>
+
+    <!--
+    Logging configuration
+    -->
+    <context-param>
+        <param-name>log4jConfigLocation</param-name>
+        <param-value>/WEB-INF/classes/log4j.properties</param-value>
+    </context-param>
+    <context-param>
+        <param-name>log4jRefreshInterval</param-name>
+        <param-value>60000</param-value>
+    </context-param>
+    <context-param>
+        <param-name>webAppRootKey</param-name>
+        <param-value>com.hp.ccue.identity.idm-service</param-value>
+    </context-param>
+    <listener>
+        <listener-class>org.springframework.web.util.Log4jConfigListener</listener-class>
+    </listener>
+
+    <!--
+    Spring Security Configuration
+    -->
+    <filter>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>
+    </filter>
+    <filter-mapping>
+        <filter-name>springSecurityFilterChain</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--
+    Force UTF-8 encoding
+    -->
+    <filter>
+        <filter-name>encodingFilter</filter-name>
+        <filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+        <init-param>
+            <param-name>encoding</param-name>
+            <param-value>UTF-8</param-value>
+        </init-param>
+        <init-param>
+            <param-name>forceEncoding</param-name>
+            <param-value>true</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>encodingFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!--
+    Session configuration
+    -->
+    <session-config>
+        <session-timeout>30</session-timeout>
+        <cookie-config>
+            <http-only>true</http-only>
+        </cookie-config>
+    </session-config>
+
+    <!--Default Servlet to disable directory traversal -->
+    <servlet>
+        <servlet-name>default</servlet-name>
+        <servlet-class>org.eclipse.jetty.servlet.DefaultServlet</servlet-class>
+        <init-param>
+            <param-name>dirAllowed</param-name>
+            <param-value>false</param-value>
+        </init-param>
+        <load-on-startup>0</load-on-startup>
+    </servlet>
+
+    <!--
+    Servlet configuration - the Spring MVC DispatcherServlet class handles REST services.
+    -->
+    <servlet>
+        <display-name>authv0</display-name>
+        <servlet-name>authv0</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/applicationContext-v0.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+		<display-name>oauth2</display-name>
+        <servlet-name>oauth2</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/applicationContext-common.xml
+                /WEB-INF/spring/applicationContext-oauth2.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <display-name>restservices</display-name>
+        <servlet-name>restservices</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/applicationContext.xml
+                /WEB-INF/spring/applicationContext-common.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <display-name>scim</display-name>
+        <servlet-name>scim</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/applicationContext-common.xml
+                /WEB-INF/spring/applicationContext-scim.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <display-name>api</display-name>
+        <servlet-name>api</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+                /WEB-INF/spring/applicationContext-api.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+    <servlet>
+        <display-name>system</display-name>
+        <servlet-name>system</servlet-name>
+        <servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+        <init-param>
+            <param-name>contextConfigLocation</param-name>
+            <param-value>
+            	/WEB-INF/spring/applicationContext-common.xml
+                /WEB-INF/spring/applicationContext-system.xml
+            </param-value>
+        </init-param>
+        <load-on-startup>1</load-on-startup>
+    </servlet>
+
+
+    <!--
+    Specifies how incoming requests are handled: specifically, handle all incoming requests.
+    -->
+    <servlet-mapping>
+        <servlet-name>authv0</servlet-name>
+        <url-pattern>/idm/v0/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>restservices</servlet-name>
+        <url-pattern>/v2.0/*</url-pattern>
+    </servlet-mapping>
+	<servlet-mapping>
+        <servlet-name>oauth2</servlet-name>
+        <url-pattern>/rest-ext/oauth2/*</url-pattern>
+    </servlet-mapping>
+    <!--
+    See http://www.simplecloud.info/specs/draft-scim-api-01.html#api-versioning for SCIM API Versioning details.
+    -->
+    <servlet-mapping>
+        <servlet-name>scim</servlet-name>
+        <url-pattern>/api/scim/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>api</servlet-name>
+        <url-pattern>/api/*</url-pattern>
+    </servlet-mapping>
+    <servlet-mapping>
+        <servlet-name>system</servlet-name>
+        <url-pattern>/api/system/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- START HP SSO Configuration -->
+    <listener>
+        <listener-class>com.hp.ccue.identity.hpssoImpl.HpSsoContextListener</listener-class>
+    </listener>
+
+    <context-param>
+        <param-name>com.hp.sw.bto.ast.security.lwsso.conf.fileLocation</param-name>
+        <param-value>{{ tomcat_webtier_path }}{{ idm_webinf_path }}/hpssoConfig.xml</param-value>
+    </context-param>
+    <!-- END HP SSO Configuration -->
+
+    <!-- monitoring stuff -->
+
+    <listener>
+        <listener-class>com.hp.ccue.identity.metrics.servlet.MetricsContextListener</listener-class>
+    </listener>
+
+    <listener>
+        <listener-class>com.hp.ccue.identity.metrics.servlet.HealthCheckContextListener</listener-class>
+    </listener>
+
+    <servlet>
+        <servlet-name>MonitoringAdminServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.AdminServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>MonitoringAdminServlet</servlet-name>
+        <url-pattern>/monitoring/*</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>MetricsServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.MetricsServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>MetricsServlet</servlet-name>
+        <url-pattern>/monitoring/metrics</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>HealthCheckServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.HealthCheckServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>HealthCheckServlet</servlet-name>
+        <url-pattern>/monitoring/healthcheck</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>ThreadDumpServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.ThreadDumpServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>ThreadDumpServlet</servlet-name>
+        <url-pattern>/monitoring/thread</url-pattern>
+    </servlet-mapping>
+
+    <servlet>
+        <servlet-name>PingServlet</servlet-name>
+        <servlet-class>com.codahale.metrics.servlets.PingServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>PingServlet</servlet-name>
+        <url-pattern>/monitoring/ping</url-pattern>
+    </servlet-mapping>
+
+    <!-- START WS-Trust -->
+    <!--
+    <servlet>
+        <servlet-name>CXFServlet</servlet-name>
+        <servlet-class>org.apache.cxf.transport.servlet.CXFServlet</servlet-class>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>CXFServlet</servlet-name>
+        <url-pattern>/ws/*</url-pattern>
+    </servlet-mapping>
+    -->
+    <!-- END WS-Trust -->
+
+    <filter>
+        <filter-name>instrumentedFilter</filter-name>
+        <filter-class>com.hp.ccue.identity.metrics.servlet.IdmInstrumentedFilter</filter-class>
+        <init-param>
+            <param-name>name-prefix</param-name>
+            <param-value>all_requests</param-value>
+        </init-param>
+    </filter>
+
+    <filter-mapping>
+        <filter-name>instrumentedFilter</filter-name>
+        <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <!-- Security constraints to disable TRACE method -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>disable-trace-root-all</web-resource-name>
+            <url-pattern>/*</url-pattern>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>disable-trace-context-all</web-resource-name>
+            <url-pattern>/idm-service/*</url-pattern>
+            <http-method>TRACE</http-method>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+
+    <!-- Security constraints to disable access to files -->
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-migrations</web-resource-name>
+            <url-pattern>/migrations/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-node-modules</web-resource-name>
+            <url-pattern>/node_modules/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-ui</web-resource-name>
+            <url-pattern>/ui/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-bin</web-resource-name>
+            <url-pattern>/bin/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-node-rollover</web-resource-name>
+            <url-pattern>/rollover.json</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+    <security-constraint>
+        <web-resource-collection>
+            <web-resource-name>hide-package</web-resource-name>
+            <url-pattern>/package.json</url-pattern>
+        </web-resource-collection>
+        <auth-constraint />
+    </security-constraint>
+</web-app>

@@ -40,21 +40,3 @@
   tags: prepare
   become: yes
   notify: restart tomcat
-
-
-# Moved to tomcat Role !!
-#
-# - name: generate ssl truststore
-#   command: keytool -genkey -keyalg RSA -noprompt -alias tomcat -dname "CN=servicemanager, OU=vagrant, O=DB, L=Franfurt, S=Hessen, C=DE" -keystore "{{ tomcat_keystore }}" -storepass changeit -keypass changeit
-#   become: yes
-#
-# - name: copy server.xml with ssl activated
-#   copy:
-#     src: server.xml
-#     dest: "{{ tomcat_config_path }}"
-#     #owner: "{{ tomcat_user }}"
-#     owner: root
-#     group: "{{ tomcat_group }}"
-#     mode: 0755
-#   become: yes
-#   notify: restart tomcat

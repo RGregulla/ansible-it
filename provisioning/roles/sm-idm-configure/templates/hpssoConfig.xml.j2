@@ -1,0 +1,176 @@
+<!-- hpssoConfig is root element. required-->
+<hpssoConfig>
+    <!--
+         creation tag is optional. If the server you are configuring is the authentication point,
+        it means it is the server that creates the lwsso tokens, then this tag is required.
+        Without this tag the configured server cannot issue tokens.
+
+        Inline attributes:
+        1. useHTTPOnly        -    whether to create lwsso token only for HTTP request - TODO!!!
+        2. secureHTTPCookie
+        3. tokenGlobalTimeout -    time in seconds to lapse since token's creation for the token to become invalid, even if the user was active the whole time
+        4. tokenIdleTimeout   -    time in minutes to lapse since token's creation for the token to become invalid, If the user's session was idle.
+        5. divideRatio        -    time in minutes. tokens and their decrypted value are cached so as to speed up the requests
+                                   handling. Divide ratio means, when a cached token should be cleared from the cache and be decrypted anew.
+                                   HPSSO uses the formula: tokenIdleTimeout/divideRatio
+    -->
+    <!--
+        Recommendations:
+            tokenIdleTimeout: 30 minutes
+            tokenGlobalTimeout: 480 minutes / 8 hours
+            Require users to re-authenticate at least once every 8 hours (even if they are actively using the application)
+            i.e. once per business day. Common to also use 1440 minutes / 24 hours.
+     -->
+    <creation tokenGlobalTimeout="480" tokenIdleTimeout="30" secureHTTPCookie="false">
+        <!-- lwsso is required -->
+        <lwsso>
+            <!-- domain is required
+                HPSSO 1.0 version supports a single domain only.
+                All servers using HPSSO should have the same domain and it should be denoted in this tag
+            -->
+            <creationDomains>
+                <!-- for development environments only! -->
+                <domain>{{ sso_domain }}</domain>
+            </creationDomains>
+        </lwsso>
+    </creation>
+
+    <!-- Required
+        In line attributes:
+        httpConnectionTimeOut - stands for time in minutes to wait for an http connection to be acquired
+        (if HP SSO is to generate http requests, for example, for authenticating an integration user).
+    -->
+    <global httpConnectionTimeOut="1">
+        <!-- lwsso tag is required as a nested tag of global
+            - If the configured server is protected by a lwsso validator, or issuing lwsso tokens
+        <lwsso tenant="Tenant1">: If tenant="Tenant" is specified. IDM will rewrite the cookie geneated by LWSSO LegacyApp,
+        another alternative is to use the organization's acceptLegacyLwssoCookie added in IdM 1.15.2, default value is false
+        -->
+        <lwsso tenant="{{ sso_tenant }}">
+        <lwsso>
+            <!-- crypto is required.
+                It defines how to encrypt the tokens and how to decrypt them
+                All inline attributes have default values (denoted here) save initString.
+                initString - is the key for decryption of the lwsso token. This is the shared secret of all servers
+                             protected by lwsso and connected to the same authentication point server; therefore, it
+                             must be identical in all configurations of all servers in the system. By default, user is forced
+                             to configure one valid key string which should contains at least number and alphbet. minimum length >= 32
+                (all other values are defaults)
+                checkIntegrity - enabled or disabled, enabled is recommended to make sure mac is always be checked
+            -->
+            <crypto initString="{{ sso_domain }}" cipherType="symmetricBlockCipher" engineName="AES"
+                    paddingMode="CBC" keySize="256" encodingMode="Base64Url" algorithmPaddingName="PKCS7Padding" checkIntegrity="enabled"
+                    cryptoSource="lw" directKeyEncoded="false" directKeyEncoding="Hex" jcePbeAlgorithmName="PBEWithHmacSHA1"
+                    jcePbeMacAlgorithmName="PBEWithHmacSHA1" macAlgorithmName="SHA1" macKeySize="256" macPbeCount="20" macType="hmac"
+                    pbeCount="20" pbeDigestAlgorithm="SHA1"/>
+
+            <!-- Optional tag. however, if configured, then it must be configured on all entities in the system.-->
+            <!--
+            <sign lookForKeyStoreInClasspath="false" algorithmName="SHA256withRSA" keyStorePassword="topazPwd"
+                  privateKeyPassword="mercuryPwd" keyStorePath="C:\MSM" privateKeyDefaultAliasName="lwsso"
+                  certificateDefaultAliasName="lwsso" keyStoreName="lwsso" keyStoreType="JKS"
+                  providerName="Default Provider Name" />
+            -->
+        </lwsso>
+
+        <!--
+            securityAttributes UUID="UUID" USERNAME="USERNAME" USERFIRSTNAME="USERFIRSTNAME" USERLASTNAME="USERLASTNAME"
+            TOKEN_DIVIDE_RATIO="TOKEN_DIVIDE_RATIO" CUSTOMERID="CUSTOMERID" TOKENID="TOKENID"
+            TOKEN_GLOBAL_TIMEOUT="TOKEN_GLOBAL_TIMEOUT" LOCALE="LOCALE" AUTHORIZED_TENANTS="AUTHORIZED_TENANTS"
+            CREATION_DOMAIN="CREATION_DOMAIN" MULTI_DOMAIN_TOKEN_LOGOUT_APPS="MULTI_DOMAIN_TOKEN_LOGOUT_APPS"
+            SECURE_COOKIE="SECURE_COOKIE" IS_HTTP_ONLY_COOKIE="IS_HTTP_ONLY_COOKIE"
+            TOKEN_CREATION_TIME="TOKEN_CREATION_TIME" TOKEN_IDLE_TIMEOUT="TOKEN_IDLE_TIMEOUT" ROLES="ROLES"
+            GROUPS="GROUPS"
+        -->
+        <securityAttributes uuidHeader="UUID" userNameHeader="HPSSO.userNameHeader"
+                            firstNameHeader="HPSSO.USERFIRSTNAME" lastNameHeader="HPSSO.USERLASTNAME"
+                            tokenDivideRatioHeader="HPSSO.TOKEN_DIVIDE_RATIO" customerIdHeader="HPSSO.CUSTOMERID"
+                            tokenIdHeader="HPSSO.TOKENID" tokenGlobalTimeoutHeader="HPSSO.TOKEN_GLOBAL_TIMEOUT"
+                            localeHeader="HPSSO.LOCALE" authorizedTenetsHeader="HPSSO.AUTHORIZED_TENANTS"
+                            creationDomainHeader="HPSSO.CREATION_DOMAIN"
+                            multiDomainTokenLogoutAppsHeader="HPSSO.MULTI_DOMAIN_TOKEN_LOGOUT_APPS"
+                            secureCookieHeader="HPSSO.SECURE_COOKIE" isHttpOnlyCookieHeader="HPSSO.IS_HTTP_ONLY_COOKIE"
+                            tokenCreationTimeHeader="HPSSO.TOKEN_CREATION_TIME"
+                            tokenIdleTimeOutHeader="HPSSO.TOKEN_IDLE_TIMEOUT" rolesHeader="ROLES"
+                            groupHeader="GROUPS"/>
+
+        <!-- optional
+            This tag defines how tokens are cached.
+
+            Attributes:
+            manager - which type of caching to do? HP SSO single point cache or WEB_CONTAINER that uses the web server
+                      session. ALL - mean the tokens are cached in both places. Recommended is the HPSSO option
+            refresh - time to lapse in minutes since token first cache time until it is cleared from the cache.
+                      Recommended value is twice the formula expirationTime/divideRatio
+        -->
+        <sessionManager manager="HPSSO" refresh="30"/>
+    </global>
+
+    <!-- validation tag is required-->
+    <validation>
+        <!-- defines which URL are to be considered as log out URLs.
+            request for a logout URL is always valid. However, before passing on the request, the user's token is
+            invalidated
+        -->
+        <logoutURLs>
+            <!-- Can hold a specific URL or a java like regular expression, to cover a group of URLs-->
+            <url>.*/logout</url>
+            <url>.*/logout/close</url>
+        </logoutURLs>
+
+        <!-- defines which URL are to be considered as not protected by HPSSO.
+            A request to a non-secured URL is always valid.
+        -->
+        <nonSecureURLs>
+            <!-- Can hold a specific URL or a java like regular expression, to cover a group of URLs-->
+        </nonSecureURLs>
+
+        <!-- defines what HPSSO does upon invalidation of a request
+            There are 4 types of actions that can be performed:
+            1. redirect to the authentication point
+            2. redirect to a regular URL (can be the authentication point, but will be handled differently)
+            3. return an error status code (default)
+            4. delete security context
+
+            Each action can be configured on which URLs it is applicable.
+            Alternatively one may configure on which URLs it is NOT applicable.
+        -->
+        <onFailure>
+            <!-- delete security context from session or request:
+                This is the default behavior on the authentication point server (the HP SSO master)
+            -->
+            <action name="deleteSecurityContext">
+                <value>403</value>
+                <targetUrl>403</targetUrl>
+                <includeUrls>
+                    <url>/*</url>
+                </includeUrls>
+            </action>
+        </onFailure>
+
+        <!--
+            Required tag. List of validators to be applied on incoming request. The order of the validators determines
+            the order of execution. The validators are applied to the incoming request in the order in which they appear
+            in the configuration file.
+
+            If a validator fails and it is configured as mandatory, then the request is deemed as invalid by HP SSO
+            and the consecutive validators are not executed.
+
+            If none of the validators in mandatory, then all of them will be executed: If at least one of the
+            validators validates the request, then the request will pass through. Alternatively, if at least one of the
+            validators fails, then the error of the first failure will be surfaced by HP SSO as the root cause of the
+            failure.
+
+            all validators share one attribute *isMandatory* It is not required to specify the inMandatory attribute.
+            By default its value is false.
+
+            "checkMDLogin": if validator fails request, do you want to check if user is logged in on different domain?
+            Usually set "true" for lwsso validator, and "false" for returnStatusCode, but it's upon you.
+        -->
+        <validators>
+            <custom isMandatory="false">
+                <class>com.hp.ccue.identity.hpsso.HpSsoValidator</class>
+            </custom>
+        </validators>
+    </validation>
+</hpssoConfig>

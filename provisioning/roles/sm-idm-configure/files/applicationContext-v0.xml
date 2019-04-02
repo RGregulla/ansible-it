@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+                           http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd
+                           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <bean class="com.hp.ccue.identity.web.WebConfiguration"/>
+    <context:annotation-config/>
+
+    <!--Authentication API -->
+    <bean id="authenticationApiController" class="com.hp.ccue.identity.web.api.AuthenticationController">
+        <property name="tokenService" ref="tokenService"/>
+        <property name="identityService" ref="identityService"/>
+        <property name="sessionStateService" ref="sessionStateService"/>
+        <!-- START HP SSO Configuration -->
+        <property name="tokenWriter" ref="hpssoTokenWriter" />
+        <!-- END HP SSO Configuration -->
+    </bean>
+
+    <!--Login Page Controller-->
+    <bean id="loginPageController" class="com.hp.ccue.identity.web.LoginPageController">
+        <property name="sessionStateService" ref="sessionStateService"/>
+        <property name="tenantService" ref="tenantService"/>
+    </bean>
+
+    <!-- resolve using HTTP header, but set using Cookie -->
+    <bean id="localeInterceptor" class="com.hp.ccue.identity.filter.LocaleInterceptor">
+        <constructor-arg>
+            <bean id="headerLocaleResolver" class="org.springframework.web.servlet.i18n.AcceptHeaderLocaleResolver" />
+        </constructor-arg>
+        <constructor-arg>
+            <bean id="cookieLocaleResolver" class="com.hp.ccue.identity.filter.CookieLocaleBCP47Resolver">
+                <property name="cookieName" value="JLOCALE"/>
+            </bean>
+        </constructor-arg>
+    </bean>
+
+    <!-- make the Referer available to the UI -->
+    <bean id="refererInterceptor" class="com.hp.ccue.identity.filter.RefererCookieFilter" />
+
+    <bean id="cacheInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+        <property name="cacheSeconds" value="0"></property>
+        <property name="useExpiresHeader" value="true" />
+        <property name="useCacheControlHeader" value="true" />
+        <property name="useCacheControlNoStore" value="true" />
+        <property name="cacheMappings">
+            <props>
+                <!-- UI assets -->
+                <prop key="/**/*.html">604800</prop>
+                <prop key="/**/*.css">604800</prop>
+                <prop key="/**/*.js">604800</prop>
+
+                <!-- Image assets -->
+                <prop key="/**/*.png">31536000</prop>
+                <prop key="/**/*.gif">31536000</prop>
+                <prop key="/**/*.jpg">31536000</prop>
+                <prop key="/**/*.svg">31536000</prop>
+                <prop key="/**/*.ico">31536000</prop>
+
+                <!-- Font assets -->
+                <prop key="/**/*.ttf*">31536000</prop>
+                <prop key="/**/*.eot*">31536000</prop>
+                <prop key="/**/*.woff*">31536000</prop>
+                <prop key="/**/*.otf*">31536000</prop>
+            </props>
+        </property>
+    </bean>
+
+    <mvc:interceptors>
+        <!--TODO: find a cleaner way to use multiple interceptors-->
+        <mvc:interceptor>
+            <!--Support both root and push state path, for IE9-->
+            <mvc:mapping path="/" />
+            <mvc:mapping path="/login/**" />
+            <mvc:mapping path="/logout/**" />
+            <ref bean="localeInterceptor" />
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <!--Support both root and push state path, for IE9-->
+            <mvc:mapping path="/" />
+            <mvc:mapping path="/login/**" />
+            <mvc:mapping path="logout/**" />
+            <ref bean="refererInterceptor" />
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/api/**"/>
+            <bean id="noCacheInterceptor" class="org.springframework.web.servlet.mvc.WebContentInterceptor">
+                <!--Causes no-cache headers-->
+                <property name="cacheSeconds" value="0"/>
+            </bean>
+        </mvc:interceptor>
+        <mvc:interceptor>
+            <mvc:mapping path="/**/*"/>
+            <ref bean="cacheInterceptor"/>
+        </mvc:interceptor>
+    </mvc:interceptors>
+
+    <!--Request Token API-->
+    <bean id="tokenController" class="com.hp.ccue.identity.web.api.TokenController">
+        <property name="tokenService" ref="tokenService"/>
+    </bean>
+
+    <!--Organization/Tenant API-->
+    <bean id="tenantController" class="com.hp.ccue.identity.web.api.TenantController">
+        <property name="tenantService" ref="tenantService"/>
+    </bean>
+
+    <!--Image Proxy API-->
+    <bean id="imageProxyController" class="com.hp.ccue.identity.web.api.ImageProxyController">
+        <property name="imageProxyService" ref="imageProxyService"/>
+    </bean>
+
+    <!-- This is configured so that @RequestMapping receives higher priority than ResourceHttpRequestHandler
+        (mvc:resources). Otherwise, without this, the LoginPageController is processed AFTER static resources -->
+    <mvc:annotation-driven />
+
+    <mvc:resources mapping="/**" location="/ui/"/>
+
+    <!--JSP Config-->
+    <bean id="viewResolver"
+          class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+    <!--End JSP Config-->
+</beans>

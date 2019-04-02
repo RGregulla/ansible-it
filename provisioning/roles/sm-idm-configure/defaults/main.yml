@@ -1,0 +1,12 @@
+---
+
+tomcat_user: tomcat
+tomcat_group: tomcat
+tomcat_webtier_path: /opt/tomcat/webapps
+tomcat_conf_path: /opt/tomcat/conf
+idm_webinf_path: /idm-service.war/WEB-INF/
+sso_domain: mycompany.net
+sso_tenant: CIO-ITSM
+idm_db_server: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
+idm_db_user: smuser
+idm_db_password: smpassw0rd

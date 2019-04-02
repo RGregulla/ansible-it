@@ -1,0 +1,46 @@
+[
+    {
+        "operation":"ADD_OR_UPDATE",
+        "type":"organization",
+        "attributes":{
+            "name":"{{ sso_organization_name }}",
+            "displayName":"{{ sso_tenant }}"
+        }
+    },
+    {
+        "operation":"ADD",
+        "type":"samlConfiguration",
+        "names":{
+            "organizationName":"{{ sso_tenant }}"
+        },
+        "attributes":{
+            "name":"IdmDemoSamlConfiguration1",
+            "displayName":"IdmDemoSamlConfiguration1",
+            "entityUrl":"http://localhost:8080/auth/realms/master/protocol/saml/descriptor",
+            "roleName": "SamlRole",
+            "attrName": "SamlAttr"
+        }
+    },
+     {
+        "operation":"UPDATE",
+        "type":"samlConfiguration",
+        "names":{
+            "organizationName":"{{ sso_tenant }}",
+            "samlConfigurationName":"IdmDemoSamlConfiguration1"
+        },
+        "attributes":{
+            "displayName":"IdmDemoSamlConfiguration1-XX"
+        }
+    },
+    {
+        "operation": "ADD_OR_UPDATE",
+        "type": "organizationMetadata",
+        "names": {
+            "organizationName": "IDM-SM"
+        },
+        "attributes": {
+            "key": "idm.auth.flow",
+            "value": "seeded,database_user,ldap,ad,jaas,saml"
+        }
+}
+]
