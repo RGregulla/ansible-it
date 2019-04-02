@@ -3,7 +3,7 @@
 - name: configure sp-initiated sso
   template:
     src: web.xml.j2
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}"
+    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/web.xml"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -14,7 +14,7 @@
 - name: set sso domain
   template:
     src: hpssoConfig.xml.j2
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}"
+    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/hpssoConfig.xml"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
@@ -23,7 +23,7 @@
   #notify: restart tomcat
 
 - name: spring saml config
-  template:
+  file:
     src: applicationContext-saml.xml
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
@@ -34,7 +34,7 @@
   #notify: restart tomcat
 
 - name: spring v0 config
-  template:
+  file:
     src: applicationContext-v0.xml
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
@@ -46,8 +46,8 @@
 
 - name: copy hpe tenant for sso
   template:
-    src: com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json
-    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/seeded"
+    src: com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json.j2
+    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/seeded/com.hpe.tenant1__1.3.2.1__Add_Update_Saml_Configuration.json"
     owner: "{{ tomcat_user }}"
     #owner: root
     group: "{{ tomcat_group }}"
