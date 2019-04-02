@@ -149,7 +149,7 @@
         wait: yes
         name: "{{ ami_name }}-{{ sm_version }}.{{ ansible_date_time.date }}.{{  ansible_date_time.hour }}.{{  ansible_date_time.minute }}"
         tags:
-          Name: sm-webtier
+          Name: itsm-sm-webtier
           Version: "{{ sm_version }}"
           Packer: ansible
 
