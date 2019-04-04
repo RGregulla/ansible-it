@@ -1,8 +1,5 @@
 ---
 
-- name: load secrets into playbook
-  include_vars: secrets.yml
-
 - name: create sm installdir
   file: path={{ install_filepath }} state=directory mode=0755 owner={{ install_user }}
   tags: prepare
