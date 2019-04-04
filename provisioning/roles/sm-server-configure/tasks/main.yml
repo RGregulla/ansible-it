@@ -41,9 +41,24 @@
     chdir: "{{ sm_install_server_dir }}/RUN"
   tags: unlock_database
 
-- name: start sm
-  shell: "{{ sm_install_server_dir }}/RUN/smstart"
-  args:
-    executable: /bin/bash
-    chdir: "{{ sm_install_server_dir }}/RUN"
-  tags: start_sm
+- name: add smserver.service
+  template:
+    src: smserver.service.j2
+    dest: "{{ sm_service_path }}/{{ sm_service_file }}"
+    mode: 0755
+  become: true
+
+- name: install smserver as service
+  shell: systemctl daemon-reload
+  become: true
+
+- name: enable smservice service
+  shell: systemctl enable smserver.service
+  become: true
+
+# - name: start sm
+#   shell: "{{ sm_install_server_dir }}/RUN/smstart"
+#   args:
+#     executable: /bin/bash
+#     chdir: "{{ sm_install_server_dir }}/RUN"
+#   tags: start_sm
