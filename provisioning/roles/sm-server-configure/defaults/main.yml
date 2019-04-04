@@ -1,10 +1,11 @@
 ---
 
-install_user: vagrant
+install_user: ec2-user
 
 s3_bucket: itsm-classic-src
 s3_cert_path: Certificates
 sm_install_server_dir: /opt/MicroFocus/ServiceManager9.60/Server
+sm_server_run_dir: /opt/MicroFocus/ServiceManager9.60/Server/RUN
 sm_server_port: 13080
 sm_server_dbhost: localhost
 sm_patch_path: /opt/itsm/patches
@@ -16,6 +17,10 @@ sm_server_dbhost: smdb.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 sm_server_dbport: 5432
 sm_server_dbname: servicemanagement
 postgres_user: postgres
+sm_service_user: ec2-user
+sm_service_group: ec2-user
+sm_service_path: /etc/systemd/system
+sm_service_file: smserver.service
 
 # Config for smini
 # enable ldap: 0 (enabled) or 1 (disabled)

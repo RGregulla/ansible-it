@@ -1,0 +1,5 @@
+---
+
+- name: restart smserver
+  service: name=smserver state=restarted
+  become: yes
