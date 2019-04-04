@@ -61,7 +61,7 @@
     chdir: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes/security/"
   become: yes
 
-- name: copy hpe tenant for sso
+- name: copy log4j config
   file:
     src: log4j.properties
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes"
