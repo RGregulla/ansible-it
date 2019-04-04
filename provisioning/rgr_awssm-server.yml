@@ -33,7 +33,7 @@
         server_port: 13080
 
   roles:
-    - common
+#    - common
     - get-rdsfacts
 #    - sm-postgres
 #    - prepare-postgres
