@@ -12,7 +12,6 @@
 #    - jdk
 #    - tomcat
     - get-smelbfacts
-    - get-rdsfacts
     - sm-webtier-configure
     - sm-idm-configure
 #    - sm-idm
