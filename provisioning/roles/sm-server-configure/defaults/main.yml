@@ -21,6 +21,8 @@ sm_service_user: ec2-user
 sm_service_group: ec2-user
 sm_service_path: /etc/systemd/system
 sm_service_file: smserver.service
+# For Development Scenarios set to false
+production_mode: true
 
 # Config for smini
 # enable ldap: 0 (enabled) or 1 (disabled)

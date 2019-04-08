@@ -2,6 +2,7 @@
 
 - name: load secrets into playbook
   include_vars: secrets.yml
+  when: production_mode
 
 - name: copy truststore from S3
   aws_s3:
@@ -9,6 +10,7 @@
     object: "{{ s3_cert_path }}/smtrust"
     dest: "{{ sm_install_server_dir }}/RUN/smtrust"
     mode: get
+  when: production_mode
   become: false
 
 - name: add sm.ini
