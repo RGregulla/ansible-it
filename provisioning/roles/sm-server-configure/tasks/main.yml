@@ -57,6 +57,7 @@
 - name: enable smservice service
   shell: systemctl enable smserver.service
   become: true
+  notify: restart smserver
 
 # - name: start sm
 #   shell: "{{ sm_install_server_dir }}/RUN/smstart"

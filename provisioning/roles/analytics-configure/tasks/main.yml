@@ -1,12 +1,31 @@
 ---
 
-- name: start analytics
-  shell: "{{ analytics_install_dir }}/scripts/StartAll.sh"
-  args:
-    executable: /bin/bash
-    chdir: "{{ analytics_install_dir }}/scripts"
-  tags: start_analytics
-  ignore_errors: yes
+- name: add smserver.service
+  template:
+    src: smanalytics.service.j2
+    dest: "{{ sm_service_path }}/{{ sm_service_file }}"
+    mode: 0755
+  become: true
+
+- name: install smanalytics as service
+  shell: systemctl daemon-reload
+  become: true
+
+- name: enable smanalytics service
+  shell: systemctl enable smserver.service
+  become: true
+  notify: restart smanalytics
+
+# Run Hanler NOW to start Analytics
+- meta: flush_handlers
+
+# - name: start analytics
+#   shell: "{{ analytics_install_dir }}/scripts/StartAll.sh"
+#   args:
+#     executable: /bin/bash
+#     chdir: "{{ analytics_install_dir }}/scripts"
+#   tags: start_analytics
+#   ignore_errors: yes
 
 - name: Register analytics in sm-server
   uri:
