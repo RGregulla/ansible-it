@@ -19,6 +19,10 @@ sm_Rest_User_Pwd: ""
 sma_AnalyticsServer: 18.184.241.191
 sma_CFSServer: 18.184.241.191
 sma_AnhangServer: 18.184.241.191
+sma_service_user: ec2-user
+sma_service_group: ec2-user
+sma_service_path: /etc/systemd/system
+sma_service_file: smanalytics.service
 
 sm_serverHost: 52.28.115.201
 sm_server_port: 13080

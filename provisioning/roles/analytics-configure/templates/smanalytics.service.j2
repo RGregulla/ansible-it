@@ -1,0 +1,25 @@
+# Systemd unit file for default tomcat
+#
+# To create clones of this service:
+# DO NOTHING, use tomcat@.service instead.
+
+[Unit]
+Description=Microfocus Analytics Server
+After=syslog.target network.target
+
+[Service]
+Type=simple
+#Type=forking
+
+User={{ sma_service_user }}
+Group={{ sma_service_group }}
+
+WorkingDirectory={{ analytics_install_dir }}
+
+#Environment="JAVA_HOME={{ analytics_install_dir }}/jre"
+
+ExecStart={{ analytics_install_dir }}/scripts/StartAll.sh
+ExecStop={{ analytics_install_dir }}/scripts/StopAll.sh
+
+[Install]
+WantedBy=multi-user.target
