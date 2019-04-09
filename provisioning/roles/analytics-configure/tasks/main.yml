@@ -3,7 +3,7 @@
 - name: add smserver.service
   template:
     src: smanalytics.service.j2
-    dest: "{{ sm_service_path }}/{{ sm_service_file }}"
+    dest: "{{ sma_service_path }}/{{ sma_service_file }}"
     mode: 0755
   become: true
 
@@ -12,7 +12,7 @@
   become: true
 
 - name: enable smanalytics service
-  shell: systemctl enable smserver.service
+  shell: systemctl enable smanalytics.service
   become: true
   notify: restart smanalytics
 
