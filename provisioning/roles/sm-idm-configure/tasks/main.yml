@@ -23,7 +23,7 @@
   #notify: restart tomcat
 
 - name: spring saml config
-  file:
+  copy:
     src: applicationContext-saml.xml
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
@@ -34,7 +34,7 @@
   #notify: restart tomcat
 
 - name: spring v0 config
-  file:
+  copy:
     src: applicationContext-v0.xml
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
     owner: "{{ tomcat_user }}"
@@ -62,7 +62,7 @@
   become: yes
 
 - name: copy log4j config
-  file:
+  copy:
     src: log4j.properties
     dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/classes"
     owner: "{{ tomcat_user }}"

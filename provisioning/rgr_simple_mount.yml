@@ -1,0 +1,38 @@
+---
+
+- hosts: all
+  remote_user: ec2-user
+  vars:
+    ansible_ssh_private_key_file: ~/.ssh/AWSSierra.pem
+    sm_server_dbhost: dummy
+    volume_id: vol-0e8bf431a20d788bb
+
+  tasks:
+
+    - name: get all ec2 facts
+      ec2_metadata_facts:
+
+    - name: debug all facts
+      debug: var=ansible_facts
+
+    # - name: get ec2 tags
+    #   local_action:
+    #     module: ec2_tag
+    #     region: "{{ ansible_ec2_placement_region }}"
+    #     resource: "{{ ansible_ec2_instance_id }}"
+    #     state: list
+    #   register: my_ec2_tags
+
+# vol-0a85e5be826ba55e8
+    # - name: mount volume
+    #   ec2_vol:
+    #     instance: "{{ ec2_instance_id }}"
+    #     id: "{{ volume_id }}"
+    #     region: "{{ ansible_ec2_placement_region }}"
+    #     device_name: /dev/sdf
+    #
+    # - name: get all ec2 facts
+    #   ec2_metadata_facts:
+    #
+    # - name: debug all facts
+    #   debug: var=ansible_facts
