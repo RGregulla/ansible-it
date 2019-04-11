@@ -9,20 +9,14 @@
     mode: get
   tags: idm_install
 
-- name: copy idm war
-  copy:
+- name: unarchive idm war
+  unarchive:
     src: "{{ webtier_target }}/{{ s3_idm_archive }}"
-    dest: "{{ tomcat_webtier_path }}"
+    dest: "{{ tomcat_webtier_path }}/idm-service"
     mode: 0755
     owner: "{{ tomcat_user}}"
     group: "{{ tomcat_group }}"
-    remote_src: yes
+    remote_src: "{{ remote_src }}"
   tags: idm_install
   become: yes
   #notify: restart tomcat
-
-# <CookieProcessor className="org.apache.tomcat.util.http.LegacyCookieProcessor"/>
-# - name: add cookieprocessor to context xml
-#   xml:
-#     path: "{{ tomcat_conf_path }}/context.xml"
-#     content:
