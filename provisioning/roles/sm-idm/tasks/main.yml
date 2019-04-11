@@ -9,10 +9,19 @@
     mode: get
   tags: idm_install
 
+- name: Create deploy folder directory
+  file:
+    path: "{{ idm_deploy_path }}"
+    state: directory
+    mode: 0755
+    owner: "{{ tomcat_user}}"
+    group: "{{ tomcat_group }}"
+  become: yes
+
 - name: unarchive idm war
   unarchive:
     src: "{{ webtier_target }}/{{ s3_idm_archive }}"
-    dest: "{{ tomcat_webtier_path }}/idm-service"
+    dest: "{{ idm_deploy_path }}"
     mode: 0755
     owner: "{{ tomcat_user}}"
     group: "{{ tomcat_group }}"

@@ -8,5 +8,6 @@ webtier_target: /tmp
 tomcat_user: tomcat
 tomcat_group: tomcat
 tomcat_webtier_path: /opt/tomcat/webapps
+idm_deploy_path: /opt/tomcat/webapps/idm-service
 tomcat_conf_path: /opt/tomcat/conf
 remote_src: yes
