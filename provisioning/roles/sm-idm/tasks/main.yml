@@ -1,5 +1,15 @@
 ---
 
+- name: create propel logdir
+  file: path={{ propel_log_path }} state=directory mode=0755
+  tags: prepare
+  become: yes
+
+- name: create propel logdir
+  file: path={{ propel_log_path }}/idm state=directory mode=0755 owner={{ tomcat_user }}
+  tags: prepare
+  become: yes
+
 - name: copy idm from S3
   aws_s3:
     bucket: "{{ s3_bucket }}"
