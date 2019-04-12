@@ -33,6 +33,17 @@
   become: yes
   #notify: restart tomcat
 
+- name: spring applicationContext config
+  template:
+    src: applicationContext.properties
+    dest: "{{ tomcat_webtier_path }}{{ idm_webinf_path }}/spring"
+    owner: "{{ tomcat_user }}"
+    #owner: root
+    group: "{{ tomcat_group }}"
+    mode: 0755
+  become: yes
+  #notify: restart tomcat
+
 - name: spring v0 config
   copy:
     src: applicationContext-v0.xml
