@@ -23,7 +23,7 @@
 # Reason: starting idm without configuration of database marks the application as "bad"
 - name: stop tomcat
   command: systemctl stop tomcat
-  become: true
+  become: yes
 
 - name: Create deploy folder directory
   file:
@@ -44,4 +44,3 @@
     remote_src: "{{ remote_src }}"
   tags: idm_install
   become: yes
-  #notify: restart tomcat
