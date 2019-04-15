@@ -23,7 +23,7 @@
      -->
     <creation tokenGlobalTimeout="480" tokenIdleTimeout="30" secureHTTPCookie="false">
         <!-- lwsso is required -->
-        <lwsso tenant="{{ sso_tenant }}">
+        <lwsso>
             <!-- domain is required
                 HPSSO 1.0 version supports a single domain only.
                 All servers using HPSSO should have the same domain and it should be denoted in this tag
@@ -47,7 +47,6 @@
         another alternative is to use the organization's acceptLegacyLwssoCookie added in IdM 1.15.2, default value is false
         -->
         <lwsso tenant="{{ sso_tenant }}">
-        <lwsso>
             <!-- crypto is required.
                 It defines how to encrypt the tokens and how to decrypt them
                 All inline attributes have default values (denoted here) save initString.
