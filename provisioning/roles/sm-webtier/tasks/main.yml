@@ -49,4 +49,3 @@
     remote_src: "{{ remote_src }}"
   tags: prepare
   become: yes
-  notify: restart tomcat
