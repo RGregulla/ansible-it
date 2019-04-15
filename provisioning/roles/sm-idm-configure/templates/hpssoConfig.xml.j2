@@ -23,7 +23,7 @@
      -->
     <creation tokenGlobalTimeout="480" tokenIdleTimeout="30" secureHTTPCookie="false">
         <!-- lwsso is required -->
-        <lwsso>
+        <lwsso tenant="{{ sso_tenant }}">
             <!-- domain is required
                 HPSSO 1.0 version supports a single domain only.
                 All servers using HPSSO should have the same domain and it should be denoted in this tag
@@ -58,7 +58,7 @@
                 (all other values are defaults)
                 checkIntegrity - enabled or disabled, enabled is recommended to make sure mac is always be checked
             -->
-            <crypto initString="{{ sso_domain }}" cipherType="symmetricBlockCipher" engineName="AES"
+            <crypto initString="{{ sso_init_string }}" cipherType="symmetricBlockCipher" engineName="AES"
                     paddingMode="CBC" keySize="256" encodingMode="Base64Url" algorithmPaddingName="PKCS7Padding" checkIntegrity="enabled"
                     cryptoSource="lw" directKeyEncoded="false" directKeyEncoding="Hex" jcePbeAlgorithmName="PBEWithHmacSHA1"
                     jcePbeMacAlgorithmName="PBEWithHmacSHA1" macAlgorithmName="SHA1" macKeySize="256" macPbeCount="20" macType="hmac"

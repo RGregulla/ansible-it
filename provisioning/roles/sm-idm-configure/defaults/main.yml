@@ -7,6 +7,7 @@ tomcat_conf_path: /opt/tomcat/conf
 idm_webinf_path: /idm-service/WEB-INF/
 sso_domain: mycompany.net
 sso_tenant: CIO-ITSM
+sso_init_string: geheimerinitstring
 idm_db_server: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 idm_db_user: smuser
 idm_db_password: smpassw0rd
