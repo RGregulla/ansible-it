@@ -19,6 +19,12 @@
     mode: get
   tags: idm_install
 
+# For deploying idm stop tomcat
+# Reason: starting idm without configuration of database marks the application as "bad"
+- name: stop tomcat
+  command: systemctl stop tomcat
+  become: true
+
 - name: Create deploy folder directory
   file:
     path: "{{ idm_deploy_path }}"
