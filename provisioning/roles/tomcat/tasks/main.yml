@@ -85,4 +85,3 @@
     group: "{{ tomcat_group }}"
     mode: 0755
   become: yes
-#  notify: restart tomcat
