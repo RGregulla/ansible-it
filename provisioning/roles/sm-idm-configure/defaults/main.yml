@@ -10,5 +10,6 @@ sso_tenant: CIO-ITSM
 idm_db_server: itsm-db.ch1znfaihylb.eu-central-1.rds.amazonaws.com
 idm_db_user: smuser
 idm_db_password: smpassw0rd
+idm_db_name: idmdb
 # ansible_ec2_local_hostname
 saml_idm_hostname: samlhost
