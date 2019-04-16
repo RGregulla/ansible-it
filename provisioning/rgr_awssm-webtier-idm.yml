@@ -14,4 +14,5 @@
     - get-smelbfacts
     - sm-webtier-configure
     - sm-idm-configure
+    - tomcat-configure
 #    - sm-idm
