@@ -5,7 +5,7 @@ tomcat_group: tomcat
 tomcat_webtier_path: /opt/tomcat/webapps
 tomcat_conf_path: /opt/tomcat/conf
 idm_webinf_path: /idm-service/WEB-INF/
-sso_domain: mycompany.net
+sso_domain: itsmcompany.net
 sso_tenant: CIO-ITSM
 # inistring: it must have at least 32 characters, including at least one numerical digit and at least one letter
 sso_init_string: diesisteinsehrgeheimerinitstring1234567

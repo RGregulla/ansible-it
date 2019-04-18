@@ -179,8 +179,8 @@
                 </property>
                 <property name="extendedMetadata">
                    <bean class="org.springframework.security.saml.metadata.ExtendedMetadata">
-                      <!--
                       <property name="ecpEnabled" value="true" />
+                      <!--
                       <property name="requireLogoutResponseSigned" value="true" />
                     -->
                    </bean>
