@@ -1,0 +1,4 @@
+---
+
+aws_cloudwatchagent_url: https://s3.amazonaws.com/amazoncloudwatch-agent/redhat/amd64/latest/amazon-cloudwatch-agent.rpm
+aws_cloudwatchagent_config: /opt/aws/amazon-cloudwatch-agent/etc/amazon-cloudwatch-agent.json

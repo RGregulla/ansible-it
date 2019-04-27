@@ -1,0 +1,10 @@
+---
+
+- name: install aws ssm
+  yum:
+    name: "{{ aws_cloudwatchagent_url }}"
+    state: installed
+  tags: prepare
+  become: yes
+  when: ansible_distribution == 'RedHat'
+  ignore_errors: yes

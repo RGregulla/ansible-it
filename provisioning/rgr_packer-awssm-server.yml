@@ -24,6 +24,7 @@
     - sm-server
     - sm-server-patch
     - languagepack
+    - awscw-agent
 
   # environment:
   #   http_proxy: http://webproxy.comp.db.de:8080

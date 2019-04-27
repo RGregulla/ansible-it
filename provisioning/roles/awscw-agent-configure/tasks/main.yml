@@ -1,0 +1,12 @@
+---
+
+- name: copy cloudwatch agent config
+  copy:
+    src: config.json
+    dest: "{{ aws_cloudwatchagent_config }}"
+    mode: 0755
+  become: yes
+
+
+- name: execute cloudwatch agent
+  command: sudo /opt/aws/amazon-cloudwatch-agent/bin/amazon-cloudwatch-agent-ctl -a fetch-config -m ec2 -c file:"{{ aws_cloudwatchagent_config }}" -s
